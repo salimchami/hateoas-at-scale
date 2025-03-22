@@ -1,0 +1,15 @@
+_________                       __
+\_   ___ \  _____    _______  _/  |_
+/    \  \/  \__  \   \_  __ \ \   __\
+\     \____  / __ \_  |  | \/  |  |
+ \______  / (____  /  |__|     |__|
+        \/       \/
+
+
+${spring.application.name} application is starting
+
+The currently active profile is: ${spring.profiles.active}
+
+The web application is running on port: ${server.port}
+
+Powered by Spring Boot Version ${spring-boot.version}
