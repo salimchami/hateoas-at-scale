@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: users
+  profiles:
+    active: dev
+  banner:
+    location: classpath:/banner.txt
+  cloud:
+    consul:
+      host: consul-service
+      port: 8500
+      discovery:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+server:
+  port: 0
+  error:
+    whitelabel:
+      enabled: 'false'

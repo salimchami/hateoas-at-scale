@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: cart
+  profiles:
+    active: dev
+  banner:
+    location: classpath:/banner.txt
+  cloud:
+    consul:
+      host: consul-service
+      discovery:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+server:
+  port: 0
+  error:
+    whitelabel:
+      enabled: 'false'
