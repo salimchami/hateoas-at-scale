@@ -12,6 +12,6 @@ class UsersController {
 
     @GetMapping("/{id}")
     fun userInfo(@PathVariable id: Long): HttpEntity<User> {
-        return HttpEntity<User>(User("ada.lovelace", "Ada", "lovelace"))
+        return HttpEntity<User>(User(id, "ada.lovelace", "Ada", "lovelace"))
     }
 }
