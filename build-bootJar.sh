@@ -3,6 +3,6 @@
 for app in cart products users
 do
   cd "$app" || exit
-  ./gradlew clean bootJar
+  ./gradlew bootJar
   cd ..
 done
