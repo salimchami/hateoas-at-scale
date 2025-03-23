@@ -1,1 +1,2 @@
-# HateOAS at scale
+# HATEOAS at scale
+
