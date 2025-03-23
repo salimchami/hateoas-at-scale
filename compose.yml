@@ -1,35 +1,33 @@
 name: "HATEOAS @ scale"
 
 services:
-  users:
-    container_name: users
-    build:
-      context: ./users
-      dockerfile: ../Dockerfile
+  users-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
     ports:
       - "8080:8080"
-    networks:
-      - hateoas-at-scale-nw
+    command: "java -jar /app/app.jar"
 
-  cart:
-    container_name: cart
-    build:
-      context: ./cart
-      dockerfile: ../Dockerfile
+  products-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
     ports:
-      - "8081:8080"
-    networks:
-      - hateoas-at-scale-nw
+      - "8081:8081"
+    command: "java -jar /app/app.jar"
 
-  products:
-    container_name: products
-    build:
-      context: ./products
-      dockerfile: ../Dockerfile
+  cart-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
     ports:
-      - "8082:8080"
-    networks:
-      - hateoas-at-scale-nw
+      - "8082:8082"
+    command: "java -jar /app/app.jar"
+
+  consul:
+    image: consul:1.15.4
+    network_mode: host
 
 networks:
   hateoas-at-scale-nw:
