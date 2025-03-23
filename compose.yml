@@ -6,8 +6,6 @@ services:
     build:
       context: ./users
       dockerfile: ../Dockerfile
-    volumes:
-      - ./users/build/libs:/
     ports:
       - "8080:8080"
     networks:
@@ -18,8 +16,6 @@ services:
     build:
       context: ./cart
       dockerfile: ../Dockerfile
-    volumes:
-      - ./cart/build/libs:/
     ports:
       - "8081:8080"
     networks:
@@ -30,8 +26,6 @@ services:
     build:
       context: ./products
       dockerfile: ../Dockerfile
-    volumes:
-      - ./products/build/libs:/
     ports:
       - "8082:8080"
     networks:

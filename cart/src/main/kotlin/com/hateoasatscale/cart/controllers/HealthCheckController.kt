@@ -1,7 +1,6 @@
 package com.hateoasatscale.cart.controllers
 
 import org.springframework.http.HttpEntity
-import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 class HealthCheckController {
 
     @GetMapping
-    fun userInfo(): HttpEntity<Int> {
-        return HttpEntity<Int>(HttpStatus.OK.value())
+    fun userInfo(): HttpEntity<String> {
+        return HttpEntity<String>("Cart app is started")
     }
 }
