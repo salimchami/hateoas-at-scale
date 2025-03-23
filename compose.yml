@@ -1,35 +1,44 @@
-name: "HATEOAS @ scale"
+name: "HATEOAS at scale"
 
 services:
   users-service:
     image: openjdk:21-jdk-slim
     volumes:
       - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    ports:
-      - "8080:8080"
     command: "java -jar /app/app.jar"
+    depends_on:
+      - consul-service
+    networks:
+      - hateoas-at-scale-nw
 
   products-service:
     image: openjdk:21-jdk-slim
     volumes:
       - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    ports:
-      - "8081:8081"
     command: "java -jar /app/app.jar"
+    depends_on:
+      - consul-service
+    networks:
+      - hateoas-at-scale-nw
 
   cart-service:
     image: openjdk:21-jdk-slim
     volumes:
       - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    ports:
-      - "8082:8082"
     command: "java -jar /app/app.jar"
+    depends_on:
+      - consul-service
+    networks:
+      - hateoas-at-scale-nw
 
-  consul:
+  consul-service:
     image: consul:1.15.4
-    network_mode: host
+    ports:
+      - "8500:8500"
+    networks:
+      - hateoas-at-scale-nw
+
 
 networks:
   hateoas-at-scale-nw:
-    name: hateoas-at-scale-nw
-    driver: bridge
+    name: "hateoas-at-scale-nw"
