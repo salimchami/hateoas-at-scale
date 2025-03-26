@@ -9,10 +9,16 @@ spring:
     consul:
       host: consul-service
       discovery:
-        prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+        health-check-path: ${management.server.servlet.context-path}/health
+        health-check-interval: 15s
+
 server:
-  port: 0
   error:
     whitelabel:
       enabled: 'false'
+  forward-headers-strategy: framework
+
+management:
+  server:
+    port: 4452
