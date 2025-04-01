@@ -1,22 +1,23 @@
-package com.hateoasatscale.users.controllers.users
+package com.hateoasatscale.products.controllers.products
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
+import java.math.BigDecimal
 
-class User @JsonCreator constructor(
+class Product @JsonCreator constructor(
     private val usersServiceUrl: String,
     private val id: Long,
-    val username: String,
-    val firstname: String,
-    val lastname: String
-) : RepresentationModel<User>() {
+    val name: String,
+    val reference: String,
+    val price: BigDecimal,
+) : RepresentationModel<Product>() {
 
     init {
         addSelfLink()
     }
 
     private fun addSelfLink() {
-        add(Link.of("$usersServiceUrl/users/$id"))
+        add(Link.of("$usersServiceUrl/products/$id"))
     }
 }

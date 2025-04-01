@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: cart
   cloud:
     discovery:
       enabled: false
