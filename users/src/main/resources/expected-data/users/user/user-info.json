@@ -4,7 +4,7 @@
   "lastname": "lovelace",
   "_links": {
     "self": {
-      "href": "http://users/users/1"
+      "href": "http://172.20.0.4:32589/users/1"
     }
   }
 }
