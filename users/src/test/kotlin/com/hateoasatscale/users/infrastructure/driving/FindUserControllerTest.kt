@@ -1,17 +1,19 @@
-package com.hateoasatscale.users.controllers.users
+package com.hateoasatscale.users.infrastructure.driving
 
-import com.hateoasatscale.users.JsonReader.strip
-import com.hateoasatscale.users.JsonReader.toExpectedJson
+import com.hateoasatscale.users.AbstractTests
+import com.hateoasatscale.users.utils.JsonReader.strip
+import com.hateoasatscale.users.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.http.HttpStatus
 
-class UsersControllerTest : GenericTest() {
+class FindUserControllerTest : AbstractTests() {
 
     @Test
     fun `should return user info with links`() {
-        val expectedUser = toExpectedJson("users/user", "user-info")
+        val expectedUser =
+            toExpectedJson("users/user", "user-ada").replace("{{users-service-url}}", "localhost:${usersServerPort}")
         val entity = restTemplate.getForEntity<String>("/users/1")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedUser)

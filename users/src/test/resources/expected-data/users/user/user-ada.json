@@ -1,0 +1,10 @@
+{
+  "username": "ada.lovelace",
+  "firstname": "Ada",
+  "lastname": "Lovelace",
+  "_links": {
+    "self": {
+      "href": "http://{{users-service-url}}/users/1"
+    }
+  }
+}
