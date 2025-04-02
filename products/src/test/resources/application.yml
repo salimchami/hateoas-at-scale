@@ -1,8 +1,5 @@
 spring:
   application:
     name: products
-  cloud:
-    discovery:
-      enabled: false
-    consul:
-      enabled: false
+  profiles:
+    active: test

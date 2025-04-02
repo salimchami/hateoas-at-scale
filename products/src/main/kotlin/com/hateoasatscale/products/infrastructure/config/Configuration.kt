@@ -1,4 +1,4 @@
-package com.hateoasatscale.products.config
+package com.hateoasatscale.products.infrastructure.config
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced
 import org.springframework.context.annotation.Bean
