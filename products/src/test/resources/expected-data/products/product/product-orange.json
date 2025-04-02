@@ -1,0 +1,10 @@
+{
+  "name": "orange",
+  "reference": "DFHDHYUJJBN887644",
+  "price": 158.00,
+  "_links": {
+    "self": {
+      "href": "http://{{products-service-url}}/products/4"
+    }
+  }
+}
