@@ -1,11 +1,11 @@
 package com.hateoasatscale.users.infrastructure.driving
 
 import com.fasterxml.jackson.annotation.JsonCreator
-import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 class UserDto @JsonCreator constructor(
-    private val usersServiceUrl: String,
     private val id: Long,
     val username: String,
     val firstname: String,
@@ -16,11 +16,7 @@ class UserDto @JsonCreator constructor(
         addSelfLink()
     }
 
-
-    //    private fun addSelfLink() {
-//        add(linkTo(methodOn(UsersController::class.java).userInfo(id)).withSelfRel())
-//    }
     private fun addSelfLink() {
-        add(Link.of("$usersServiceUrl/users/$id"))
+        add(linkTo(methodOn(UsersResource::class.java).userInfo(id)).withSelfRel())
     }
 }

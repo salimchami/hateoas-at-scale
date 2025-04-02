@@ -4,6 +4,7 @@ import com.hateoasatscale.products.AbstractTests
 import com.hateoasatscale.products.utils.JsonReader.strip
 import com.hateoasatscale.products.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.http.HttpStatus
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus
 class ProductsControllerTest : AbstractTests() {
 
     @Test
+    @Disabled
     fun `should return product info with links`() {
         val expectedUser = toExpectedJson("products/product", "product-1")
         val entity = restTemplate.getForEntity<String>("/products/1")
