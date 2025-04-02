@@ -6,6 +6,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 @AutoConfiguration
+//@EnableFeignClients
 class UsersApplication
 
 

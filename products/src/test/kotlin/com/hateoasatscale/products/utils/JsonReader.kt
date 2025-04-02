@@ -1,4 +1,4 @@
-package com.hateoasatscale.users
+package com.hateoasatscale.products.utils
 
 import java.nio.file.Files
 import java.nio.file.Paths

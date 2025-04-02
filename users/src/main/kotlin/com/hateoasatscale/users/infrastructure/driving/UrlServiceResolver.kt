@@ -1,4 +1,4 @@
-package com.hateoasatscale.users.config
+package com.hateoasatscale.users.infrastructure.driving
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cloud.client.discovery.DiscoveryClient
