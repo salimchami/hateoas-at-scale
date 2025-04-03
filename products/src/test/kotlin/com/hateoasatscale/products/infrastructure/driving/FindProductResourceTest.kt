@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.http.HttpStatus
 
-class FindProductControllerTest : AbstractTests() {
+class FindProductResourceTest : AbstractTests() {
 
     @Test
     fun `should return product info with links`() {

@@ -6,7 +6,7 @@ import org.springframework.web.client.getForObject
 
 @Component
 class UsersProviderClient(val restTemplate: RestTemplate) : UsersProvider {
-    override fun findUser(id: Long): ProviderUserDto {
+    override fun findBy(id: Long): ProviderUserDto {
         return this.restTemplate.getForObject<ProviderUserDto>("/users/$id")
     }
 }

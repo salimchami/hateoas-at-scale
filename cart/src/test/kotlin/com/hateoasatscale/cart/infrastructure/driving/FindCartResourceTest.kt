@@ -3,15 +3,20 @@ package com.hateoasatscale.cart.infrastructure.driving
 import com.hateoasatscale.cart.AbstractTests
 import com.hateoasatscale.cart.utils.JsonReader.strip
 import com.hateoasatscale.cart.utils.JsonReader.toExpectedJson
+import com.hateoasatscale.cart.utils.ProductsFixture
+import com.hateoasatscale.cart.utils.UsersFixture
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.http.HttpStatus
 
-class CartControllerTest : AbstractTests() {
+class FindCartResourceTest : AbstractTests() {
 
     @Test
     fun `should return cart info with links`() {
+        `when`(usersProvider.findBy(1)).thenReturn(UsersFixture.adaLovelace)
+        `when`(productsProvider.findBy(listOf(1, 4))).thenReturn(listOf(ProductsFixture.apple, ProductsFixture.orange))
         val expectedProduct =
             toExpectedJson("cart", "cart-ada-orange").replace(
                 "{{cart-service-url}}", baseUrl

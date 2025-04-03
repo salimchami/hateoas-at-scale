@@ -1,32 +1,39 @@
 {
+  "totalPrice": 159.00,
   "user": {
     "firstname": "Ada",
-    "lastname": "Lovelace"
+    "lastname": "Lovelace",
+    "_links": {
+      "self": {
+        "href": "http://users.localhost:8081/users/1"
+      }
+    }
   },
   "products": [
     {
       "name": "apple",
       "reference": "RRDGHGT554346",
-      "price": 1.00
+      "price": 1.00,
+      "_links": {
+        "self": {
+          "href": "http://products.localhost:8082/products/1"
+        }
+      }
     },
     {
       "name": "orange",
       "reference": "DFHDHYUJJBN887644",
-      "price": 158.00
+      "price": 158.00,
+      "_links": {
+        "self": {
+          "href": "http://products.localhost:8082/products/4"
+        }
+      }
     }
   ],
   "_links": {
     "self": {
       "href": "{{cart-service-url}}/cart/1"
-    },
-    "apple-4": {
-      "href": "{{products-service-url}}/products/1"
-    },
-    "orange-1": {
-      "href": "{{products-service-url}}/products/4"
-    },
-    "user": {
-      "href": "{{users-service-url}}/users/1"
     }
   }
 }

@@ -4,5 +4,5 @@ import org.springframework.cloud.openfeign.FeignClient
 
 @FeignClient("users")
 fun interface UsersProvider {
-    fun findUser(id: Long): ProviderUserDto
+    fun findBy(id: Long): ProviderUserDto
 }
