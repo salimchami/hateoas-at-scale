@@ -4,7 +4,7 @@
   "lastname": "Lovelace",
   "_links": {
     "self": {
-      "href": "http://{{users-service-url}}/users/1"
+      "href": "{{users-service-url}}/users/1"
     }
   }
 }

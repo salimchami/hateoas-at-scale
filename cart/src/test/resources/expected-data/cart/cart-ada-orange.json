@@ -1,0 +1,32 @@
+{
+  "user": {
+    "firstname": "Ada",
+    "lastname": "Lovelace"
+  },
+  "products": [
+    {
+      "name": "apple",
+      "reference": "RRDGHGT554346",
+      "price": 1.00
+    },
+    {
+      "name": "orange",
+      "reference": "DFHDHYUJJBN887644",
+      "price": 158.00
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "{{cart-service-url}}/cart/1"
+    },
+    "apple-4": {
+      "href": "{{products-service-url}}/products/1"
+    },
+    "orange-1": {
+      "href": "{{products-service-url}}/products/4"
+    },
+    "user": {
+      "href": "{{users-service-url}}/users/1"
+    }
+  }
+}

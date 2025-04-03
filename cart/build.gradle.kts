@@ -22,15 +22,17 @@ tasks.getByName<Jar>("jar") {
 repositories {
     mavenCentral()
 }
+extra["springCloudVersion"] = "2024.0.1"
 
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery:4.2.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -42,6 +44,11 @@ dependencies {
 
     compileOnly("org.springframework.boot:spring-boot-devtools")
 
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 kotlin {
