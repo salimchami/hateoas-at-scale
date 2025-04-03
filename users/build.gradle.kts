@@ -39,8 +39,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.restdocs:spring-restdocs-asciidoctor")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testImplementation("org.testcontainers:testcontainers:latest.release")
-    testImplementation("org.testcontainers:junit-jupiter:latest.release")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 

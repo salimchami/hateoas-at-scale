@@ -1,8 +1,8 @@
-package com.hateoasatscale.products.driving
+package com.hateoasatscale.products.infrastructure.driving
 
 import com.hateoasatscale.products.AbstractTests
-import com.hateoasatscale.users.utils.JsonReader.strip
-import com.hateoasatscale.users.utils.JsonReader.toExpectedJson
+import com.hateoasatscale.products.utils.JsonReader.strip
+import com.hateoasatscale.products.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.getForEntity
@@ -13,8 +13,10 @@ class FindProductControllerTest : AbstractTests() {
     @Test
     fun `should return product info with links`() {
         val expectedProduct =
-            toExpectedJson("products/product", "product-orange").replace("{{products-service-url}}", "localhost:${productsServerPort}")
-        val entity = restTemplate.getForEntity<String>("/products/4")
+            toExpectedJson("products/product", "product-orange").replace(
+                "{{products-service-url}}", baseUrl
+            )
+        val entity = restTemplate.getForEntity<String>("$baseUrl/products/4")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
     }

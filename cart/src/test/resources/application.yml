@@ -1,8 +1,10 @@
 spring:
   application:
     name: cart
+  profiles:
+    active: test
+  banner:
+    location: classpath:/banner.txt
   cloud:
-    discovery:
-      enabled: false
     consul:
       enabled: false

@@ -3,3 +3,6 @@ spring:
     name: users
   profiles:
     active: test
+  cloud:
+    consul:
+      enabled: false

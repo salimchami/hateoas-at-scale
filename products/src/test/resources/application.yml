@@ -3,3 +3,8 @@ spring:
     name: products
   profiles:
     active: test
+  banner:
+    location: classpath:/banner.txt
+  cloud:
+    consul:
+      enabled: false
