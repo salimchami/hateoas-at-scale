@@ -2,6 +2,7 @@ package com.hateoasatscale.users.infrastructure.driven
 
 import com.hateoasatscale.users.domain.User
 import com.hateoasatscale.users.domain.UserNotFound
+import com.hateoasatscale.users.domain.UsersRepository
 import org.springframework.stereotype.Component
 
 @Component

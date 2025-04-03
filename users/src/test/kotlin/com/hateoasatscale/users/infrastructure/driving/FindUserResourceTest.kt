@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.http.HttpStatus
 
-class FindUserControllerTest : AbstractTests() {
+class FindUserResourceTest : AbstractTests() {
 
     @Test
     fun `should return user info with links`() {

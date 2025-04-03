@@ -2,6 +2,7 @@ package com.hateoasatscale.products.infrastructure.driven
 
 import com.hateoasatscale.products.domain.Product
 import com.hateoasatscale.products.domain.ProductNotFound
+import com.hateoasatscale.products.domain.ProductsRepository
 import org.springframework.stereotype.Component
 
 @Component
