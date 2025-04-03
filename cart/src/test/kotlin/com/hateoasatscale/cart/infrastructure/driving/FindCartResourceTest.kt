@@ -24,6 +24,5 @@ class FindCartResourceTest : AbstractTests() {
         val entity = restTemplate.getForEntity<String>("$baseUrl/cart/1")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
-
     }
 }
