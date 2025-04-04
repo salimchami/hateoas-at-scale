@@ -8,9 +8,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 @SpringBootApplication
 @AutoConfiguration
 @EnableFeignClients
-class UsersApplication
+class ProductsApplication
 
 
 fun main(args: Array<String>) {
-    runApplication<UsersApplication>(*args)
+    runApplication<ProductsApplication>(*args)
 }
