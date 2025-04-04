@@ -1,6 +1,6 @@
 # hateoas-at-scale
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 ![Last Commit](https://img.shields.io/github/last-commit/salimchami/hateoas-at-scale)
 ![Number of Contributors](https://img.shields.io/github/contributors/salimchami/hateoas-at-scale)
 ![Main Language](https://img.shields.io/github/languages/top/salimchami/hateoas-at-scale)
