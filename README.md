@@ -1,8 +1,5 @@
-# HATEOAS at scale
-
-Spring boot distributed services using HATEOAS and consul 
-
 # hateoas-at-scale
+Spring boot distributed services using HATEOAS and consul 
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Last Commit](https://img.shields.io/github/last-commit/salimchami/hateoas-at-scale)
