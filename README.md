@@ -67,7 +67,7 @@ Make sure you have the following installed:
 
 ### API Endpoints
 
-List the main API endpoints available and their roles. For example:
+List of the main API endpoints available:
 
 * `GET /users/1`: Retrieves a user from the `users` service. (see `com.hateoasatscale.users.infrastructure.driven.FakeDbUsers`)
 * `GET /products/1`: Retrieves a product from the `products` service. (see `com.hateoasatscale.products.infrastructure.driven.FakeDbProducts`)
@@ -77,7 +77,7 @@ List the main API endpoints available and their roles. For example:
 
 Here's an example of the cart 1 response 
 
-**Example Request (GET /resources):**
+**Example Request (GET <cart-service-url>/cart/1):**
 
 ```bash
 curl http://<cart-service-url>/cart/1
