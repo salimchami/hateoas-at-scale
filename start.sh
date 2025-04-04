@@ -1,3 +1,9 @@
 #!/bin/bash
-
-docker compose up --build
+for app in cart products users
+do
+  cd "$app" || exit
+  rm -rf build
+  ./gradlew clean build
+  cd ..
+done
+docker compose up -d --build

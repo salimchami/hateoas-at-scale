@@ -5,8 +5,9 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 
 @Component
-class ProductsProviderClient(val restTemplate: RestTemplate) : ProductsProvider {
+class ProductsProviderClient(val restTemplate: RestTemplate) :
+    ProductsProvider {
     override fun findBy(ids: List<Long>): List<ProviderProductDto> {
-        return ids.map { this.restTemplate.getForObject<ProviderProductDto>("/products/$it.id") }
+        return ids.map { id -> this.restTemplate.getForObject<ProviderProductDto>("http://products/products/${id}") }
     }
 }

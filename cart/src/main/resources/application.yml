@@ -13,10 +13,10 @@ spring:
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
 server:
-  port: 0
+  port: 8080
   error:
     whitelabel:
       enabled: false
 management:
   server:
-    port: 4452
+    port: 4450
