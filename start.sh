@@ -6,4 +6,4 @@ do
   ./gradlew clean build
   cd ..
 done
-docker compose up --build
+docker compose up -d --build
