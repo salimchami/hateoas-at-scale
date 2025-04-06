@@ -1,6 +1,122 @@
 name: "HATEOAS at scale"
 
+x-kong-config: &kong-env
+  KONG_DATABASE: postgres
+  KONG_PG_DATABASE: ${KONG_PG_DATABASE:-kong}
+  KONG_PG_HOST: 172.25.0.10
+  KONG_PG_USER: ${POSTGRES_USER:-kong}
+  KONG_PG_PASSWORD_FILE: /run/secrets/kong_postgres_password
+
 services:
+
+  kong-gateway:
+    image: kong/kong-gateway:3.10.0.0
+    user: "${KONG_USER:-kong}"
+    networks:
+      - hateoas-at-scale-nw
+    environment:
+      <<: *kong-env
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_DNS_RESOLVER: 172.25.0.5:8600
+    secrets:
+      - kong_postgres_password
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+      - "8004:8004"
+    depends_on:
+      kong-database:
+        condition: service_healthy
+      consul-service:
+        condition: service_healthy
+      kong-migrations-up:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: on-failure:5
+
+  kong-database:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=${KONG_PG_DATABASE:-kong}
+      - POSTGRES_USER=${POSTGRES_USER:-kong}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-kongpass123}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}' ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      hateoas-at-scale-nw:
+        ipv4_address: 172.25.0.10
+
+  kong-migrations-bootstrap:
+    image: kong/kong-gateway:3.10.0.0
+    command: kong migrations bootstrap
+    depends_on:
+      kong-database:
+        condition: service_healthy
+    environment:
+      <<: *kong-env
+    secrets:
+      - kong_postgres_password
+    networks:
+      - hateoas-at-scale-nw
+    restart: on-failure
+
+  kong-migrations-up:
+    image: kong/kong-gateway:3.10.0.0
+    command: kong migrations up && kong migrations finish
+    depends_on:
+      kong-database:
+        condition: service_healthy
+      kong-migrations-bootstrap:
+        condition: service_completed_successfully
+    environment:
+      <<: *kong-env
+    secrets:
+      - kong_postgres_password
+    networks:
+      - hateoas-at-scale-nw
+    restart: on-failure
+
+  consul-service:
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+      - "8600:8600"
+    command: [
+      "agent",
+      "-server",
+      "-ui",
+      "-node=server-1",
+      "-bootstrap-expect=1",
+      "-client=0.0.0.0",
+      "-log-level=ERROR"
+    ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8500/v1/agent/self" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      hateoas-at-scale-nw:
+        ipv4_address: 172.25.0.5
+
   users-service:
     image: openjdk:21-jdk-slim
     volumes:
@@ -31,23 +147,15 @@ services:
     networks:
       - hateoas-at-scale-nw
 
-  consul-service:
-    image: consul:1.15.4
-    ports:
-      - "8500:8500"
-    command: [
-      "agent",
-      "-server",
-      "-ui",
-      "-node=server-1",
-      "-bootstrap-expect=1",
-      "-client=0.0.0.0",
-      "-log-level=ERROR"
-    ]
-    networks:
-      - hateoas-at-scale-nw
-
+secrets:
+  kong_postgres_password:
+    file: ./kong/POSTGRES_PASSWORD
 
 networks:
   hateoas-at-scale-nw:
-    name: "hateoas-at-scale-nw"
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
+
