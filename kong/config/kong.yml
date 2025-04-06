@@ -1,2 +1,19 @@
-_format_version: "2.1"
+_format_version: "3.0"
 _transform: true
+
+services:
+  - name: users-service
+    protocol: http  # or https if applicable
+    host: users-service.service.consul # Use Consul DNS for service discovery
+    port: 8080    # Port your users-service listens on
+    routes:
+      - name: users-route
+        paths:
+          - /users  # Or any other path you want to expose
+        strip_path: false # Set to true if desired
+        # Add plugins or other route configurations here
+
+upstreams:
+  - name: users-upstream
+    targets:
+      - target: users-service.service.consul:8080

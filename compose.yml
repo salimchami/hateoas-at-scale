@@ -12,8 +12,6 @@ services:
   kong-gateway:
     image: kong/kong-gateway:3.10.0.0
     user: "${KONG_USER:-kong}"
-    networks:
-      - hateoas-at-scale-nw
     environment:
       <<: *kong-env
       KONG_PROXY_ACCESS_LOG: /dev/stdout
@@ -45,6 +43,8 @@ services:
       timeout: 10s
       retries: 10
     restart: on-failure:5
+    networks:
+      - hateoas-at-scale-nw
 
   kong-database:
     image: postgres:13
