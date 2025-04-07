@@ -3,16 +3,23 @@ _transform: true
 
 services:
   - name: users-service
-    protocol: http  # or https if applicable
-    host: users-service.service.consul # Use Consul DNS for service discovery
-    port: 8080    # Port your users-service listens on
+    protocol: http
+    host: users.service.consul
+    port: 8081
     routes:
       - name: users-route
         paths:
-          - /users  # Or any other path you want to expose
-        strip_path: false # Set to true if desired
-        # Add plugins or other route configurations here
-
+          - /users
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              add:
+                headers:
+                  - "X-Forwarded-Host: $host"
+                  - "X-Forwarded-Port: $port"
+                  - "X-Forwarded-Proto: $scheme"
+                  - "X-Forwarded-Prefix: /users"
 upstreams:
   - name: users-upstream
     targets:
