@@ -19,7 +19,7 @@ class FindCartResourceTest : AbstractTests() {
         `when`(productsProvider.findBy(any())).thenReturn(ProductsFixture.apple).thenReturn(ProductsFixture.orange)
         val expectedProduct =
             toExpectedJson("cart", "cart-ada-orange").replace(
-                "{{cart-service-url}}", baseUrl
+                "{{carts-service-url}}", baseUrl
             )
         val entity = restTemplate.getForEntity<String>("$baseUrl/cart/1")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)

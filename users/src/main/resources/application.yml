@@ -15,7 +15,7 @@ spring:
         service-name: ${spring.application.name}
 
 server:
-  port: 8081
+  port: 8080
   error:
     whitelabel:
       enabled: false

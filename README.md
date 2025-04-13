@@ -77,10 +77,10 @@ List of the main API endpoints available:
 
 Here's an example of the cart 1 response 
 
-**Example Request (GET <cart-service-url>/cart/1):**
+**Example Request (GET <carts-service-url>/carts/1):**
 
 ```bash
-curl http://<cart-service-url>/cart/1
+curl http://<carts-service-url>/cart/1
 ```
 
 ``` json
@@ -91,7 +91,7 @@ curl http://<cart-service-url>/cart/1
         "lastname": "Lovelace",
         "_links": {
             "self": {
-                "href": "http://172.20.0.4:8081/users/1"
+                "href": "http://172.20.0.4:8080/users/1"
             }
         }
     },
@@ -102,7 +102,7 @@ curl http://<cart-service-url>/cart/1
             "price": 1.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8082/products/1"
+                    "href": "http://172.20.0.5:8080/products/1"
                 }
             }
         },
@@ -112,7 +112,7 @@ curl http://<cart-service-url>/cart/1
             "price": 158.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8082/products/4"
+                    "href": "http://172.20.0.5:8080/products/4"
                 }
             }
         }
