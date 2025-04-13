@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class CartResource(@Autowired private val findCart: FindCart) {
 
-    @GetMapping("/cart/{id}")
-    fun userInfo(@PathVariable id: Long): EntityModel<CartDto> {
+    @GetMapping("/carts/{id}")
+    fun cartInfo(@PathVariable id: Long): EntityModel<CartDto> {
         val cart = findCart.by(id)
         val user = UserDto(cart.user.firstname, cart.user.lastname, cart.user.links)
         val products = cart.products.map { ProductDto(it.name, it.reference, it.price, it.links) }

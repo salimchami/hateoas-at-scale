@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 class ProductsResource(@Autowired private val findProduct: FindProduct) {
 
     @GetMapping("/products/{id}")
-    fun userInfo(@PathVariable id: Long): EntityModel<ProductDto> {
+    fun productInfo(@PathVariable id: Long): EntityModel<ProductDto> {
         val product = findProduct.by(id)
         return EntityModel.of(ProductDto(id, product.name, product.reference, product.price))
     }

@@ -64,7 +64,8 @@ services:
       - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
     depends_on:
-      - consul-service
+      consul-service:
+        condition: service_healthy
     networks:
       - hateoas-at-scale-nw
 
@@ -74,7 +75,8 @@ services:
       - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
     depends_on:
-      - consul-service
+      consul-service:
+        condition: service_healthy
     networks:
       - hateoas-at-scale-nw
 
@@ -84,7 +86,8 @@ services:
       - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
     depends_on:
-      - consul-service
+      consul-service:
+        condition: service_healthy
     networks:
       - hateoas-at-scale-nw
 
