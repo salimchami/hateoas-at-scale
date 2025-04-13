@@ -15,8 +15,8 @@ class FindCartResourceTest : AbstractTests() {
 
     @Test
     fun `should return cart info with links`() {
-        `when`(usersProvider.findBy(anyLong())).thenReturn(UsersFixture.adaLovelace)
-        `when`(productsProvider.findBy(anyList())).thenReturn(listOf(ProductsFixture.apple, ProductsFixture.orange))
+        `when`(usersServiceClient.findBy(anyLong())).thenReturn(UsersFixture.adaLovelace)
+        `when`(productsProvider.findBy(any())).thenReturn(ProductsFixture.apple).thenReturn(ProductsFixture.orange)
         val expectedProduct =
             toExpectedJson("cart", "cart-ada-orange").replace(
                 "{{cart-service-url}}", baseUrl

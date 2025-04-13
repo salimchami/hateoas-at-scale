@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cart
+    name: cart-service
   profiles:
     active: dev
   banner:
@@ -12,11 +12,13 @@ spring:
       discovery:
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+
 server:
   port: 8080
   error:
     whitelabel:
       enabled: false
+
 management:
   server:
     port: 4450

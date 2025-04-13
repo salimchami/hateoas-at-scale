@@ -4,23 +4,48 @@ _transform: true
 services:
   - name: users-service
     protocol: http
-    host: users.service.consul
+    host: users-service.service.consul
     port: 8081
     routes:
       - name: users-route
         paths:
           - /users
-        strip_path: false
-        plugins:
-          - name: request-transformer
-            config:
-              add:
-                headers:
-                  - "X-Forwarded-Host: $host"
-                  - "X-Forwarded-Port: $port"
-                  - "X-Forwarded-Proto: $scheme"
-                  - "X-Forwarded-Prefix: /users"
-upstreams:
-  - name: users-upstream
-    targets:
-      - target: users-service.service.consul:8080
+        strip_path: true
+        preserve_host: true
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+        headers:
+          X-Forwarded-Host: ["localhost"]
+          X-Forwarded-Port: ["8000"]
+          X-Forwarded-Proto: ["http", "https"]
+
+  - name: products-service
+    protocol: http
+    host: products-service.service.consul
+    port: 8082
+    routes:
+      - name: products-route
+        paths:
+          - /products
+        strip_path: true
+        preserve_host: true
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+        headers:
+          X-Forwarded-Host: ["localhost"]
+          X-Forwarded-Port: ["8000"]
+          X-Forwarded-Proto: ["http", "https"]
+
+  - name: cart-service
+    protocol: http
+    host: cart-service.service.consul
+    port: 8080
+    routes:
+      - name: cart-route
+        paths:
+          - /cart
+        strip_path: true
+        preserve_host: true
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
+        headers:
+          X-Forwarded-Host: ["localhost"]
+          X-Forwarded-Port: ["8000"]
+          X-Forwarded-Proto: ["http", "https"]

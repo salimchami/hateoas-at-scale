@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cart
+    name: cart-service
   profiles:
     active: test
   banner:
