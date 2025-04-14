@@ -24,13 +24,10 @@ class CartDto @JsonCreator constructor(
         val servicePath =
             (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes?)?.request?.getHeader("X-Service-Path")
                 ?: ""
-
         val path = linkTo(methodOn(CartResource::class.java).cartInfo(id)).toUri().path
-
         val uriBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
             .replacePath("$servicePath$path")
             .replaceQuery(null)
-
         add(Link.of(uriBuilder.build().toUriString()).withSelfRel())
     }
 }
