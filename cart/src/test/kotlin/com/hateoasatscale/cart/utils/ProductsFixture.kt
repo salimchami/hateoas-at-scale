@@ -5,9 +5,9 @@ import org.springframework.hateoas.Link
 
 class ProductsFixture {
     companion object {
-        val apple = ProviderProductDto("apple", "RRDGHGT554346", "1.00".toBigDecimal())
-            .add(Link.of("http://products.localhost:8080/products/1").withSelfRel())
-        val orange = ProviderProductDto("orange", "DFHDHYUJJBN887644", "158.00".toBigDecimal())
-            .add(Link.of("http://products.localhost:8080/products/4").withSelfRel())
+        val apple: ProviderProductDto = ProviderProductDto("apple", "RRDGHGT554346", "1.00".toBigDecimal())
+            .add(Link.of("http://localhost:8080/products/1").withSelfRel())
+        val orange: ProviderProductDto = ProviderProductDto("orange", "DFHDHYUJJBN887644", "158.00".toBigDecimal())
+            .add(Link.of("http://localhost:8080/products/4").withSelfRel())
     }
 }
