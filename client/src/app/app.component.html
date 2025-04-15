@@ -1,0 +1,13 @@
+<mat-toolbar class="client-header">{{ 'HATEOAS @ Scale' }}</mat-toolbar>
+
+<mat-sidenav-container class="client-container">
+  <mat-sidenav #sidenav mode="side" opened class="client-sidenav"
+               [fixedInViewport]="true" [fixedTopGap]="0"
+               [fixedBottomGap]="0">
+  </mat-sidenav>
+  <mat-sidenav-content [formGroup]="options">
+    <p>
+      <button mat-button (click)="sidenav.toggle()">Toggle</button>
+    </p>
+  </mat-sidenav-content>
+</mat-sidenav-container>
