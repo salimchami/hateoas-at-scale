@@ -59,10 +59,11 @@ Make sure you have the following installed:
     ```
     Alternatively, you can run the main classes (`*Application.java`) from your IDE by editing the runner configuration to run it on docker.
 
-2. Consul service should be available at [localhost:8500](http://localhost:8500) 
+2. Consul service should be available at [localhost:8500](http://localhost:8500)
+On the Consul web page, you can find services urls
 
-3. On the Consul web page, you can find services urls
- 
+3. Kong API Gateway should be available at [localhost:8002](http://localhost:8002)
+
 ## Usage
 
 ### API Endpoints
@@ -77,10 +78,10 @@ List of the main API endpoints available:
 
 Here's an example of the cart 1 response 
 
-**Example Request (GET <carts-service-url>/carts/1):**
+**Example Request (GET <kong-ui-url>/carts-service/carts/1):**
 
 ```bash
-curl http://<carts-service-url>/cart/1
+curl http://localhost:8000/carts-service/carts/1
 ```
 
 ``` json
@@ -91,7 +92,7 @@ curl http://<carts-service-url>/cart/1
         "lastname": "Lovelace",
         "_links": {
             "self": {
-                "href": "http://172.20.0.4:8080/users/1"
+                "href": "http://localhost:8000/users-service/users/1"
             }
         }
     },
@@ -102,7 +103,7 @@ curl http://<carts-service-url>/cart/1
             "price": 1.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8080/products/1"
+                    "href": "http://localhost:8000/products-service/products/1"
                 }
             }
         },
@@ -112,14 +113,14 @@ curl http://<carts-service-url>/cart/1
             "price": 158.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8080/products/4"
+                    "href": "http://localhost:8000/products-service/products/4"
                 }
             }
         }
     ],
     "_links": {
         "self": {
-            "href": "http://172.20.0.3:8080/cart/1"
+            "href": "http://localhost:8000/carts-service/carts/1"
         }
     }
 }
