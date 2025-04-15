@@ -5,7 +5,7 @@
 ![Number of Contributors](https://img.shields.io/github/contributors/salimchami/hateoas-at-scale)
 ![Main Language](https://img.shields.io/github/languages/top/salimchami/hateoas-at-scale)
 
-**A demonstration of HATEOAS implementation at scale with Spring Boot.**
+**A demonstration of HATEOAS implementation at scale with [Spring Boot](https://spring.io/projects/spring-boot), [Consul](https://developer.hashicorp.com/consul) and [Kong API Gateway](https://konghq.com).**
 
 This project aims to showcase an approach to implement HATEOAS (Hypermedia as the Engine of Application State) in RESTful applications designed for scalability. It provides a concrete example of an architecture and techniques for managing hypermedia links efficiently in distributed systems.
 
@@ -28,7 +28,13 @@ This project aims to showcase an approach to implement HATEOAS (Hypermedia as th
 * **HATEOAS Implementation:** Utilizes Spring HATEOAS features to dynamically generate hypermedia links in API responses.
 * **Scalability-focused Design:** Explores strategies for managing HATEOAS links in a microservices or distributed system context.
 * **Concrete Example:** Provides an example of a simple API (e.g., cart management) integrating HATEOAS.
-* **Spring Boot Usage:** Simplifies the setup and execution of the application.
+* **Spring Boot Usage:** Simplifies the setup and execution of the applications.
+* **Consul:** Acts as a service discovery and configuration solution. It allows the system to locate other services
+  dynamically in a distributed architecture, handle load balancing, and store service configuration centrally. This
+  ensures that the components of the system can communicate efficiently and scale seamlessly.
+* **Kong API Gateway:** Provides a scalable API management solution with capabilities like routing, load-balancing,
+authentication, and monitoring of API traffic. It's used in this project to manage and expose the services in a unified
+way, ensuring secure and efficient communication between clients and microservices.
 
 ## Quick Start
 
@@ -59,10 +65,11 @@ Make sure you have the following installed:
     ```
     Alternatively, you can run the main classes (`*Application.java`) from your IDE by editing the runner configuration to run it on docker.
 
-2. Consul service should be available at [localhost:8500](http://localhost:8500) 
+2. Consul service should be available at [localhost:8500](http://localhost:8500)
+On the Consul web page, you can find services urls
 
-3. On the Consul web page, you can find services urls
- 
+3. Kong API Gateway should be available at [localhost:8002](http://localhost:8002)
+
 ## Usage
 
 ### API Endpoints
@@ -77,10 +84,10 @@ List of the main API endpoints available:
 
 Here's an example of the cart 1 response 
 
-**Example Request (GET <cart-service-url>/cart/1):**
+**Example Request (GET <kong-ui-url>/carts-service/carts/1):**
 
 ```bash
-curl http://<cart-service-url>/cart/1
+curl http://localhost:8000/carts-service/carts/1
 ```
 
 ``` json
@@ -91,7 +98,7 @@ curl http://<cart-service-url>/cart/1
         "lastname": "Lovelace",
         "_links": {
             "self": {
-                "href": "http://172.20.0.4:8081/users/1"
+                "href": "http://localhost:8000/users-service/users/1"
             }
         }
     },
@@ -102,7 +109,7 @@ curl http://<cart-service-url>/cart/1
             "price": 1.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8082/products/1"
+                    "href": "http://localhost:8000/products-service/products/1"
                 }
             }
         },
@@ -112,14 +119,14 @@ curl http://<cart-service-url>/cart/1
             "price": 158.00,
             "_links": {
                 "self": {
-                    "href": "http://172.20.0.5:8082/products/4"
+                    "href": "http://localhost:8000/products-service/products/4"
                 }
             }
         }
     ],
     "_links": {
         "self": {
-            "href": "http://172.20.0.3:8080/cart/1"
+            "href": "http://localhost:8000/carts-service/carts/1"
         }
     }
 }

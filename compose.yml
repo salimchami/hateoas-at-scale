@@ -1,40 +1,45 @@
 name: "HATEOAS at scale"
 
 services:
-  users-service:
-    image: openjdk:21-jdk-slim
-    volumes:
-      - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    command: "java -jar /app/app.jar"
-    depends_on:
-      - consul-service
-    networks:
-      - hateoas-at-scale-nw
 
-  products-service:
-    image: openjdk:21-jdk-slim
-    volumes:
-      - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    command: "java -jar /app/app.jar"
+  kong-gateway:
+    image: kong/kong-gateway:3.10.0.0
+    environment:
+      KONG_DATABASE: off
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_GUI_URL: http://localhost:8002
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_DNS_RESOLVER: 172.25.0.5:8600
+      KONG_DECLARATIVE_CONFIG: /opt/kong/kong.yml
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+      - "8003:8003"
+      - "8004:8004"
     depends_on:
-      - consul-service
-    networks:
-      - hateoas-at-scale-nw
-
-  cart-service:
-    image: openjdk:21-jdk-slim
+      consul-service:
+        condition: service_healthy
     volumes:
-      - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
-    command: "java -jar /app/app.jar"
-    depends_on:
-      - consul-service
+      - ./kong/config:/opt/kong
+    healthcheck:
+      test: [ "CMD", "kong", "health" ]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: on-failure:5
     networks:
       - hateoas-at-scale-nw
 
   consul-service:
-    image: consul:1.15.4
+    image: hashicorp/consul:latest
     ports:
       - "8500:8500"
+      - "8600:8600"
     command: [
       "agent",
       "-server",
@@ -44,10 +49,59 @@ services:
       "-client=0.0.0.0",
       "-log-level=ERROR"
     ]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8500/v1/agent/self" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      hateoas-at-scale-nw:
+        ipv4_address: 172.25.0.5
+
+  users-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
+    command: "java -jar /app/app.jar"
+    depends_on:
+      consul-service:
+        condition: service_healthy
+    deploy:
+      replicas: 3
     networks:
       - hateoas-at-scale-nw
 
+  products-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
+    command: "java -jar /app/app.jar"
+    depends_on:
+      consul-service:
+        condition: service_healthy
+    deploy:
+      replicas: 3
+    networks:
+      - hateoas-at-scale-nw
+
+  cart-service:
+    image: openjdk:21-jdk-slim
+    volumes:
+      - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
+    command: "java -jar /app/app.jar"
+    depends_on:
+      consul-service:
+        condition: service_healthy
+    deploy:
+      replicas: 3
+    networks:
+      - hateoas-at-scale-nw
 
 networks:
   hateoas-at-scale-nw:
-    name: "hateoas-at-scale-nw"
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
+

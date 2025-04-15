@@ -17,6 +17,6 @@ class ProductDto @JsonCreator constructor(
     }
 
     private fun addLinks(links: List<Link>) {
-        links.forEach { link -> add(link.rel?.let { org.springframework.hateoas.Link.of(link.href, it) }) }
+        links.forEach { link -> link.rel?.let { org.springframework.hateoas.Link.of(link.href, it) }?.let { add(it) } }
     }
 }

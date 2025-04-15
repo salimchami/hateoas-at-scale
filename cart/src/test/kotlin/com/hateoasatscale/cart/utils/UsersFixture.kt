@@ -6,6 +6,6 @@ import org.springframework.hateoas.Link
 class UsersFixture {
     companion object {
         val adaLovelace = ProviderUserDto("ada.lovelace", "Ada", "Lovelace")
-            .add(Link.of("http://users.localhost:8081/users/1").withSelfRel())
+            .add(Link.of("http://users.localhost:8080/users/1").withSelfRel())
     }
 }

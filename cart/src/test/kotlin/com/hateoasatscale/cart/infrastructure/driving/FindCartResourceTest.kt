@@ -15,13 +15,13 @@ class FindCartResourceTest : AbstractTests() {
 
     @Test
     fun `should return cart info with links`() {
-        `when`(usersProvider.findBy(anyLong())).thenReturn(UsersFixture.adaLovelace)
-        `when`(productsProvider.findBy(anyList())).thenReturn(listOf(ProductsFixture.apple, ProductsFixture.orange))
+        `when`(usersServiceClient.findBy(anyLong())).thenReturn(UsersFixture.adaLovelace)
+        `when`(productsProvider.findBy(anyLong())).thenReturn(ProductsFixture.apple).thenReturn(ProductsFixture.orange)
         val expectedProduct =
             toExpectedJson("cart", "cart-ada-orange").replace(
-                "{{cart-service-url}}", baseUrl
+                "{{service-url}}", baseUrl
             )
-        val entity = restTemplate.getForEntity<String>("$baseUrl/cart/1")
+        val entity = restTemplate.getForEntity<String>("$baseUrl/carts/1")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
     }

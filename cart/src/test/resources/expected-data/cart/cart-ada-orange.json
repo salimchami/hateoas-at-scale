@@ -5,7 +5,7 @@
     "lastname": "Lovelace",
     "_links": {
       "self": {
-        "href": "http://users.localhost:8081/users/1"
+        "href": "{{service-url}}/users-service/users/1"
       }
     }
   },
@@ -16,7 +16,7 @@
       "price": 1.00,
       "_links": {
         "self": {
-          "href": "http://products.localhost:8082/products/1"
+          "href": "{{service-url}}/products-service/products/1"
         }
       }
     },
@@ -26,14 +26,14 @@
       "price": 158.00,
       "_links": {
         "self": {
-          "href": "http://products.localhost:8082/products/4"
+          "href": "{{service-url}}/products-service/products/4"
         }
       }
     }
   ],
   "_links": {
     "self": {
-      "href": "{{cart-service-url}}/cart/1"
+      "href": "{{service-url}}/carts/1"
     }
   }
 }
