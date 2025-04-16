@@ -26,6 +26,7 @@ class CartResource(@Autowired private val findCart: FindCart) {
         val cart = findCart.by(id)
         val user = UserDto(cart.user.firstname, cart.user.lastname, cart.user.links)
         val products = cart.products.map { ProductDto(it.name, it.reference, it.price, it.links) }
-        return EntityModel.of(CartDto(cart.id, cart.totalPrice, user, products))
+        val content = CartDto(cart.id, cart.totalPrice, user, products)
+        return EntityModel.of(content)
     }
 }

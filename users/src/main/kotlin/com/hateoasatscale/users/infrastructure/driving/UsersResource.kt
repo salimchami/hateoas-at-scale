@@ -24,6 +24,7 @@ class UsersResource(private val findUser: FindUser) {
         println("remote: $remoteHostAddress ($remoteHostName)")
 
         val user = findUser.by(id)
-        return EntityModel.of(UserDto(id, user.username, user.firstname, user.lastname))
+        val content = UserDto(id, user.username, user.firstname, user.lastname)
+        return EntityModel.of(content)
     }
 }

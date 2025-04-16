@@ -1,0 +1,32 @@
+{
+  "/users": {
+    "target": "http://localhost:8000",
+    "secure": false,
+    "changeOrigin": true,
+    "headers": {
+      "X-Forwarded-Host": "localhost",
+      "X-Forwarded-Port": "4200",
+      "X-Forwarded-Proto": "http"
+    }
+  },
+  "/products-service": {
+    "target": "http://localhost:8000",
+    "secure": false,
+    "changeOrigin": true,
+    "headers": {
+      "X-Forwarded-Host": "localhost",
+      "X-Forwarded-Port": "4200",
+      "X-Forwarded-Proto": "http"
+    }
+  },
+  "/carts-service": {
+    "target": "http://localhost:8000",
+    "secure": false,
+    "changeOrigin": true,
+    "headers": {
+      "X-Forwarded-Host": "localhost",
+      "X-Forwarded-Port": "4200",
+      "X-Forwarded-Proto": "http"
+    }
+  }
+}

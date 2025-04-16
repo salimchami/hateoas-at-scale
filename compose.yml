@@ -66,8 +66,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-    deploy:
-      replicas: 3
+#    deploy:
+#      replicas: 3
     networks:
       - hateoas-at-scale-nw
 
@@ -79,8 +79,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-    deploy:
-      replicas: 3
+#    deploy:
+#      replicas: 3
     networks:
       - hateoas-at-scale-nw
 
@@ -92,8 +92,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-    deploy:
-      replicas: 3
+#    deploy:
+#      replicas: 3
     networks:
       - hateoas-at-scale-nw
 
