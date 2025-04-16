@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.math.BigDecimal
 
 class ProductDto @JsonCreator constructor(
+    private val frontendBaseUrl: String,
     private val id: Long,
     val name: String,
     val reference: String,

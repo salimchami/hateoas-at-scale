@@ -24,3 +24,7 @@ server:
 management:
   server:
     port: 4451
+
+app:
+  frontend:
+    base-url: http://localhost:4200

@@ -2,6 +2,7 @@ package com.hateoasatscale.cart.infrastructure.driving
 
 import com.hateoasatscale.cart.domain.api.FindCart
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.EntityModel
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.net.InetAddress
 
 @RestController
-class CartResource(@Autowired private val findCart: FindCart) {
+class CartResource(
+    @Autowired private val findCart: FindCart,
+    @Value("\${app.frontend.base-url}")
+    private val frontendBaseUrl: String
+) {
 
     @GetMapping("/carts/{id}")
     fun cartInfo(@PathVariable id: Long): EntityModel<CartDto> {
@@ -26,7 +31,7 @@ class CartResource(@Autowired private val findCart: FindCart) {
         val cart = findCart.by(id)
         val user = UserDto(cart.user.firstname, cart.user.lastname, cart.user.links)
         val products = cart.products.map { ProductDto(it.name, it.reference, it.price, it.links) }
-        val content = CartDto(cart.id, cart.totalPrice, user, products)
+        val content = CartDto(frontendBaseUrl, cart.id, cart.totalPrice, user, products)
         return EntityModel.of(content)
     }
 }

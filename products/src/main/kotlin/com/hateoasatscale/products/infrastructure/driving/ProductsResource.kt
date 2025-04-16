@@ -2,6 +2,7 @@ package com.hateoasatscale.products.infrastructure.driving
 
 import com.hateoasatscale.products.domain.FindProduct
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.EntityModel
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.net.InetAddress
 
 @RestController
-class ProductsResource(@Autowired private val findProduct: FindProduct) {
+class ProductsResource(
+    @Autowired private val findProduct: FindProduct,
+    @Value("\${app.frontend.base-url}")
+    private val frontendBaseUrl: String
+) {
 
     @GetMapping("/products/{id}")
     fun productInfo(@PathVariable id: Long): EntityModel<ProductDto> {
@@ -25,6 +30,6 @@ class ProductsResource(@Autowired private val findProduct: FindProduct) {
         println("remote: $remoteHostAddress ($remoteHostName)")
 
         val product = findProduct.by(id)
-        return EntityModel.of(ProductDto(id, product.name, product.reference, product.price))
+        return EntityModel.of(ProductDto(frontendBaseUrl, id, product.name, product.reference, product.price))
     }
 }
