@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -10,6 +10,8 @@ import {Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
 import {routes} from '../app.routes';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {User} from '../user/user';
+import {UserService} from '../user/user-service';
 
 @Component({
   selector: 'app-layout',
@@ -24,7 +26,8 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
     MatIconModule,
     AsyncPipe,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    NgOptimizedImage
   ]
 })
 export class LayoutComponent {
@@ -36,4 +39,15 @@ export class LayoutComponent {
       map(result => result.matches),
       shareReplay()
     );
+  currentUser: User = {} as User;
+
+  constructor(private readonly userService: UserService) {
+  }
+
+  connect() {
+    this.userService.loadCurrentUser().subscribe(user => {
+      this.userService.setCurrentUser(user);
+      this.currentUser = user;
+    })
+  }
 }
