@@ -27,9 +27,8 @@ export class HttpService {
                 requestParams?: HttpParam[]
   ): Observable<any> {
     endpoint = this.fillParams(endpoint, requestParams);
-    const newHeaders = headers || new HttpHeaders();
-    const finalHeaders = newHeaders.set('Content-Type', 'application/json');
-    return this.http.get<any>(endpoint, {headers: finalHeaders});
+    headers?.append('Content-Type', 'application/json')
+    return this.http.get<any>(endpoint, {headers: headers});
   }
 
   protected post(endpoint: string,
