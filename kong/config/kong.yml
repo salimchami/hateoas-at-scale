@@ -12,7 +12,7 @@ services:
           - /users-service
         strip_path: true
         preserve_host: true
-        methods: [ "GET" ]
+        methods: [ "GET", "OPTIONS", "POST", "PUT", "PATCH" ]
     plugins:
       - name: request-transformer
         config:
@@ -22,6 +22,24 @@ services:
         config:
           add:
             headers: [ "X-Service-Path:/users-service" ]
+      - name: cors
+        config:
+          origins:
+            - http://localhost:4200
+            - http://172.25.0.9:4200
+          methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Requested-With
+          credentials: true
+          max_age: 3600
+          preflight_continue: false
 
   - name: products-service
     protocol: http
@@ -33,7 +51,7 @@ services:
           - /products-service
         strip_path: true
         preserve_host: true
-        methods: [ "GET" ]
+        methods: [ "GET", "OPTIONS", "POST", "PUT", "PATCH" ]
     plugins:
       - name: request-transformer
         config:
@@ -43,6 +61,24 @@ services:
         config:
           add:
             headers: [ "X-Service-Path:/products-service" ]
+      - name: cors
+        config:
+          origins:
+            - http://localhost:4200
+            - http://172.25.0.9:4200
+          methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Requested-With
+          credentials: true
+          max_age: 3600
+          preflight_continue: false
 
   - name: carts-service
     protocol: http
@@ -54,7 +90,7 @@ services:
           - /carts-service
         strip_path: true
         preserve_host: true
-        methods: [ "GET" ]
+        methods: [ "GET", "OPTIONS", "POST", "PUT", "PATCH" ]
     plugins:
       - name: request-transformer
         config:
@@ -64,3 +100,21 @@ services:
         config:
           add:
             headers: [ "X-Service-Path:/carts-service" ]
+      - name: cors
+        config:
+          origins:
+            - http://localhost:4200
+            - http://172.25.0.9:4200
+          methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - OPTIONS
+          headers:
+            - Content-Type
+            - Authorization
+            - X-Requested-With
+          credentials: true
+          max_age: 3600
+          preflight_continue: false

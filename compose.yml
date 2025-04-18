@@ -114,7 +114,8 @@ services:
     ports:
       - "4200:4200"
     networks:
-      - hateoas-at-scale-nw
+      hateoas-at-scale-nw:
+        ipv4_address: 172.25.0.9
 
 networks:
   hateoas-at-scale-nw:
