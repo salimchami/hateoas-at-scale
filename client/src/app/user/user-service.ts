@@ -10,7 +10,7 @@ export class UserService extends HttpService {
   currentUser: User = {} as User;
 
   loadCurrentUser(): Observable<User> {
-    return this.get(env.startupEndpoint).pipe(map(user => User.from(user)));
+    return this.get(this.url(env.startupEndpoint)).pipe(map(user => User.from(user)));
   }
 
   setCurrentUser(user: User) {

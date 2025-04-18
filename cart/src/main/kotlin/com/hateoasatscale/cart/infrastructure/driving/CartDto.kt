@@ -11,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.math.BigDecimal
 
 class CartDto @JsonCreator constructor(
-    private val frontendBaseUrl: String,
     private val id: Long,
     val totalPrice: BigDecimal,
     val user: UserDto,

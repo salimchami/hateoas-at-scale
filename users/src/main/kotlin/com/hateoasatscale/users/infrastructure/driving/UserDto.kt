@@ -7,9 +7,9 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 class UserDto @JsonCreator constructor(
-    private val frontendBaseUrl: String,
     private val id: Long,
     val username: String,
     val firstname: String,
@@ -25,7 +25,9 @@ class UserDto @JsonCreator constructor(
             (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes?)?.request?.getHeader("X-Service-Path")
                 ?: ""
         val path = linkTo(methodOn(UsersResource::class.java).userInfo(id)).toUri().path
-        val fullUrl = "$frontendBaseUrl$servicePath$path"
-        add(Link.of(fullUrl).withSelfRel())
+        val uriBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
+            .replacePath("$servicePath$path")
+            .replaceQuery(null)
+        add(Link.of(uriBuilder.build().toUriString()).withSelfRel())
     }
 }
