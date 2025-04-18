@@ -1,7 +1,6 @@
 package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.domain.FindUser
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.EntityModel
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,8 +10,6 @@ import java.net.InetAddress
 @RestController
 class UsersResource(
     private val findUser: FindUser,
-    @Value("\${app.frontend.base-url}")
-    private val frontendBaseUrl: String
 ) {
 
     @GetMapping("/users/{id}")
@@ -29,7 +26,7 @@ class UsersResource(
         println("remote: $remoteHostAddress ($remoteHostName)")
 
         val user = findUser.by(id)
-        val content = UserDto(frontendBaseUrl, id, user.username, user.firstname, user.lastname)
+        val content = UserDto(id, user.username, user.firstname, user.lastname)
         return EntityModel.of(content)
     }
 }

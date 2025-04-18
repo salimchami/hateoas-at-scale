@@ -33,7 +33,8 @@ services:
       retries: 10
     restart: on-failure:5
     networks:
-      - hateoas-at-scale-nw
+      hateoas-at-scale-nw:
+        ipv4_address: 172.25.0.10
 
   consul-service:
     image: hashicorp/consul:latest
@@ -94,6 +95,24 @@ services:
         condition: service_healthy
 #    deploy:
 #      replicas: 3
+    networks:
+      - hateoas-at-scale-nw
+
+  client:
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    depends_on:
+      kong-gateway:
+        condition: service_healthy
+      users-service:
+        condition: service_started
+      cart-service:
+        condition: service_started
+      products-service:
+        condition: service_started
+    ports:
+      - "4200:4200"
     networks:
       - hateoas-at-scale-nw
 
