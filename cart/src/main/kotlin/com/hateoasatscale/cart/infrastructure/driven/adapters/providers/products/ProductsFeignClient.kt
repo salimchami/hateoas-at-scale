@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 @FeignClient("products-service")
-fun interface ProductsServiceClient {
+fun interface ProductsFeignClient {
 
     @GetMapping("/products/{id}")
     fun findBy(@PathVariable id: Long): ProviderProductDto

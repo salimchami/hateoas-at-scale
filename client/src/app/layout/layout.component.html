@@ -42,7 +42,6 @@
       <span class="spacer"></span>
       @if (currentUser.firstname) {
         <span class="">{{ currentUser.firstname }} {{ currentUser.lastname }} ({{ currentUser.username }})</span>
-        {{currentUser._links.self.href}}
       } @else {
         <section>
           <div class="connection-button-row">
@@ -53,7 +52,7 @@
     </mat-toolbar>
     <div class="sidenav-scroll-wrapper">
       <div class="sidenav-content">
-        <ng-content></ng-content>
+        <router-outlet></router-outlet>
       </div>
     </div>
   </mat-sidenav-content>

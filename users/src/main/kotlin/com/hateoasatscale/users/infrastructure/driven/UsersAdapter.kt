@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component
 @Component
 class UsersAdapter : UsersRepository {
     @Throws(UserNotFound::class)
-    override fun findBy(id: Long): User {
-        return FakeDbUsers.users.find { it.id == id }
+    override fun findBy(username: String): User {
+        return FakeDbUsers.users.find { it.username == username }
             ?.let { User(it.username, it.firstname, it.lastname) }
-            ?: throw UserNotFound("User with id $id not found")
+            ?: throw UserNotFound("User with username $username not found")
     }
 }

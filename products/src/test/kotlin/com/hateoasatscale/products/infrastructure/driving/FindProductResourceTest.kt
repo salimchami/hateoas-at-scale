@@ -20,4 +20,15 @@ class FindProductResourceTest : AbstractTests() {
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
     }
+
+    @Test
+    fun `should return products list`() {
+        val expectedProduct =
+            toExpectedJson("products/list", "products-list").replace(
+                "{{products-service-url}}", baseUrl
+            )
+        val entity = restTemplate.getForEntity<String>("$baseUrl/products")
+        assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
+        assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
+    }
 }

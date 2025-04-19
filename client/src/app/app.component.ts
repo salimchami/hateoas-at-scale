@@ -1,15 +1,11 @@
 import {Component} from '@angular/core';
-import {LayoutComponent} from './layout/layout.component';
-import {RouterOutlet} from '@angular/router';
 import {UserService} from './user/user-service';
 import {HttpService} from '../shared/http.service';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    LayoutComponent,
-    RouterOutlet,
-  ],
+  imports: [RouterOutlet],
   standalone: true,
   providers: [HttpService, UserService],
   templateUrl: './app.component.html',

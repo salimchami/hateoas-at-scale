@@ -14,7 +14,7 @@ class FindUserResourceTest : AbstractTests() {
     fun `should return user info with links`() {
         val expectedUser =
             toExpectedJson("users/user", "user-ada").replace("{{users-service-url}}", baseUrl)
-        val entity = restTemplate.getForEntity<String>("$baseUrl/users/1")
+        val entity = restTemplate.getForEntity<String>("$baseUrl/users/ada.lovelace")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedUser)
     }
