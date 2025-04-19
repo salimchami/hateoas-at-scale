@@ -1,5 +1,6 @@
 package com.hateoasatscale.products.domain
 
-fun interface ProductsRepository {
+interface ProductsRepository {
     fun findBy(id: Long): Product
+    fun findAll(): List<Product>
 }

@@ -1,6 +1,6 @@
 @use "@angular/material" as mat;
 @use "../m3-theme";
-@use "./app/layout/layout-component.theme";
+@use "app.theme";
 
 @include mat.core();
 
@@ -48,7 +48,7 @@ $dark-theme: $client-dark-theme;
   @include mat.all-component-themes($theme);
 
   // Components themes
-  @include layout-component.theme($theme);
+  @include app.theme($theme);
 
   // Add backwards compatibility styles for color variants
   @include mat.color-variants-backwards-compatibility($theme);
@@ -57,7 +57,7 @@ $dark-theme: $client-dark-theme;
     @include mat.all-component-colors($dark-theme);
 
     // Components themes
-    @include layout-component.theme($dark-theme);
+    @include app.theme($dark-theme);
 
     @include mat.color-variants-backwards-compatibility($dark-theme);
   }

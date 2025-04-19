@@ -1,0 +1,79 @@
+{
+  "list": [
+    {
+      "name": "apple",
+      "reference": "RRDGHGT554346",
+      "price": 1.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/1"
+        }
+      }
+    },
+    {
+      "name": "banana",
+      "reference": "FFFGJU9976",
+      "price": 1.54,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/2"
+        }
+      }
+    },
+    {
+      "name": "kiwi",
+      "reference": "DDGHKBDQ221467",
+      "price": 100.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/3"
+        }
+      }
+    },
+    {
+      "name": "orange",
+      "reference": "DFHDHYUJJBN887644",
+      "price": 158.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/4"
+        }
+      }
+    },
+    {
+      "name": "pineapple",
+      "reference": "FFDFGHNN99875",
+      "price": 99.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/5"
+        }
+      }
+    },
+    {
+      "name": "strawberry",
+      "reference": "DDSDFHGNN8644",
+      "price": 56.99,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/6"
+        }
+      }
+    },
+    {
+      "name": "watermelon",
+      "reference": "SSFSFGHHJ8846524",
+      "price": 1000.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/7"
+        }
+      }
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "{{products-service-url}}/products"
+    }
+  }
+}

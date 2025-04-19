@@ -12,7 +12,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 @EnableFeignClients
 class ProductsApplication
 
-
 fun main(args: Array<String>) {
     runApplication<ProductsApplication>(*args)
 }

@@ -10,7 +10,11 @@ class ProductsAdapter : ProductsRepository {
     @Throws(ProductNotFound::class)
     override fun findBy(id: Long): Product {
         return FakeDbProducts.products.find { it.id == id }
-            ?.let { Product(it.name, it.reference, it.price) }
+            ?.let { Product(it.id, it.name, it.reference, it.price) }
             ?: throw ProductNotFound("Product with id $id not found")
+    }
+
+    override fun findAll(): List<Product> {
+        return FakeDbProducts.products.map { Product(it.id, it.name, it.reference, it.price) }
     }
 }
