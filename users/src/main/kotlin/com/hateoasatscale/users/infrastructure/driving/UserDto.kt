@@ -5,12 +5,13 @@ import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
-import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 class UserDto @JsonCreator constructor(
-    private val id: Long,
+    private val gatewayUrl: String,
+    private val productsServiceName: String,
+    private val productsEndpoint: String,
+    private val cartsServiceName: String,
+    private val cartsEndpoint: String,
     val username: String,
     val firstname: String,
     val lastname: String
@@ -18,16 +19,20 @@ class UserDto @JsonCreator constructor(
 
     init {
         addSelfLink()
+        addProductsLink()
+        addCartLink()
+    }
+
+    private fun addProductsLink() {
+        add(Link.of("$gatewayUrl/$productsServiceName/$productsEndpoint", "products"))
+    }
+
+    private fun addCartLink() {
+        add(Link.of("$gatewayUrl/$cartsServiceName/$cartsEndpoint/$username", "cart"))
     }
 
     private fun addSelfLink() {
-        val servicePath =
-            (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes?)?.request?.getHeader("X-Service-Path")
-                ?: ""
-        val path = linkTo(methodOn(UsersResource::class.java).userInfo(id)).toUri().path
-        val uriBuilder = ServletUriComponentsBuilder.fromCurrentRequest()
-            .replacePath("$servicePath$path")
-            .replaceQuery(null)
-        add(Link.of(uriBuilder.build().toUriString()).withSelfRel())
+        add(linkTo(methodOn(UsersResource::class.java)
+            .userInfo(this.username)).withSelfRel())
     }
 }
