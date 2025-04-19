@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../user/user-service';
 import {User} from '../user/user';
 import {NgIf} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -23,12 +24,14 @@ import {NgIf} from '@angular/common';
     }
   `
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   currentUser: User = {} as User;
+  private subscription: Subscription | null = null;
+
   constructor(private readonly userService: UserService) {
   }
 
   ngOnInit(): void {
-        this.currentUser = this.userService.currentUser;
-    }
+    this.subscription = this.userService.currentUser$.subscribe(user => this.currentUser = user);
+  }
 }
