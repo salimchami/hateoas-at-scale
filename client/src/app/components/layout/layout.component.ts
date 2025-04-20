@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Route, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Route, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {AsyncPipe, NgOptimizedImage} from '@angular/common';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -49,6 +49,7 @@ export class LayoutComponent implements OnInit {
   constructor(
     private readonly userService: UserService,
     private readonly breakpointObserver: BreakpointObserver,
+    private readonly router: Router,
   ) {
   }
 
@@ -60,11 +61,19 @@ export class LayoutComponent implements OnInit {
         shareReplay()
       );
     this.userService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      this.updateVisibleRoutes();
+      if (user?.username) {
+        this.currentUser = user;
+        this.updateVisibleRoutes();
+      } else {
+        this.currentUser = null;
+      }
     });
+    if (!this.userService.currentUser) {
+      this.userService.refreshCurrentUser(false).subscribe();
+    } else {
+      this.updateVisibleRoutes();
+    }
 
-    this.updateVisibleRoutes();
   }
 
   connect(username: string) {
@@ -88,5 +97,6 @@ export class LayoutComponent implements OnInit {
   logout() {
     this.userService.logout();
     this.currentUser = null;
+    this.router.navigate(['/home']).then(() => this.updateVisibleRoutes());
   }
 }

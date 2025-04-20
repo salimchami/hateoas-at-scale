@@ -13,7 +13,8 @@ export class UserService extends HttpService {
   constructor(private readonly localStorageService: LocalStorageService,
               readonly httpClient: HttpClient,
               private readonly router: Router,) {
-    super(httpClient)
+    super(httpClient);
+    this.initializeFromLocalStorage();
   }
 
   private readonly currentUserSubject = new BehaviorSubject<User>({} as User);
@@ -29,17 +30,35 @@ export class UserService extends HttpService {
     'samuel.jackson',
   ];
 
+  private initializeFromLocalStorage() {
+    const storedUser = this.localStorageService.getItem<string>('currentUser');
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        this.currentUserSubject.next(user);
+      } catch (e) {
+        console.error('Error parsing stored user', e);
+        this.localStorageService.removeItem('currentUser'); // Remove invalid data
+      }
+    }
+  }
+
   findUser(username: string): Observable<User> {
     return this.get(this.url(`${environment.startupEndpoint}/${username}`))
       .pipe(map(user => {
-        this.setCurrentUser(user);
-        return User.from(user);
+        const userObj = User.from(user);
+        this.setCurrentUser(userObj);
+        return userObj;
       }));
   }
 
   get currentUser(): User | null {
-    const currentUserFromLocalStorage = this.localStorageService.getItem<string>('currentUser');
-    return this.currentUserSubject.value ?? (currentUserFromLocalStorage ? JSON.parse(currentUserFromLocalStorage) : null);
+    const user = this.currentUserSubject.value;
+    // Check if the user object has meaningful data
+    if (user?.username) {
+      return user;
+    }
+    return null;
   }
 
   private setCurrentUser(user: User) {
@@ -57,8 +76,9 @@ export class UserService extends HttpService {
   }
 
   refreshCurrentUser(withRedirectOnError: boolean = false): Observable<User> {
-    if (this.selectedUsername) {
-      return this.findUser(this.selectedUsername);
+    const username = this.selectedUsername;
+    if (username) {
+      return this.findUser(username);
     }
     if (withRedirectOnError) {
       this.router.navigate(['/home']).then();
