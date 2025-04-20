@@ -32,11 +32,10 @@ import {UserService} from '../user/user-service';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent implements OnInit {
-  private allRoutes = routes
+  private readonly allRoutes = routes
     .find(r => r.path === '' && r.children)?.children || [];
 
-  // Create a BehaviorSubject to hold the visible routes
-  private visibleRoutesSubject = new BehaviorSubject<Route[]>([]);
+  private readonly visibleRoutesSubject = new BehaviorSubject<Route[]>([]);
   visibleRoutes$ = this.visibleRoutesSubject.asObservable();
 
   isHandset$!: Observable<boolean>;
@@ -69,16 +68,13 @@ export class LayoutComponent implements OnInit {
     });
   }
 
-  /**
-   * Update the list of visible routes based on current user
-   */
   private updateVisibleRoutes() {
     const visibleRoutes = this.allRoutes.filter(route => this.hasAccess(route));
     this.visibleRoutesSubject.next(visibleRoutes);
   }
 
   hasAccess(route: Route): boolean {
-    const routeLinkName = route.data?.['linkName'] || route.path;
+    const routeLinkName = route.data?.['linkName'] ?? route.path;
     return route.path === 'home'
       ||
       (this.currentUser._links
