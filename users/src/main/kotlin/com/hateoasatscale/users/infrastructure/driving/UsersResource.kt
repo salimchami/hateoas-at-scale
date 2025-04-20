@@ -1,6 +1,7 @@
 package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.domain.FindUser
+import jakarta.validation.constraints.NotBlank
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.hateoas.EntityModel
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +20,7 @@ class UsersResource(
     ) {
 
     @GetMapping("/users/{username}")
-    fun userInfo(@PathVariable username: String): EntityModel<UserDto> {
+    fun userInfo(@PathVariable @NotBlank username: String): EntityModel<UserDto> {
         val user = findUser.by(username)
         val content = UserDto(
             this.gatewayUrl,

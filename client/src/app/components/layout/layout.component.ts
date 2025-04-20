@@ -9,9 +9,11 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map, shareReplay} from 'rxjs/operators';
-import {routes} from '../app.routes';
 import {User} from '../user/user';
 import {UserService} from '../user/user-service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
+import {routes} from '../../app.routes';
 
 @Component({
   selector: 'app-layout',
@@ -26,7 +28,9 @@ import {UserService} from '../user/user-service';
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatMenuModule
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
@@ -39,8 +43,8 @@ export class LayoutComponent implements OnInit {
   visibleRoutes$ = this.visibleRoutesSubject.asObservable();
 
   isHandset$!: Observable<boolean>;
-
-  currentUser: User = {} as User;
+  usernames: Array<string> = [];
+  currentUser: User | null = null;
 
   constructor(
     private readonly userService: UserService,
@@ -49,6 +53,7 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.usernames = this.userService.usernames;
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map(result => result.matches),
@@ -63,9 +68,7 @@ export class LayoutComponent implements OnInit {
   }
 
   connect(username: string) {
-    this.userService.loadCurrentUser(username).subscribe(user => {
-      this.userService.setCurrentUser(user);
-    });
+    this.userService.findUser(username).subscribe();
   }
 
   private updateVisibleRoutes() {
@@ -74,10 +77,16 @@ export class LayoutComponent implements OnInit {
   }
 
   hasAccess(route: Route): boolean {
+    const userLinks = this.userService.currentUser?._links;
+    const routeIsHome = route.path === 'home';
     const routeLinkName = route.data?.['linkName'] ?? route.path;
-    return route.path === 'home'
-      ||
-      (this.currentUser._links
-        && Object.keys(this.currentUser._links).some(linkKey => linkKey === routeLinkName));
+    const userLinksContainsRoute = !!userLinks && Object.keys(userLinks).some(linkKey => linkKey === routeLinkName)
+    return routeIsHome || userLinksContainsRoute;
+  }
+
+
+  logout() {
+    this.userService.logout();
+    this.currentUser = null;
   }
 }
