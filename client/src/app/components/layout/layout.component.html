@@ -1,0 +1,65 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>
+      <div class="mat-text-align-center">
+        <a routerLink=""><img ngSrc="/logo.png" alt="home" width="79" height="53"></a>
+      </div>
+    </mat-toolbar>
+    <mat-nav-list>
+      @for (item of visibleRoutes$ | async; track $index) {
+        <a mat-list-item
+           [routerLink]="item.path"
+           #link="routerLinkActive"
+           routerLinkActive
+           [activated]="link.isActive">
+          {{ item.title }}
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      @if (isHandset$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <span>HATEOAS Marketplace</span>
+      <span class="spacer"></span>
+      @if (currentUser?.firstname) {
+        <span class="">{{ currentUser?.firstname }} {{ currentUser?.lastname }} ({{ currentUser?.username }})</span>
+        <button mat-button (click)="logout()">
+          <mat-icon aria-label="Logout">logout</mat-icon>
+        </button>
+      } @else {
+        <section>
+          <div class="connection-button-row">
+            <button mat-stroked-button [matMenuTriggerFor]="menu">Connection</button>
+            <mat-menu #menu="matMenu">
+              @for (username of usernames; track username) {
+                <button mat-menu-item (click)="connect(username)">{{ username }}</button>
+              }
+            </mat-menu>
+          </div>
+        </section>
+      }
+    </mat-toolbar>
+    <div class="sidenav-scroll-wrapper">
+      <div class="sidenav-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

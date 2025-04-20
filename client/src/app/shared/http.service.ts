@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {environment as env} from '../environments/environment';
+import {environment} from '../../environments/environment';
 
 class HttpParam {
   constructor(
@@ -47,7 +47,7 @@ export class HttpService {
   }
 
   protected url(endpoint: string): string {
-    return `${env.apiUrl}${endpoint}`;
+    return `${environment.apiUrl}${endpoint}`;
   }
 
   private fillParams(endpoint: string, requestParams: HttpParam[] = []) {
