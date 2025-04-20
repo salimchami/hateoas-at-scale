@@ -54,7 +54,6 @@ export class UserService extends HttpService {
 
   get currentUser(): User | null {
     const user = this.currentUserSubject.value;
-    // Check if the user object has meaningful data
     if (user?.username) {
       return user;
     }
