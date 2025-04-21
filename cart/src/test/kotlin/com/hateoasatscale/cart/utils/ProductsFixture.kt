@@ -7,7 +7,7 @@ class ProductsFixture {
     companion object {
         val apple: ProviderProductDto = ProviderProductDto("apple", "1.00".toBigDecimal())
             .add(Link.of("http://localhost:8080/products/apple").withSelfRel())
-        val orange: ProviderProductDto = ProviderProductDto("orange", "158.00".toBigDecimal())
-            .add(Link.of("http://localhost:8080/products/orange").withSelfRel())
+        val pineapple: ProviderProductDto = ProviderProductDto("pineapple", "200.50".toBigDecimal())
+            .add(Link.of("http://localhost:8080/products/pineapple").withSelfRel())
     }
 }

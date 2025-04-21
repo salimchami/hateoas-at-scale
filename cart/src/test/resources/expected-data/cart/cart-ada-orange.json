@@ -1,39 +1,31 @@
 {
   "totalPrice": 159.00,
   "user": {
-    "firstname": "Ada",
-    "lastname": "Lovelace",
-    "_links": {
-      "self": {
-        "href": "{{service-url}}/users-service/users/1"
-      }
-    }
+    "username": "ada.lovelace"
   },
   "products": [
     {
       "name": "apple",
-      "reference": "RRDGHGT554346",
       "price": 1.00,
       "_links": {
         "self": {
-          "href": "{{service-url}}/products-service/products/1"
+          "href": "{{service-url}}/products-service/products/apple"
         }
       }
     },
     {
-      "name": "orange",
-      "reference": "DFHDHYUJJBN887644",
-      "price": 158.00,
+      "name": "pineapple",
+      "price": 200.50,
       "_links": {
         "self": {
-          "href": "{{service-url}}/products-service/products/4"
+          "href": "{{service-url}}/products-service/products/pineapple"
         }
       }
     }
   ],
   "_links": {
     "self": {
-      "href": "{{service-url}}/carts/1"
+      "href": "{{service-url}}/carts/ada.lovelace"
     }
   }
 }

@@ -1,33 +1,45 @@
 package com.hateoasatscale.cart.infrastructure.driven.db
 
-import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProviderProductDto
-import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.users.ProviderUserDto
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
 
 class FakeDbCartsTest {
 
+    lateinit var sut: FakeDbCarts
+    private val adalovelace = "ada.lovelace"
+    private val martinlutherking = "martin.lutherking"
+    private val strawberry: String = "strawberry"
+    private val apple = "apple"
+    private val pineapple = "pineapple"
+
+    @BeforeEach
+    fun setUp() {
+        sut = FakeDbCarts()
+    }
+
     @Test
     fun `should add products for a user`() {
-        val sut = FakeDbCarts()
-        val user = ProviderUserDto("ada.lovelace")
-        val products = listOf(ProviderProductDto("apple", BigDecimal(10)))
-        sut.add(user, products)
-        assertThat(sut.myMap).isEqualTo(mapOf(user to products))
+        sut.createOrUpdate(DbUser(adalovelace), listOf(DbProduct(apple), DbProduct(strawberry)))
+        assertThat(sut.findBy(adalovelace)).isEqualTo(
+            listOf(
+                DbProduct(apple, 2),
+                DbProduct(pineapple, 2),
+                DbProduct(strawberry)
+            )
+        )
     }
 
     @Test
     fun `should find cart for a user`() {
-        val sut = FakeDbCarts()
-        val user1 = ProviderUserDto("ada.lovelace")
-        val user2 = ProviderUserDto("martin.lutherking")
-        val products1 = listOf(ProviderProductDto("apple", BigDecimal(10)))
+        val user1 = DbUser(adalovelace)
+        val user2 = DbUser(martinlutherking)
+        val products1 = listOf(DbProduct(apple))
         val products2 =
-            listOf(ProviderProductDto("apple", BigDecimal(10)), ProviderProductDto("pineapple", BigDecimal(15)))
-        sut.add(user1, products1)
-        sut.add(user2, products2)
-        val products: List<ProviderProductDto> = sut.findBy(user2.username)
+            listOf(DbProduct(apple), DbProduct(pineapple))
+        sut.createOrUpdate(user1, products1)
+        sut.createOrUpdate(user2, products2)
+        val products: List<DbProduct> = sut.findBy(user2.username)
         assertThat(products).isEqualTo(products2)
     }
 }
