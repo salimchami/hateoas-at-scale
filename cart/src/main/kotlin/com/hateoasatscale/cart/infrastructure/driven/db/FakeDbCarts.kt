@@ -13,19 +13,8 @@ class FakeDbCarts {
     )
 
     fun createOrUpdate(user: DbUser, products: List<DbProduct>) {
-        val currentProducts = carts.getOrPut(user) { mutableListOf() }
-        products.forEach { productToAdd ->
-            val existingProductIndex = currentProducts.indexOfFirst { it.name == productToAdd.name }
-            if (existingProductIndex == -1) {
-                currentProducts.add(productToAdd)
-            } else {
-                val existingProduct = currentProducts[existingProductIndex]
-                val updatedQuantity = existingProduct.quantity + productToAdd.quantity
-                currentProducts[existingProductIndex] = DbProduct(existingProduct.name, updatedQuantity)
-            }
-        }
+        carts[user] = products.toMutableList()
     }
-
 
     fun findBy(username: String): List<DbProduct> {
         return carts.entries

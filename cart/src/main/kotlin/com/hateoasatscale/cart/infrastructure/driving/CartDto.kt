@@ -16,6 +16,6 @@ class CartDto @JsonCreator constructor(
     }
 
     private fun addSelfLink() {
-        linkTo(methodOn(CartResource::class.java).cartInfo(user.username)).withSelfRel()
+        add(linkTo(methodOn(CartResource::class.java).cartInfo(user.username)).withSelfRel())
     }
 }

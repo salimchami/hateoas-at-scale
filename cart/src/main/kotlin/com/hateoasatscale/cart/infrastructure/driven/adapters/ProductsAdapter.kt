@@ -18,7 +18,6 @@ class ProductsAdapter(
             Product(
                 product.name,
                 product.price,
-                0,
                 links.map { link -> Link(link.href, link.rel.value()) })
         }
     }

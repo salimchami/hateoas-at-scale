@@ -1,5 +1,5 @@
 {
-  "totalPrice": 159.00,
+  "totalPrice": 402.00,
   "user": {
     "username": "ada.lovelace"
   },
@@ -7,6 +7,7 @@
     {
       "name": "apple",
       "price": 1.00,
+      "quantity": 1,
       "_links": {
         "self": {
           "href": "{{service-url}}/products-service/products/apple"
@@ -15,7 +16,8 @@
     },
     {
       "name": "pineapple",
-      "price": 200.50,
+      "price": 401.00,
+      "quantity": 2,
       "_links": {
         "self": {
           "href": "{{service-url}}/products-service/products/pineapple"
