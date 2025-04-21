@@ -14,7 +14,7 @@ export class ProductService extends HttpService {
   }
 
   find(): Observable<Product> {
-    const localStorageProductLink = this.localStorageService.getItem<string>('selectedProductLink');
+    const localStorageProductLink = this.localStorageService.getSelectedProductLink();
     if (localStorageProductLink) {
       return this.get(localStorageProductLink).pipe(map(product => Product.from(product)));
     }

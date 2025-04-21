@@ -1,1 +1,50 @@
-<p>cart works!</p>
+<h1>Shopping Cart</h1>
+<div *ngIf="cart?.products?.length; else emptyCart" class="cart-container">
+  <mat-card appearance="outlined" class="cart-summary">
+    <mat-card-header>
+      <mat-card-title>Cart Summary</mat-card-title>
+      <mat-card-subtitle>User: {{ cart.user.username }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="total-price">Total: <strong>{{ cart.totalPrice }} $</strong></p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-list class="cart-items">
+    <div mat-subheader>Cart Items</div>
+    <mat-list-item *ngFor="let product of cart.products" class="cart-item">
+      <img matListItemAvatar [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="40" height="40">
+      <div matListItemTitle>{{ product.name | uppercase }}</div>
+      <div matListItemLine>Total Price: {{ product.totalPrice }}</div>
+      <div matListItemLine>({{product.totalPrice / product.quantity}} $ * {{product.quantity}})</div>
+      <button mat-icon-button color="warn" (click)="removeProduct(product)" aria-label="Remove item">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <div class="cart-actions">
+    <button mat-raised-button color="primary">
+      <mat-icon>shopping_cart_checkout</mat-icon>
+      Checkout
+    </button>
+    <button mat-button color="warn">
+      <mat-icon>remove_shopping_cart</mat-icon>
+      Clear Cart
+    </button>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <mat-card appearance="outlined" class="empty-cart">
+    <mat-card-content>
+      <div class="empty-cart-message">
+        <mat-icon>shopping_cart</mat-icon>
+        <p>Your cart is empty</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/products">Browse Products</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
