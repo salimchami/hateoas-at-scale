@@ -7,7 +7,6 @@ import java.math.BigDecimal
 
 class ProductDto @JsonCreator constructor(
     val name: String,
-    val reference: String,
     val price: BigDecimal,
     private val links: List<Link>
 ) : RepresentationModel<ProductDto>() {

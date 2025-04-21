@@ -7,7 +7,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import java.math.BigDecimal
 
 class CartDto @JsonCreator constructor(
-    private val id: Long,
     val totalPrice: BigDecimal,
     val user: UserDto,
     val products: List<ProductDto>,
@@ -17,6 +16,6 @@ class CartDto @JsonCreator constructor(
     }
 
     private fun addSelfLink() {
-        linkTo(methodOn(CartResource::class.java).cartInfo(id)).withSelfRel()
+        linkTo(methodOn(CartResource::class.java).cartInfo(user.username)).withSelfRel()
     }
 }
