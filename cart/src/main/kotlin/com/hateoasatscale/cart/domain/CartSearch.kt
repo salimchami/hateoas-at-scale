@@ -13,10 +13,10 @@ class CartSearch(
     private val usersRepository: UsersRepository,
 ) : FindCart {
     @Throws(CartNotFound::class)
-    override fun by(username: String): UserCart {
-        val cart = cartsRepository.findBy(username)
-        val user = usersRepository.findBy(cart.username)
-        val products = productsRepository.findBy(cart.productsNames)
-        return UserCart(user, products)
+    override fun findBy(username: String): UserCart {
+        val dbCart = cartsRepository.findBy(username)
+        val user = usersRepository.findBy(dbCart.username)
+        val products = productsRepository.findBy(dbCart.productsNames)
+        return UserCart(user.username, products)
     }
 }
