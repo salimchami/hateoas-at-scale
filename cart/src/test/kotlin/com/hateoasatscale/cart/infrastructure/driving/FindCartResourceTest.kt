@@ -22,7 +22,7 @@ class FindCartResourceTest : AbstractTests() {
             toExpectedJson("cart", "cart-ada-orange").replace(
                 "{{service-url}}", baseUrl
             )
-        endPointCaller.perform(get("/carts/ada.lovelace"))
+        endPointCaller.perform(get("$baseUrl/carts/ada.lovelace"))
             .andExpect(content().json(expectedProduct, JsonCompareMode.STRICT))
     }
 

@@ -4,8 +4,8 @@ import java.math.BigDecimal
 
 data class UserCart(
     val username: String,
-    val products: List<Product>,
+    val products: List<UserCartProduct>,
 ) {
-    val totalPrice: BigDecimal = products.sumOf { it.price }
+    val totalPrice: BigDecimal = products.map { it.totalPrice }.sumOf { it }
 }
 

@@ -1,9 +1,6 @@
 package com.hateoasatscale.cart.domain
 
-import com.hateoasatscale.cart.domain.entities.Cart
-import com.hateoasatscale.cart.domain.entities.Product
-import com.hateoasatscale.cart.domain.entities.User
-import com.hateoasatscale.cart.domain.entities.UserCart
+import com.hateoasatscale.cart.domain.entities.*
 import com.hateoasatscale.cart.domain.spi.CartsRepository
 import com.hateoasatscale.cart.domain.spi.ProductsRepository
 import com.hateoasatscale.cart.domain.spi.UsersRepository
@@ -37,22 +34,23 @@ class CartSearchTest {
         `when`(cartsRepository.findBy(anyString())).thenReturn(
             Cart(
                 adalovelace, listOf(
-                    apple, pineapple, pineapple
+                    CartProduct(apple, 1), CartProduct(pineapple, 2)
                 )
             )
         )
-        `when`(usersRepository.findBy(anyString())).thenReturn(User(adalovelace, emptyList()))
+        `when`(usersRepository.findBy(anyString())).thenReturn(User(adalovelace))
         `when`(productsRepository.findBy(listOf(apple, pineapple))).thenReturn(
             listOf(
-                Product(apple, BigDecimal.TEN, 0, listOf()),
-                Product(pineapple, BigDecimal.TWO, 0, listOf()),
+                Product(apple, BigDecimal.TEN, listOf()),
+                Product(pineapple, BigDecimal.TWO, listOf()),
             )
         )
-        val cart = sut.findBy("ada.lovelace")
+        val cart = sut.by("ada.lovelace")
         assertThat(cart).isEqualTo(
             UserCart(
                 adalovelace,
-                listOf(Product(apple, BigDecimal.TEN, 1, listOf()), Product(pineapple, BigDecimal.TWO, 0,listOf()))
+                listOf(UserCartProduct(apple, BigDecimal.TEN,1,  listOf()),
+                    UserCartProduct(pineapple, BigDecimal.valueOf(4), 2, listOf()))
             )
         )
     }

@@ -10,11 +10,10 @@ class CartResource(@Autowired private val findCart: FindCart) {
 
     @GetMapping("/carts/{username}")
     fun cartInfo(@PathVariable username: String): EntityModel<CartDto> {
-        val cart = findCart.findBy(username)
+        val cart = findCart.by(username)
         val user = UserDto(cart.username)
-        val products = cart.products.map { ProductDto(it.name, it.price, it.quantity, it.links) }
-        val content = CartDto(cart.totalPrice, user, products)
-        return EntityModel.of(content)
+        val products = cart.products.map { ProductDto(it.name, it.totalPrice, it.quantity, it.links) }
+        return EntityModel.of(CartDto(cart.totalPrice, user, products))
     }
 
     @PostMapping("/carts/{username}")
