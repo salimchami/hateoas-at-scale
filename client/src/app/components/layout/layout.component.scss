@@ -25,12 +25,12 @@
 }
 
 .sidenav-scroll-wrapper {
-  padding: 20px;
+  padding: 0 20px 0 20px;
   height: calc(100vh - 64px);
   overflow: auto;
 }
 
 .sidenav-content {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
 }

@@ -1,4 +1,4 @@
-import {Product} from './product';
+import {Product} from '../../shared/product';
 import {HateoasModel} from '../../shared/hateoas.model';
 
 export class Products extends HateoasModel {
@@ -7,8 +7,10 @@ export class Products extends HateoasModel {
   }
 
   static from(products: any) {
-    return new Products(products.list.map((product: any) => {
-      return new Product(product.name, product.reference, product.price);
+    return new Products(products.list.map((item: any) => {
+      const product = new Product(item.name, item.reference, item.price);
+      product._links = item._links;
+      return product;
     }));
   }
 }

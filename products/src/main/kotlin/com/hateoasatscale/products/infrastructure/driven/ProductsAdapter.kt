@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component
 @Component
 class ProductsAdapter : ProductsRepository {
     @Throws(ProductNotFound::class)
-    override fun findBy(id: Long): Product {
-        return FakeDbProducts.products.find { it.id == id }
+    override fun findBy(name: String): Product {
+        return FakeDbProducts.products.find { it.name == name }
             ?.let { Product(it.id, it.name, it.reference, it.price) }
-            ?: throw ProductNotFound("Product with id $id not found")
+            ?: throw ProductNotFound("Product $name not found")
     }
 
     override fun findAll(): List<Product> {

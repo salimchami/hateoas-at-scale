@@ -13,10 +13,10 @@ class ProductsResource(
     private val findProducts: FindProducts
 ) {
 
-    @GetMapping("/products/{id}")
-    fun find(@PathVariable id: Long): EntityModel<ProductDto> {
-        val product = findProduct.by(id)
-        return EntityModel.of(ProductDto(id, product.name, product.reference, product.price))
+    @GetMapping("/products/{name}")
+    fun find(@PathVariable name: String): EntityModel<ProductDto> {
+        val product = findProduct.by(name)
+        return EntityModel.of(ProductDto(product.name, product.reference, product.price))
     }
 
     @GetMapping("/products")
@@ -24,7 +24,6 @@ class ProductsResource(
         val products = findProducts.all()
         return EntityModel.of(ProductsDto(products.map { product ->
             ProductDto(
-                product.id,
                 product.name,
                 product.reference,
                 product.price
