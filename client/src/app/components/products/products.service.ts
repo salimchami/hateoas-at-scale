@@ -19,6 +19,6 @@ export class ProductsService extends HttpService {
   }
 
   selectProduct(product: Product) {
-    this.localStorageService.setItem('selectedProductLink', product._links.self.href);
+    this.localStorageService.setSelectedProductLink(product._links.self.href);
   }
 }

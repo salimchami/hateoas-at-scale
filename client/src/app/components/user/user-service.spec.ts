@@ -60,7 +60,7 @@ describe('UserService', () => {
     req.flush(userHttpResponse);
     const user = await userPromise;
     expect(user).toEqual(currentUser);
-    expect(localStorageService.getItem('currentUser')).toEqual(
+    expect(localStorageService.getCurrentUser()).toEqual(
       JSON.stringify(userHttpResponse)
     );
   });

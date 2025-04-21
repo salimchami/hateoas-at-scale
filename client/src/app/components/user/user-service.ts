@@ -31,14 +31,14 @@ export class UserService extends HttpService {
   ];
 
   private initializeFromLocalStorage() {
-    const storedUser = this.localStorageService.getItem<string>('currentUser');
+    const storedUser = this.localStorageService.getCurrentUser();
     if (storedUser) {
       try {
         const user = JSON.parse(storedUser);
         this.currentUserSubject.next(user);
       } catch (e) {
         console.error('Error parsing stored user', e);
-        this.localStorageService.removeItem('currentUser'); // Remove invalid data
+        this.localStorageService.removeCurrentUser(); // Remove invalid data
       }
     }
   }
@@ -61,17 +61,17 @@ export class UserService extends HttpService {
   }
 
   private setCurrentUser(user: User) {
-    this.localStorageService.setItem('currentUser', JSON.stringify(user));
+    this.localStorageService.setCurrentUser(JSON.stringify(user));
     this.setSelectedUsername(user.username);
     this.currentUserSubject.next(user);
   }
 
   private setSelectedUsername(username: string) {
-    this.localStorageService.setItem('selectedUsername', username);
+    this.localStorageService.setSelectedUsername(username);
   }
 
   get selectedUsername(): string | null {
-    return this.localStorageService.getItem('selectedUsername');
+    return this.localStorageService.getSelectedUsername();
   }
 
   refreshCurrentUser(withRedirectOnError: boolean = false): Observable<User> {
@@ -87,7 +87,7 @@ export class UserService extends HttpService {
 
   logout() {
     this.currentUserSubject.next({} as User);
-    this.localStorageService.removeItem('currentUser');
-    this.localStorageService.removeItem('selectedUsername');
+    this.localStorageService.removeCurrentUser();
+    this.localStorageService.removeSelectedUsername();
   }
 }

@@ -14,6 +14,7 @@ import {UserService} from '../user/user-service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 import {routes} from '../../app.routes';
+import {LocalStorageService} from '../../shared/local-storage.service';
 
 @Component({
   selector: 'app-layout',
@@ -50,6 +51,7 @@ export class LayoutComponent implements OnInit {
     private readonly userService: UserService,
     private readonly breakpointObserver: BreakpointObserver,
     private readonly router: Router,
+    private readonly localStorageService: LocalStorageService,
   ) {
   }
 
@@ -93,10 +95,10 @@ export class LayoutComponent implements OnInit {
     return routeIsHome || userLinksContainsRoute;
   }
 
-
   logout() {
     this.userService.logout();
     this.currentUser = null;
     this.router.navigate(['/home']).then(() => this.updateVisibleRoutes());
+    this.localStorageService.clear();
   }
 }

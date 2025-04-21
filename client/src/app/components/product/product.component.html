@@ -5,7 +5,7 @@
         <mat-card-title-group>
           <mat-card-title>{{ product.name | uppercase }}</mat-card-title>
           <mat-card-subtitle>Price: <span class="product-price">{{ product.price }} $</span></mat-card-subtitle>
-          <img mat-card-md-image [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="200" height="200">
+          <img mat-card-md-image [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="200" height="200" priority="priority">
         </mat-card-title-group>
       </mat-card-header>
 
