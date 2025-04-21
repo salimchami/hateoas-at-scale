@@ -1,0 +1,66 @@
+<div class="product-detail-container">
+  <div *ngIf="product">
+    <mat-card class="product-detail-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>{{ product.name | uppercase }}</mat-card-title>
+          <mat-card-subtitle>Price: <span class="product-price">{{ product.price }} $</span></mat-card-subtitle>
+          <img mat-card-md-image [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="200" height="200">
+        </mat-card-title-group>
+      </mat-card-header>
+
+      <mat-card-content class="product-detail-content">
+        <div class="product-info-section">
+          <div class="product-reference-box">
+            <span class="product-reference">Reference: {{ product.reference }}</span>
+          </div>
+
+          <div class="product-description">
+            <h3>Description</h3>
+            <p>{{ 'High-quality ' + product.name + ' from our premium collection. Made with the finest ingredients and materials.' }}</p>
+          </div>
+
+          <div class="product-specs">
+            <h3>Specifications</h3>
+            <ul>
+              <li><strong>Origin:</strong> Organic Farms</li>
+              <li><strong>Availability:</strong> In Stock</li>
+              <li><strong>Category:</strong> Premium Selection</li>
+              <li><strong>Rating:</strong> ★★★★☆</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="product-purchase-section">
+          <div class="quantity-selector">
+            <h3>Quantity</h3>
+            <div class="quantity-controls">
+              <button mat-stroked-button color="primary" aria-label="Decrease quantity">
+                <span>−</span>
+              </button>
+              <span class="quantity-value">1</span>
+              <button mat-mini-fab color="primary" aria-label="Increase quantity">
+                <span>+</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="price-summary">
+            <div class="unit-price">Unit Price: <span>{{ product.price }} $</span></div>
+            <div class="total-price">Total: <span>{{ product.price }} $</span></div>
+          </div>
+
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" class="add-to-cart-btn">
+              ADD TO CART
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <a mat-button [routerLink]="['/products']">BACK TO PRODUCTS</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

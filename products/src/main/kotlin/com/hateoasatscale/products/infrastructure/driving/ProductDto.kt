@@ -7,7 +7,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import java.math.BigDecimal
 
 class ProductDto @JsonCreator constructor(
-    private val id: Long,
     val name: String,
     val reference: String,
     val price: BigDecimal
@@ -18,6 +17,6 @@ class ProductDto @JsonCreator constructor(
     }
 
     private fun addSelfLink() {
-        add(linkTo(methodOn(ProductsResource::class.java).find(id)).withSelfRel())
+        add(linkTo(methodOn(ProductsResource::class.java).find(name)).withSelfRel())
     }
 }

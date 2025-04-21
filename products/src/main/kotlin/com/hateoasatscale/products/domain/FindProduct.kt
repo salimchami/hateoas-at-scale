@@ -1,5 +1,5 @@
 package com.hateoasatscale.products.domain
 
 fun interface FindProduct {
-    fun by(id: Long): Product
+    fun by(name: String): Product
 }

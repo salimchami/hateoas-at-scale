@@ -25,7 +25,7 @@ services:
       consul-service:
         condition: service_healthy
     volumes:
-      - ./kong/config:/opt/kong
+      - ./kong:/opt/kong
     healthcheck:
       test: [ "CMD", "kong", "health" ]
       interval: 10s
