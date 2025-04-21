@@ -11,13 +11,12 @@ import org.springframework.stereotype.Component
 class ProductsAdapter(
     private val productsFeignClient: ProductsFeignClient
 ) : ProductsRepository {
-    override fun findBy(ids: List<Long>): List<Product> {
-        val products = ids.map { id -> productsFeignClient.findBy(id) }
+    override fun findBy(names: List<String>): List<Product> {
+        val products = names.map { name -> productsFeignClient.findBy(name) }
         return products.map { product ->
             val links = HateoasLinkRewriter.rewrite(product.links, "products-service")
             Product(
                 product.name,
-                product.reference,
                 product.price,
                 links.map { link -> Link(link.href, link.rel.value()) })
         }
