@@ -65,4 +65,12 @@ export class LocalStorageService {
   removeSelectedUsername(): void {
     this.removeItem('selectedUsername');
   }
+
+  addToCart(cartProducts: string) {
+    this.setItem('cartProducts', cartProducts);
+  }
+
+  getCartProducts() {
+    return this.getItem<string>('cartProducts');
+  }
 }
