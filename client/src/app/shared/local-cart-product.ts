@@ -1,6 +1,6 @@
 import {Product} from './product';
 
-export class CartProduct {
+export class LocalCartProduct {
   constructor(readonly product: Product, readonly quantity: number) {
   }
 }

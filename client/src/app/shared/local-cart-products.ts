@@ -1,20 +1,20 @@
-import {CartProduct} from './cart-product';
+import {LocalCartProduct} from './local-cart-product';
 
-export class CartProducts {
-  constructor(readonly value: Array<CartProduct>) {
+export class LocalCartProducts {
+  constructor(readonly value: Array<LocalCartProduct>) {
   }
 
   static from(cartProducts: any) {
-    return new CartProducts(cartProducts.value.map((product: any) => new CartProduct(product.product, product.quantity)));
+    return new LocalCartProducts(cartProducts.value.map((product: any) => new LocalCartProduct(product.product, product.quantity)));
   }
 
-  add(cartProduct: CartProduct) {
+  add(cartProduct: LocalCartProduct) {
     const existingProductIndex = this.value.findIndex(
       item => item.product.name === cartProduct.product.name
     );
 
     if (existingProductIndex >= 0) {
-      this.value[existingProductIndex] = new CartProduct(
+      this.value[existingProductIndex] = new LocalCartProduct(
         this.value[existingProductIndex].product,
         this.value[existingProductIndex].quantity + cartProduct.quantity
       );

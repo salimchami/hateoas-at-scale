@@ -5,8 +5,8 @@ import {LocalStorageService} from '../../shared/local-storage.service';
 import {Product} from '../../shared/product';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {CartProduct} from '../../shared/cart-product';
-import {CartProducts} from '../../shared/cart-products';
+import {LocalCartProduct} from '../../shared/local-cart-product';
+import {LocalCartProducts} from '../../shared/local-cart-products';
 
 @Injectable({providedIn: 'root'})
 export class ProductService extends HttpService {
@@ -24,9 +24,9 @@ export class ProductService extends HttpService {
   }
 
   addToCart(product: Product, quantity: number) {
-    const productToAdd = new CartProduct(product, quantity);
+    const productToAdd = new LocalCartProduct(product, quantity);
     const localCartProducts = this.localStorageService.getCartProducts();
-    const cartProducts = localCartProducts ? CartProducts.from(JSON.parse(localCartProducts)) : new CartProducts([]);
+    const cartProducts = localCartProducts ? LocalCartProducts.from(JSON.parse(localCartProducts)) : new LocalCartProducts([]);
     cartProducts.add(productToAdd);
     this.localStorageService.addToCart(JSON.stringify(cartProducts));
   }

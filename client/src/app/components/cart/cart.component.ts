@@ -7,6 +7,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {Cart} from './cart';
 import {MatTooltip} from '@angular/material/tooltip';
+import {CartService} from './cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,11 +19,14 @@ import {MatTooltip} from '@angular/material/tooltip';
 export class CartComponent implements OnInit {
   cart: Cart = {} as Cart;
 
-  constructor(private readonly activatedRoute: ActivatedRoute) {
+  constructor(private readonly activatedRoute: ActivatedRoute,
+              private readonly cartService: CartService,) {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe((data: any) => this.cart = data.cart);
+    this.activatedRoute.data.subscribe((data: any) => {
+      this.cart = this.cartService.updateCartFrom(data.cart);
+    });
   }
 
   removeProduct(product: any) {
