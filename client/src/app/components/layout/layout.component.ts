@@ -37,15 +37,13 @@ import {LocalStorageService} from '../../shared/local-storage.service';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent implements OnInit {
-  private readonly allRoutes = routes
-    .find(r => r.path === '' && r.children)?.children || [];
-
-  private readonly visibleRoutesSubject = new BehaviorSubject<Route[]>([]);
-  visibleRoutes$ = this.visibleRoutesSubject.asObservable();
-
   isHandset$!: Observable<boolean>;
   usernames: Array<string> = [];
   currentUser: User | null = null;
+  private readonly allRoutes = routes
+    .find(r => r.path === '' && r.children)?.children || [];
+  private readonly visibleRoutesSubject = new BehaviorSubject<Route[]>([]);
+  visibleRoutes$ = this.visibleRoutesSubject.asObservable();
 
   constructor(
     private readonly userService: UserService,
@@ -82,11 +80,6 @@ export class LayoutComponent implements OnInit {
     this.userService.findUser(username).subscribe();
   }
 
-  private updateVisibleRoutes() {
-    const visibleRoutes = this.allRoutes.filter(route => this.hasAccess(route));
-    this.visibleRoutesSubject.next(visibleRoutes);
-  }
-
   hasAccess(route: Route): boolean {
     const userLinks = this.userService.currentUser?._links;
     const routeIsHome = route.path === 'home';
@@ -100,5 +93,10 @@ export class LayoutComponent implements OnInit {
     this.currentUser = null;
     this.router.navigate(['/home']).then(() => this.updateVisibleRoutes());
     this.localStorageService.clear();
+  }
+
+  private updateVisibleRoutes() {
+    const visibleRoutes = this.allRoutes.filter(route => this.hasAccess(route));
+    this.visibleRoutesSubject.next(visibleRoutes);
   }
 }

@@ -1,12 +1,12 @@
 <div class="product-detail-container">
   <div *ngIf="product">
-    <mat-card class="product-detail-card" appearance="outlined">
+    <mat-card appearance="outlined" class="product-detail-card">
       <mat-card-header>
         <mat-card-title-group>
           <mat-card-title>{{ product.name | uppercase }}</mat-card-title>
           <mat-card-subtitle>Price: <span class="product-price">{{ product.price }} $</span></mat-card-subtitle>
-          <img mat-card-md-image [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="200" height="200"
-               priority="priority">
+          <img [alt]="`${product.name}`" [ngSrc]="`/${product.name}.png`" height="200" mat-card-md-image priority="priority"
+               width="200">
         </mat-card-title-group>
       </mat-card-header>
 
@@ -36,11 +36,13 @@
           <div class="quantity-selector">
             <h3>Quantity</h3>
             <div class="quantity-controls">
-              <button mat-stroked-button color="primary" aria-label="Decrease quantity" (click)="decreaseQuantity()" [disabled]="addedToCart">
+              <button (click)="decreaseQuantity()" [disabled]="addedToCart" aria-label="Decrease quantity" color="primary"
+                      mat-stroked-button>
                 <span>−</span>
               </button>
               <span class="quantity-value">{{ quantity }}</span>
-              <button mat-mini-fab color="primary" aria-label="Increase quantity" (click)="increaseQuantity()" [disabled]="addedToCart">
+              <button (click)="increaseQuantity()" [disabled]="addedToCart" aria-label="Increase quantity" color="primary"
+                      mat-mini-fab>
                 <span>+</span>
               </button>
             </div>
@@ -52,16 +54,17 @@
           </div>
 
           <div class="action-buttons">
-            <button mat-raised-button color="primary" class="add-to-cart-btn" (click)="addToCart()" [disabled]="addedToCart">
+            <button (click)="addToCart()" [disabled]="addedToCart" class="add-to-cart-btn" color="primary"
+                    mat-raised-button>
               ADD TO CART
             </button>
           </div>
-          <div class="added-to-cart" *ngIf="addedToCart">{{ quantity }} "{{ product.name }}" added to your cart.</div>
+          <div *ngIf="addedToCart" class="added-to-cart">{{ quantity }} "{{ product.name }}" added to your cart.</div>
         </div>
       </mat-card-content>
 
       <mat-card-actions align="end">
-        <a mat-button [routerLink]="['/products']">BACK TO PRODUCTS</a>
+        <a [routerLink]="['/products']" mat-button>BACK TO PRODUCTS</a>
       </mat-card-actions>
     </mat-card>
   </div>

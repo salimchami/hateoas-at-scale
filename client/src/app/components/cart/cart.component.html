@@ -14,40 +14,40 @@
           <!-- Products Table -->
           <table class="products-table">
             <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th>Actions</th>
-              </tr>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let product of cart.products" class="product-row">
-                <td class="product-cell">
-                  <div class="product-info">
-                    <img [ngSrc]="`/${product.name}.png`" [alt]="`${product.name}`" width="70" height="70">
-                    <span class="product-name">{{ product.name | uppercase }}</span>
-                  </div>
-                </td>
-                <td class="price-cell">
-                  {{ product.totalPrice / product.quantity | currency:'USD':'symbol':'1.2-2' }}
-                </td>
-                <td class="quantity-cell">
-                  <div class="quantity-box">
-                    {{ product.quantity }}
-                  </div>
-                </td>
-                <td class="total-cell">
-                  {{ product.totalPrice | currency:'USD':'symbol':'1.2-2' }}
-                </td>
-                <td class="action-cell">
-                  <button mat-icon-button color="warn" (click)="removeProduct(product)"
-                          aria-label="Remove item" matTooltip="Remove product">
-                    <mat-icon>delete_outline</mat-icon>
-                  </button>
-                </td>
-              </tr>
+            <tr *ngFor="let product of cart.products" class="product-row">
+              <td class="product-cell">
+                <div class="product-info">
+                  <img [alt]="`${product.name}`" [ngSrc]="`/${product.name}.png`" height="70" width="70">
+                  <span class="product-name">{{ product.name | uppercase }}</span>
+                </div>
+              </td>
+              <td class="price-cell">
+                {{ product.totalPrice / product.quantity | currency:'USD':'symbol':'1.2-2' }}
+              </td>
+              <td class="quantity-cell">
+                <div class="quantity-box">
+                  {{ product.quantity }}
+                </div>
+              </td>
+              <td class="total-cell">
+                {{ product.totalPrice | currency:'USD':'symbol':'1.2-2' }}
+              </td>
+              <td class="action-cell">
+                <button (click)="removeProduct(product)" aria-label="Remove item" color="warn"
+                        mat-icon-button matTooltip="Remove product">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </mat-card-content>
@@ -55,11 +55,11 @@
 
       <!-- Shopping Actions -->
       <div class="shopping-actions">
-        <button mat-stroked-button [routerLink]="['/products']">
+        <button [routerLink]="['/products']" mat-stroked-button>
           <mat-icon>arrow_back</mat-icon>
           Continue Shopping
         </button>
-        <button mat-button color="warn" (click)="clearCart()">
+        <button (click)="clearCart()" color="warn" mat-button>
           <mat-icon>remove_shopping_cart</mat-icon>
           Clear Cart
         </button>
@@ -98,7 +98,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-          <button mat-raised-button color="primary" class="checkout-button" (click)="checkout()">
+          <button (click)="checkout()" class="checkout-button" color="primary" mat-raised-button>
             <mat-icon>shopping_cart_checkout</mat-icon>
             Proceed to Checkout
           </button>
@@ -114,7 +114,7 @@
         <mat-icon class="empty-cart-icon">shopping_cart</mat-icon>
         <h2>Your Cart is Empty</h2>
         <p>Looks like you haven't added any items to your cart yet.</p>
-        <button mat-raised-button color="primary" routerLink="/products">
+        <button color="primary" mat-raised-button routerLink="/products">
           Start Shopping
         </button>
       </mat-card>

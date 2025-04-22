@@ -6,11 +6,12 @@ import {CurrencyPipe, NgForOf, NgIf, NgOptimizedImage, UpperCasePipe} from '@ang
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {MatButtonModule} from '@angular/material/button';
 import {Cart} from './cart';
-import {MatTooltip} from '@angular/material/module.d-DKQBC69L';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-cart',
-  imports: [MatButtonModule, MatCardModule, MatListModule, MatIconModule, NgOptimizedImage, UpperCasePipe, RouterLink, NgForOf, NgIf, CurrencyPipe, MatTooltip],
+  imports: [MatButtonModule, MatCardModule, MatListModule, MatIconModule,
+    NgOptimizedImage, UpperCasePipe, RouterLink, NgForOf, NgIf, CurrencyPipe, MatTooltip],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
