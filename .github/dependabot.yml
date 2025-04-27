@@ -5,19 +5,19 @@
 
 version: 2
 updates:
-  - package-ecosystem: "composer"
+  - package-ecosystem: "npm"
     directory: "/client"
     schedule:
       interval: "weekly"
-  - package-ecosystem: "composer"
+  - package-ecosystem: "gradle"
     directory: "/cart"
     schedule:
       interval: "weekly"
-  - package-ecosystem: "composer"
+  - package-ecosystem: "gradle"
     directory: "/products"
     schedule:
       interval: "weekly"
-  - package-ecosystem: "composer"
+  - package-ecosystem: "gradle"
     directory: "/users"
     schedule:
       interval: "weekly"
