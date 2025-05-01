@@ -20,6 +20,7 @@ server:
   error:
     whitelabel:
       enabled: false
+
 management:
   server:
     port: 4452

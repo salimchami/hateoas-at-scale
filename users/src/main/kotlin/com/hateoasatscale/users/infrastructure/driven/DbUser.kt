@@ -1,4 +1,6 @@
 package com.hateoasatscale.users.infrastructure.driven
 
-class DbUser(val username: String, val firstname: String, val lastname: String) {
+import com.hateoasatscale.roles.Role
+
+class DbUser(val username: String, val role: Role, val firstname: String, val lastname: String) {
 }

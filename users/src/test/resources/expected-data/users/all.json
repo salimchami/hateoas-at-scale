@@ -1,0 +1,113 @@
+{
+  "users": [
+    {
+      "username": "ada.lovelace",
+      "firstname": "Ada",
+      "lastname": "Lovelace",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/ada.lovelace"
+        },
+        "all-users": {
+          "href": "{{users-service-url}}/users/all/ada.lovelace"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/ada.lovelace"
+        }
+      }
+    },
+    {
+      "username": "alan.turing",
+      "firstname": "Alan",
+      "lastname": "Turing",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/alan.turing"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/alan.turing"
+        }
+      }
+    },
+    {
+      "username": "charles.darwin",
+      "firstname": "Charles",
+      "lastname": "Darwin",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/charles.darwin"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/charles.darwin"
+        }
+      }
+    },
+    {
+      "username": "karen.spence",
+      "firstname": "Karen",
+      "lastname": "Spence",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/karen.spence"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/karen.spence"
+        }
+      }
+    },
+    {
+      "username": "martin.curie",
+      "firstname": "Martin",
+      "lastname": "Curie",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/martin.curie"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/martin.curie"
+        }
+      }
+    },
+    {
+      "username": "richard.stallman",
+      "firstname": "Richard",
+      "lastname": "Stallman",
+      "_links": {
+        "self": {
+          "href": "{{users-service-url}}/users/richard.stallman"
+        },
+        "products": {
+          "href": "http://172.25.0.10:8000/products-service/products"
+        },
+        "cart": {
+          "href": "http://172.25.0.10:8000/carts-service/carts/richard.stallman"
+        }
+      }
+    },
+    {
+      "username": "samuel.jackson",
+      "firstname": "Samuel",
+      "lastname": "Jackson"
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "{{users-service-url}}/users/all/ada.lovelace"
+    }
+  }
+}

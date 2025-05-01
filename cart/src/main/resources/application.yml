@@ -12,6 +12,8 @@ spring:
       discovery:
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+        service-name: ${spring.application.name}
+      enabled: true
 
 server:
   port: 8080
