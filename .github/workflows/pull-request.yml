@@ -28,15 +28,16 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: "./client/package-lock.json"
 
       - name: "Install dependencies"
-        working-directory: ./client
+        working-directory: "./client"
         run: "npm i --frozen-lockfile"
 
       - name: "Build"
-        working-directory: ./client
-        run: npm run build
+        working-directory: "./client"
+        run: "npm run build"
 
       - name: "Run all unit tests"
-        working-directory: ./client
-        run: npm run test
+        working-directory: "./client"
+        run: "npm run test"
