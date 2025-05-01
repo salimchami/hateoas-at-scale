@@ -1,0 +1,44 @@
+name: "PR"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  service-apps:
+
+  client-app:
+    runs-on:
+      - "ubuntu-latest"
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - name: "Install Node.js"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: "Install dependencies"
+        working-directory: ./client
+        run: "npm i --frozen-lockfile"
+
+      - name: "Build"
+        working-directory: ./client
+        run: npm run build
+
+      - name: "Run all unit tests"
+        working-directory: ./client
+        run: npm run test
