@@ -2,6 +2,7 @@ name: "PR"
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
       - "main"
 
@@ -14,8 +15,6 @@ permissions:
   pull-requests: write
 
 jobs:
-  service-apps:
-
   client-app:
     runs-on: "ubuntu-latest"
     steps:
