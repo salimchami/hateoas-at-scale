@@ -14,6 +14,11 @@ class ProductDto @JsonCreator constructor(
 
     init {
         addSelfLink()
+        addAddProductToCartLink()
+    }
+
+    private fun addAddProductToCartLink() {
+
     }
 
     private fun addSelfLink() {
