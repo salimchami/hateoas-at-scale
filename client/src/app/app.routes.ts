@@ -6,6 +6,7 @@ import {CartComponent} from './components/cart/cart.component';
 import {ProductComponent} from './components/product/product.component';
 import {ProductResolver} from './components/product/product.resolver';
 import {CartResolver} from './components/cart/cart.resolver';
+import {UsersComponent} from './components/users/users.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -26,6 +27,8 @@ export const routes: Routes = [
           cart: CartResolver
         }
       },
+      {path: 'users', component: UsersComponent, title: 'Users', data: {linkName: 'all-users'}},
+      {path: '**', redirectTo: '/home'}
     ]
   }
 ];
