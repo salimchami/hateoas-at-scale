@@ -16,7 +16,7 @@ class FindProductResourceTest : AbstractTests() {
             toExpectedJson("products/product", "product-orange").replace(
                 "{{products-service-url}}", baseUrl
             )
-        val entity = restTemplate.getForEntity<String>("$baseUrl/products/4")
+        val entity = restTemplate.getForEntity<String>("$baseUrl/products/orange")
         assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedProduct)
     }
