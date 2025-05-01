@@ -6,7 +6,7 @@
       "price": 1.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/1"
+          "href": "{{products-service-url}}/products/apple"
         }
       }
     },
@@ -16,7 +16,7 @@
       "price": 1.54,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/2"
+          "href": "{{products-service-url}}/products/banana"
         }
       }
     },
@@ -26,7 +26,7 @@
       "price": 100.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/3"
+          "href": "{{products-service-url}}/products/kiwi"
         }
       }
     },
@@ -36,7 +36,7 @@
       "price": 158.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/4"
+          "href": "{{products-service-url}}/products/orange"
         }
       }
     },
@@ -46,7 +46,7 @@
       "price": 99.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/5"
+          "href": "{{products-service-url}}/products/pineapple"
         }
       }
     },
@@ -56,7 +56,7 @@
       "price": 56.99,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/6"
+          "href": "{{products-service-url}}/products/strawberry"
         }
       }
     },
@@ -66,7 +66,17 @@
       "price": 1000.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/7"
+          "href": "{{products-service-url}}/products/watermelon"
+        }
+      }
+    },
+    {
+      "name": "grapes",
+      "reference": "DKJGHJKQDF443",
+      "price": 154.00,
+      "_links": {
+        "self": {
+          "href": "{{products-service-url}}/products/grapes"
         }
       }
     }

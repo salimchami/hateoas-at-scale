@@ -6,7 +6,7 @@
   "products": [
     {
       "name": "apple",
-      "price": 1.00,
+      "totalPrice": 1.00,
       "quantity": 1,
       "_links": {
         "self": {
@@ -16,7 +16,7 @@
     },
     {
       "name": "pineapple",
-      "price": 401.00,
+      "totalPrice": 401.00,
       "quantity": 2,
       "_links": {
         "self": {

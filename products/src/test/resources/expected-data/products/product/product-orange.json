@@ -4,7 +4,7 @@
   "price": 158.00,
   "_links": {
     "self": {
-      "href": "{{products-service-url}}/products/4"
+      "href": "{{products-service-url}}/products/orange"
     }
   }
 }
