@@ -21,6 +21,7 @@ jobs:
         uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
+
       - name: "Setup JDK"
         uses: "actions/setup-java@v4"
         with:
@@ -28,14 +29,17 @@ jobs:
           java-version: '21'
       - name: "Setup Gradle"
         uses: "gradle/actions/setup-gradle@v4"
+
       - name: "Build users service"
-        working-directory: "/users"
+        working-directory: "./users"
         run: "./gradlew build"
+
       - name: "Build products service"
-        working-directory: "/products"
+        working-directory: "./products"
         run: "./gradlew build"
+
       - name: "Build cart service"
-        working-directory: "/cart"
+        working-directory: "./cart"
         run: "./gradlew build"
 
   client-app:
