@@ -1,5 +1,8 @@
 # hateoas-at-scale
 
+[![CI - main](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml)
+[![CI - PR](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml)
+
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 ![Last Commit](https://img.shields.io/github/last-commit/salimchami/hateoas-at-scale)
 ![Number of Contributors](https://img.shields.io/github/contributors/salimchami/hateoas-at-scale)
