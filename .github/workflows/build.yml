@@ -32,6 +32,15 @@ jobs:
           java-version: '21'
       - name: "Setup Gradle"
         uses: "gradle/actions/setup-gradle@v4"
+      - name: "Build users service"
+        working-directory: "/users"
+        run: "./gradlew build"
+      - name: "Build products service"
+        working-directory: "/products"
+        run: "./gradlew build"
+      - name: "Build cart service"
+        working-directory: "/cart"
+        run: "./gradlew build"
 
   client-app:
     runs-on: "ubuntu-latest"
