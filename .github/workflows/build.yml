@@ -30,6 +30,10 @@ jobs:
       - name: "Setup Gradle"
         uses: "gradle/actions/setup-gradle@v4"
 
+      - name: "Build hateoasatscale library"
+        working-directory: "./hateoas-library"
+        run: "./gradlew build && ./gradlew jar"
+
       - name: "Build users service"
         working-directory: "./users"
         run: "./gradlew build"
