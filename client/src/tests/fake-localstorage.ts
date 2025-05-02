@@ -17,6 +17,37 @@ export const localStorageMock = (() => {
     length: 0,
     key(index: number): string | null {
       return Object.keys(store)[index] || null;
+    },
+    getSelectedProductLink(): string | null {
+      return this.getItem('selectedProductLink');
+    },
+
+    setSelectedProductLink(href: string): void {
+      this.setItem('selectedProductLink', href);
+    },
+
+    getCurrentUser(): string | null {
+      return this.getItem('currentUser');
+    },
+
+    removeCurrentUser(): void {
+      this.removeItem('currentUser');
+    },
+
+    setCurrentUser(user: string): void {
+      this.setItem('currentUser', user);
+    },
+
+    setSelectedUsername(username: string): void {
+      this.setItem('selectedUsername', username);
+    },
+
+    getSelectedUsername(): string | null {
+      return this.getItem('selectedUsername');
+    },
+
+    removeSelectedUsername(): void {
+      this.removeItem('selectedUsername');
     }
   };
 })();

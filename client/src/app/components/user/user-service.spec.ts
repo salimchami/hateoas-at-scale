@@ -13,14 +13,14 @@ describe('UserService', () => {
   let httpTestingController: HttpTestingController;
   let localStorageService: LocalStorageService;
   const userHttpResponse = {
-    username: 'ada.lovelace',
-    firstname: 'Ada',
-    lastname: 'Lovelace',
     _links: {
       "self": {
         href: 'http://localhost:8080/api/users/ada.lovelace'
       },
-    }
+    },
+    username: 'ada.lovelace',
+    firstname: 'Ada',
+    lastname: 'Lovelace',
   };
   const currentUser = User.from(userHttpResponse);
   beforeEach(() => {
@@ -37,7 +37,7 @@ describe('UserService', () => {
     localStorageService = TestBed.inject(LocalStorageService);
   });
   afterEach(() => {
-    httpTestingController.verify(); // Verify no outstanding requests
+    httpTestingController.verify();
   });
 
   it('should ', () => {
@@ -64,6 +64,4 @@ describe('UserService', () => {
       JSON.stringify(userHttpResponse)
     );
   });
-
-  it('should ')
 });

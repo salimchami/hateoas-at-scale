@@ -20,7 +20,7 @@ import {Product} from '../../shared/product';
     MatGridList,
     MatGridTile
   ],
-  providers: [ProductsService],
+  providers: [ProductsService, UserService],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
