@@ -1,0 +1,75 @@
+name: "PR-build"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "main"
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  service-apps:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - name: "Setup JDK"
+        uses: "actions/setup-java@v4"
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+      - name: "Setup Gradle"
+        uses: "gradle/actions/setup-gradle@v4"
+
+      - name: "Build hateoasatscale library"
+        working-directory: "./hateoas-library"
+        run: "./gradlew build && ./gradlew jar"
+
+      - name: "Build users service"
+        working-directory: "./users"
+        run: "./gradlew build"
+
+      - name: "Build products service"
+        working-directory: "./products"
+        run: "./gradlew build"
+
+      - name: "Build cart service"
+        working-directory: "./cart"
+        run: "./gradlew build"
+
+  client-app:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout repository"
+        uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - name: "Install Node.js"
+        uses: "actions/setup-node@v4"
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: "./client/package-lock.json"
+
+      - name: "Install dependencies"
+        working-directory: "./client"
+        run: "npm i --frozen-lockfile"
+
+      - name: "Build"
+        working-directory: "./client"
+        run: "npm run build"
+
+      - name: "Run all unit tests"
+        working-directory: "./client"
+        run: "npm run test"
