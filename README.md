@@ -7,6 +7,7 @@
 
 [![main-build](https://github.com/salimchami/hateoas-at-scale/actions/workflows/build.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/build.yml)
 [![PR-build](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml)
+
 **A demonstration of HATEOAS implementation at scale with [Spring Boot](https://spring.io/projects/spring-boot), [Consul](https://developer.hashicorp.com/consul) and [Kong API Gateway](https://konghq.com).**
 
 This project aims to showcase an approach to implement HATEOAS (Hypermedia as the Engine of Application State) in RESTful applications designed for scalability. It provides a concrete example of an architecture and techniques for managing hypermedia links efficiently in distributed systems.
