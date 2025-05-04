@@ -24,3 +24,12 @@ server:
 management:
   server:
     port: 4452
+
+application:
+  network:
+    gateway-url: http://172.25.0.10:8000
+    services:
+      carts:
+        name: carts-service
+        endpoints:
+          add: carts
