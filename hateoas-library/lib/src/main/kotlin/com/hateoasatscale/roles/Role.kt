@@ -9,7 +9,7 @@ package com.hateoasatscale.roles
  * - `CUSTOMER`: A regular user with permissions limited to customer-related features.
  */
 enum class Role {
-    ANONYMOUS,
-    ADMIN,
-    CUSTOMER
+    HATEOASATSCALE_ANONYMOUS,
+    HATEOASATSCALE_ADMIN,
+    HATEOASATSCALE_CUSTOMER
 }

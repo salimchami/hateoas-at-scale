@@ -16,9 +16,9 @@ class CartResource(@Autowired private val findCart: FindCart) {
         return EntityModel.of(CartDto(cart.totalPrice, user, products))
     }
 
-    @PostMapping("/carts/{username}")
+    @PostMapping("/carts/{productName}")
     @ResponseStatus(code = org.springframework.http.HttpStatus.CREATED)
-    fun addCart(@PathVariable username: String, @RequestBody products: List<ProductDto>) {
+    fun addCart(@PathVariable productName: String, @RequestBody products: List<ProductDto>) {
 
     }
 }
