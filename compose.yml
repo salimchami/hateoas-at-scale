@@ -84,7 +84,7 @@ services:
       consul-service:
         condition: service_healthy
     deploy:
-      replicas: 3
+      replicas: 1
     ports:
       - "8080:8080"
       - "4451:4451"
