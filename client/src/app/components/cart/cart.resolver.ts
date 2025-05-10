@@ -5,7 +5,7 @@ import {Cart} from './cart';
 import {CartService} from './cart.service';
 
 @Injectable({providedIn: 'root'})
-export class CartResolver  implements Resolve<Cart> {
+export class CartResolver implements Resolve<Cart> {
   constructor(private readonly cartService: CartService) {
   }
 

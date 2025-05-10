@@ -1,15 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
-    class="sidenav"
-    fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    class="sidenav"
+    fixedInViewport
   >
     <mat-toolbar>
       <div class="mat-text-align-center">
-        <a routerLink=""><img ngSrc="/logo.png" alt="home" width="79" height="53"></a>
+        <a routerLink=""><img alt="home" height="53" ngSrc="/logo.png" width="79"></a>
       </div>
     </mat-toolbar>
     <mat-nav-list>

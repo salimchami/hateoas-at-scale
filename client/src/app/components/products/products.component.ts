@@ -40,12 +40,12 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  selectProduct(product: Product) {
+    this.productsService.selectProduct(product);
+  }
+
   private loadProducts(user: User) {
     this.productsService.findAll(user._links['products'].href)
       .subscribe(products => this.products = products);
-  }
-
-  selectProduct(product: Product) {
-    this.productsService.selectProduct(product);
   }
 }

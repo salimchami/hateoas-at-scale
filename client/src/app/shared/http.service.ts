@@ -47,7 +47,7 @@ export class HttpService {
   }
 
   protected url(endpoint: string): string {
-    return `${environment.apiUrl}${endpoint}`;
+    return `${environment.appApiHost}${endpoint}`;
   }
 
   private fillParams(endpoint: string, requestParams: HttpParam[] = []) {

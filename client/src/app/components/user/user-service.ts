@@ -10,16 +10,6 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class UserService extends HttpService {
-  constructor(private readonly localStorageService: LocalStorageService,
-              readonly httpClient: HttpClient,
-              private readonly router: Router,) {
-    super(httpClient);
-    this.initializeFromLocalStorage();
-  }
-
-  private readonly currentUserSubject = new BehaviorSubject<User>({} as User);
-  currentUser$ = this.currentUserSubject.asObservable();
-
   usernames: Array<string> = [
     'ada.lovelace',
     'alan.turing',
@@ -29,27 +19,14 @@ export class UserService extends HttpService {
     'richard.stallman',
     'samuel.jackson',
   ];
+  private readonly currentUserSubject = new BehaviorSubject<User>({} as User);
+  currentUser$ = this.currentUserSubject.asObservable();
 
-  private initializeFromLocalStorage() {
-    const storedUser = this.localStorageService.getCurrentUser();
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        this.currentUserSubject.next(user);
-      } catch (e) {
-        console.error('Error parsing stored user', e);
-        this.localStorageService.removeCurrentUser(); // Remove invalid data
-      }
-    }
-  }
-
-  findUser(username: string): Observable<User> {
-    return this.get(this.url(`${environment.startupEndpoint}/${username}`))
-      .pipe(map(user => {
-        const userObj = User.from(user);
-        this.setCurrentUser(userObj);
-        return userObj;
-      }));
+  constructor(private readonly localStorageService: LocalStorageService,
+              readonly httpClient: HttpClient,
+              private readonly router: Router,) {
+    super(httpClient);
+    this.initializeFromLocalStorage();
   }
 
   get currentUser(): User | null {
@@ -60,18 +37,17 @@ export class UserService extends HttpService {
     return null;
   }
 
-  private setCurrentUser(user: User) {
-    this.localStorageService.setCurrentUser(JSON.stringify(user));
-    this.setSelectedUsername(user.username);
-    this.currentUserSubject.next(user);
-  }
-
-  private setSelectedUsername(username: string) {
-    this.localStorageService.setSelectedUsername(username);
-  }
-
   get selectedUsername(): string | null {
     return this.localStorageService.getSelectedUsername();
+  }
+
+  findUser(username: string): Observable<User> {
+    return this.get(this.url(`${environment.startupEndpoint}/${username}`))
+      .pipe(map(user => {
+        const userObj = User.from(user);
+        this.setCurrentUser(userObj);
+        return userObj;
+      }));
   }
 
   refreshCurrentUser(withRedirectOnError: boolean = false): Observable<User> {
@@ -89,5 +65,28 @@ export class UserService extends HttpService {
     this.currentUserSubject.next({} as User);
     this.localStorageService.removeCurrentUser();
     this.localStorageService.removeSelectedUsername();
+  }
+
+  private initializeFromLocalStorage() {
+    const storedUser = this.localStorageService.getCurrentUser();
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        this.currentUserSubject.next(user);
+      } catch (e) {
+        console.error('Error parsing stored user', e);
+        this.localStorageService.removeCurrentUser(); // Remove invalid data
+      }
+    }
+  }
+
+  private setCurrentUser(user: User) {
+    this.localStorageService.setCurrentUser(JSON.stringify(user));
+    this.setSelectedUsername(user.username);
+    this.currentUserSubject.next(user);
+  }
+
+  private setSelectedUsername(username: string) {
+    this.localStorageService.setSelectedUsername(username);
   }
 }

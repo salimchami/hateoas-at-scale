@@ -15,11 +15,30 @@ import {ActivatedRoute, RouterModule} from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   product: Product = {} as Product;
+  quantity = 1;
+  addedToCart = false;
 
-  constructor(private readonly activatedRoute: ActivatedRoute) {
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly productService: ProductService,) {
   }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: any) => this.product = data.product);
+  }
+
+  decreaseQuantity() {
+    if (this.quantity >= 2) {
+      this.quantity--;
+    }
+  }
+
+  increaseQuantity() {
+    this.quantity++;
+  }
+
+  addToCart() {
+    this.addedToCart = true;
+    this.productService.addToCart(this.product, this.quantity);
   }
 }

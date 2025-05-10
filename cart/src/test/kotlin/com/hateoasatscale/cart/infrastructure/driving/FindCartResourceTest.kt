@@ -20,7 +20,7 @@ class FindCartResourceTest : AbstractTests() {
             .thenReturn(ProductsFixture.pineapple)
         val expectedProduct =
             toExpectedJson("cart", "cart-ada-orange").replace(
-                "{{service-url}}", baseUrl
+                "{{service-url}}", baseUrl,
             )
         endPointCaller.perform(get("$baseUrl/carts/ada.lovelace"))
             .andExpect(content().json(expectedProduct, JsonCompareMode.STRICT))
@@ -28,15 +28,6 @@ class FindCartResourceTest : AbstractTests() {
 
     @Test
     fun `should add product to a user cart`() {
-//        val request: HttpEntity<List<ProductDto>> = HttpEntity(
-//            listOf(
-//                ProductDto(
-//                    "apple",
-//                    BigDecimal(10), emptyList()
-//                ), ProductDto("orange", BigDecimal(15), emptyList())
-//            )
-//        )
-//        val entity = restTemplate.postForObject<String>("$baseUrl/carts/ada.lovelace")
-
+        endPointCaller.perform(get("$baseUrl/carts/ada.lovelace"))
     }
 }
