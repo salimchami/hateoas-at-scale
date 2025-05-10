@@ -7,6 +7,7 @@ import {ProductComponent} from './components/product/product.component';
 import {ProductResolver} from './components/product/product.resolver';
 import {CartResolver} from './components/cart/cart.resolver';
 import {UsersComponent} from './components/users/users.component';
+import {AuthGuard} from './shared/authentication/auth.guard';
 
 export const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,21 +15,50 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {path: 'home', component: HomeComponent, title: 'Home'},
-      {path: 'products', component: ProductsComponent, title: 'Products', data: {linkName: 'products'}},
       {
-        path: 'products/:name', component: ProductComponent, title: ':name',
+        path: 'home',
+        component: HomeComponent,
+        title: 'Home'
+      },
+      {
+        path: 'products',
+        canActivate: [AuthGuard],
+        component: ProductsComponent,
+        title: 'Products',
+        data: {linkName: 'products'}
+      },
+      {
+        path: 'products/:name',
+        canActivate: [AuthGuard],
+        component: ProductComponent,
+        title: ':name',
         resolve: {
           product: ProductResolver
         }
       },
       {
-        path: 'cart', component: CartComponent, title: 'Cart', data: {linkName: 'cart'}, resolve: {
+        path: 'cart',
+        canActivate: [AuthGuard],
+        component: CartComponent,
+        title: 'Cart',
+        data: {
+          linkName: 'cart'
+        },
+        resolve: {
           cart: CartResolver
         }
       },
-      {path: 'users', component: UsersComponent, title: 'Users', data: {linkName: 'all-users'}},
-      {path: '**', redirectTo: '/home'}
+      {
+        path: 'users',
+        canActivate: [AuthGuard],
+        component: UsersComponent,
+        title: 'Users',
+        data: {linkName: 'all-users'}
+      },
+      {
+        path: '**',
+        redirectTo: '/home'
+      }
     ]
   }
 ];

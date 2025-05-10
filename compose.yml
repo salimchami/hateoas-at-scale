@@ -83,6 +83,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
+      keycloak:
+        condition: service_started
     deploy:
       replicas: 1
     ports:
@@ -99,6 +101,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
+      keycloak:
+        condition: service_started
     deploy:
       replicas: 3
     ports:
@@ -115,6 +119,8 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
+      keycloak:
+        condition: service_started
     deploy:
       replicas: 3
     ports:
