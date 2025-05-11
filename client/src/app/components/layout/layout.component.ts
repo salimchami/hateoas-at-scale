@@ -58,24 +58,20 @@ export class LayoutComponent implements OnInit {
         map(result => result.matches),
         shareReplay()
       );
-    this.userService.currentUser$.subscribe(user => {
+    this.userService.currentUser.subscribe(user => {
       if (user?.username) {
+        debugger;
         this.currentUser = user;
         this.updateVisibleRoutes();
       } else {
-        this.currentUser = null;
+        debugger;
+        this.userService.findCurrentUser().subscribe();
       }
     });
-    if (!this.userService.currentUser) {
-      this.userService.findCurrentUser()
-    } else {
-      this.updateVisibleRoutes();
-    }
-
   }
 
   hasAccess(route: Route): boolean {
-    const userLinks = this.userService.currentUser?._links;
+    const userLinks = this.currentUser?._links;
     const routeIsHome = route.path === 'home';
     const routeLinkName = route.data?.['linkName'] ?? route.path;
     const userLinksContainsRoute = !!userLinks && Object.keys(userLinks).some(linkKey => linkKey === routeLinkName)
@@ -84,7 +80,6 @@ export class LayoutComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    this.currentUser = null;
     this.router.navigate(['/home']).then(() => this.updateVisibleRoutes());
     this.localStorageService.clear();
   }

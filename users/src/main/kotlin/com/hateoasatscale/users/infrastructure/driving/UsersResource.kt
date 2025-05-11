@@ -2,8 +2,6 @@ package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.domain.api.FindUser
 import com.hateoasatscale.users.domain.api.FindUsers
-import java.security.Principal
-import org.springframework.hateoas.EntityModel
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -33,11 +31,15 @@ class UsersResource(
         return ResponseEntity.ok(userDto)
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
-    fun findAll(principal: Principal): EntityModel<UsersDto> {
-        val username = principal.name
+    fun findAll(@AuthenticationPrincipal principal: Jwt?): ResponseEntity<UsersDto> {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
+        val username = principal.claims["preferred_username"] as String
         val users = findUsers.all(username)
         val usersDto = this.userMapping.domainToDto(users)
-        return EntityModel.of(UsersDto(username, usersDto))
+        return ResponseEntity.ok(UsersDto(username, usersDto))
     }
 }

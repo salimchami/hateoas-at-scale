@@ -5,32 +5,27 @@ import {LocalStorageService} from '../../shared/local-storage.service';
 import {catchError, Observable, of} from 'rxjs';
 import {Cart} from './cart';
 import {LocalCartProducts} from '../../shared/local-cart-products';
-import {UserService} from '../user/user-service';
+import {User} from '../user/user';
 
 @Injectable({providedIn: 'root'})
 export class CartService extends HttpService {
   constructor(private readonly httpClient: HttpClient,
-              private readonly userService: UserService,
               private readonly localStorageService: LocalStorageService,) {
     super(httpClient);
   }
 
-  find(): Observable<Cart> {
-    const currentUser = this.userService.currentUser;
-    if (!currentUser)
-      throw new Error(
-        'No user logged in. Please log in to access your cart.'
-      )
+  currentUser: User | null = null;
+
+  find(currentUser: User): Observable<Cart> {
     return this.get(currentUser._links['cart'].href).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
           return of({products: [], totalPrice: 0, user: currentUser} as Cart);
         }
-        throw error; // Re-throw other errors
+        throw error;
       })
     );
   }
-
 
   updateCartFrom(cart: Cart): Cart {
     const localCartProductsStr = this.localStorageService.getCartProducts();

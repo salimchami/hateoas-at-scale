@@ -6,7 +6,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 
 class UsersDto @JsonCreator constructor(
     private val username: String,
-    val users: List<UserDto>,
+    val list: List<UserDto>,
 ) : RepresentationModel<UsersDto>() {
 
     init {

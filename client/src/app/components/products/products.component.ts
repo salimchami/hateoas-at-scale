@@ -20,7 +20,7 @@ import {Product} from '../../shared/product';
     MatGridList,
     MatGridTile
   ],
-  providers: [ProductsService, UserService],
+  providers: [ProductsService],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
@@ -34,8 +34,13 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.currentUser$.subscribe(user => this.currentUser = user);
-    this.loadProducts();
+    this.userService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      debugger;
+      if (this.currentUser?.username) {
+        this.loadProducts();
+      }
+    });
   }
 
   selectProduct(product: Product) {

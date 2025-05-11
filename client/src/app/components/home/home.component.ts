@@ -1,28 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../user/user-service';
-import {User} from '../user/user';
-import {NgIf} from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
-import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../shared/authentication';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    NgIf,
-    MatIconModule,
-    MatButton
+    MatIconModule
   ],
   template: `
     <div class="home-content">
       <h2>Welcome to HATEOAS Marketplace</h2>
-      <p *ngIf="!currentUser.username">Please click on the connection button
-        <button class="connection-button" mat-stroked-button disabled>Connection</button>
-        to get started.
-        <mat-icon class="arrow-left" aria-label="">north</mat-icon>
-      </p>
-      <p *ngIf="currentUser.username">
+      <p>
         <mat-icon class="arrow-left" aria-label="">west</mat-icon>
         Please select a link on the sidebar
         <mat-icon aria-label="">menu</mat-icon>
@@ -48,11 +37,11 @@ import {AuthService} from '../../shared/authentication';
   `
 })
 export class HomeComponent implements OnInit {
-  currentUser: User = {} as User;
   isLoggedIn: boolean = false;
 
-  constructor(private readonly userService: UserService,
-              private readonly authService: AuthService) {
+  constructor(
+    private readonly authService: AuthService,
+  ) {
   }
 
   ngOnInit(): void {
@@ -60,7 +49,5 @@ export class HomeComponent implements OnInit {
     if (!this.isLoggedIn) {
       this.authService.login();
     }
-    this.userService.findCurrentUser().subscribe(user => this.currentUser = user);
-    this.userService.currentUser$.subscribe(user => this.currentUser = user);
   }
 }
