@@ -2,28 +2,40 @@ package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.domain.api.FindUser
 import com.hateoasatscale.users.domain.api.FindUsers
-import jakarta.validation.constraints.NotBlank
+import java.security.Principal
 import org.springframework.hateoas.EntityModel
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+
 @RestController
+@RequestMapping("/api/v1/users")
 class UsersResource(
     private val findUser: FindUser,
     private val findUsers: FindUsers,
     private val userMapping: UserMapping,
 ) {
 
-    @GetMapping("/users/{username}")
-    fun userInfo(@PathVariable @NotBlank username: String): EntityModel<UserDto> {
-        val user = findUser.by(username)
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
+    @GetMapping("/user-info")
+    fun userInfo(@AuthenticationPrincipal principal: Jwt?): ResponseEntity<UserDto> {
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
+        val user = findUser.by(principal.claims["preferred_username"] as String)
         val userDto = this.userMapping.domainToDto(user)
-        return EntityModel.of(userDto)
+        return ResponseEntity.ok(userDto)
     }
 
-    @GetMapping("users/all/{username}")
-    fun findAll(@PathVariable @NotBlank username: String): EntityModel<UsersDto> {
+    @GetMapping("/all")
+    fun findAll(principal: Principal): EntityModel<UsersDto> {
+        val username = principal.name
         val users = findUsers.all(username)
         val usersDto = this.userMapping.domainToDto(users)
         return EntityModel.of(UsersDto(username, usersDto))

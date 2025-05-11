@@ -24,11 +24,11 @@ export class HttpService {
   }
 
   protected get(endpoint: string, headers?: HttpHeaders,
-                requestParams?: HttpParam[]
+                requestParams?: HttpParam[], withCredentials: boolean = true
   ): Observable<any> {
     endpoint = this.fillParams(endpoint, requestParams);
     headers?.append('Content-Type', 'application/json')
-    return this.http.get<any>(endpoint, {headers: headers});
+    return this.http.get<any>(endpoint, {headers: headers, withCredentials });
   }
 
   protected post(endpoint: string,

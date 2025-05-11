@@ -249,7 +249,7 @@
       "security-admin-console" : [ ],
       "hateoasatscale" : [ {
         "id" : "f76b0acb-7429-4dea-ac04-04348429b335",
-        "name" : "HATEOASATSCALE_CUSTOMER",
+        "name" : "CUSTOMER",
         "description" : "",
         "composite" : false,
         "clientRole" : true,
@@ -257,7 +257,7 @@
         "attributes" : { }
       }, {
         "id" : "5c4a71b7-a419-4236-82da-d15fda5672a0",
-        "name" : "HATEOASATSCALE_ADMIN",
+        "name" : "ADMIN",
         "description" : "",
         "composite" : false,
         "clientRole" : true,
@@ -265,7 +265,7 @@
         "attributes" : { }
       }, {
         "id" : "eaeef2af-7261-462e-a535-cf4f49c3508e",
-        "name" : "HATEOASATSCALE_ANONYMOUS",
+        "name" : "ANONYMOUS",
         "description" : "",
         "composite" : false,
         "clientRole" : true,
@@ -422,7 +422,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_ADMIN" ]
+      "hateoasatscale" : [ "ADMIN" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -447,7 +447,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_CUSTOMER" ]
+      "hateoasatscale" : [ "CUSTOMER" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -472,7 +472,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_CUSTOMER" ]
+      "hateoasatscale" : [ "CUSTOMER" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -497,7 +497,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_CUSTOMER" ]
+      "hateoasatscale" : [ "CUSTOMER" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -522,7 +522,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_CUSTOMER" ]
+      "hateoasatscale" : [ "CUSTOMER" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -547,7 +547,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_CUSTOMER" ]
+      "hateoasatscale" : [ "CUSTOMER" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -572,7 +572,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-hateoasatscale" ],
     "clientRoles" : {
-      "hateoasatscale" : [ "HATEOASATSCALE_ANONYMOUS" ]
+      "hateoasatscale" : [ "ANONYMOUS" ]
     },
     "notBefore" : 0,
     "groups" : [ ]

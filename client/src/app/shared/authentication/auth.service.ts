@@ -4,7 +4,6 @@ import {OAuthService} from 'angular-oauth2-oidc';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {ToastService, ToastType} from '../../components/toast';
-import {environment} from '../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -82,18 +81,6 @@ export class AuthService {
 
   public login(targetUrl?: string) {
     this.oauthService.initLoginFlow(targetUrl ?? this.router.url);
-  }
-
-  public register(redirectUrl?: string) {
-    if (redirectUrl) {
-      this.redirectToRegister(redirectUrl);
-    } else {
-      this.redirectToRegister(window.location.origin);
-    }
-  }
-
-  private redirectToRegister(redirectUrl: string) {
-    window.location.href = `${environment.keycloakRegistrationUrl}${encodeURIComponent(redirectUrl)}`;
   }
 
   getAccessToken() {

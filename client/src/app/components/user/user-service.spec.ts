@@ -53,7 +53,7 @@ describe('UserService', () => {
   });
 
   it('should load current user', async () => {
-    const userPromise = firstValueFrom(sut.findUser('ada.lovelace'));
+    const userPromise = firstValueFrom(sut.findCurrentUser('ada.lovelace'));
     const expectedUrl = `${environment.appApiHost}${environment.startupEndpoint}/ada.lovelace`;
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET');

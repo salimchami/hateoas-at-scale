@@ -31,10 +31,10 @@ const authOAuthModuleConfig: OAuthModuleConfig = {
     sendAccessToken: true
   }
 }
-export const environment = {
+export const environment: any = {
   production: false,
-  appApiHost: appApiHost,
-  startupEndpoint: '/users',
+  appApiHost,
+  startupEndpoint: '/users-service/api/v1/users/user-info',
   keycloakRegistrationUrl,
   authConfig,
   authOAuthModuleConfig

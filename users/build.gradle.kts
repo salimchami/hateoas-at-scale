@@ -21,9 +21,6 @@ tasks.getByName<Jar>("jar") {
 
 repositories {
     mavenCentral()
-    flatDir {
-        dirs("../hateoas-library")
-    }
 }
 extra["springCloudVersion"] = "2024.0.1"
 
@@ -37,7 +34,6 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation(files("../hateoas-library/lib/build/libs/lib-0.0.1.jar"))
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     //  Temporary explicit version to fix Thymeleaf bug

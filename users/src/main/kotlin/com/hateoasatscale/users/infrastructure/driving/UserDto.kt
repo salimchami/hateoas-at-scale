@@ -5,7 +5,6 @@ import com.hateoasatscale.users.domain.Permission
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 class UserDto @JsonCreator constructor(
     private val gatewayUrl: String,
@@ -28,12 +27,7 @@ class UserDto @JsonCreator constructor(
 
     private fun addAllUsersLink(permissions: List<Permission>) {
         if (permissions.contains(Permission.READ_ALL_USERS)) {
-            add(
-                linkTo(
-                    methodOn(UsersResource::class.java)
-                        .findAll(this.username)
-                ).withRel("all-users")
-            )
+            add(linkTo(UsersResource::class.java.methods.first { it.name == "findAll" }).withRel("all-users"))
         }
     }
 
@@ -52,10 +46,7 @@ class UserDto @JsonCreator constructor(
     private fun addSelfLink(permissions: List<Permission>) {
         if (permissions.containsAll(listOf(Permission.READ_OWN_USER))) {
             add(
-                linkTo(
-                    methodOn(UsersResource::class.java)
-                        .userInfo(this.username)
-                ).withSelfRel()
+                linkTo(UsersResource::class.java.methods.first { it.name == "userInfo" }).withSelfRel(),
             )
         }
     }

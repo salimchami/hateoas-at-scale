@@ -1,32 +1,20 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../../shared/http.service';
-import {BehaviorSubject, EMPTY, Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from './user';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {LocalStorageService} from '../../shared/local-storage.service';
 import {environment} from '../../../environments/environment';
-import {Router} from '@angular/router';
+import {AuthService} from '../../shared/authentication';
 
 @Injectable()
 export class UserService extends HttpService {
-  usernames: Array<string> = [
-    'ada.lovelace',
-    'alan.turing',
-    'charles.darwin',
-    'karen.spence',
-    'martin.curie',
-    'richard.stallman',
-    'samuel.jackson',
-  ];
   private readonly currentUserSubject = new BehaviorSubject<User>({} as User);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private readonly localStorageService: LocalStorageService,
-              readonly httpClient: HttpClient,
-              private readonly router: Router,) {
+  constructor(private readonly authService: AuthService,
+              readonly httpClient: HttpClient) {
     super(httpClient);
-    this.initializeFromLocalStorage();
   }
 
   get currentUser(): User | null {
@@ -37,12 +25,8 @@ export class UserService extends HttpService {
     return null;
   }
 
-  get selectedUsername(): string | null {
-    return this.localStorageService.getSelectedUsername();
-  }
-
-  findUser(username: string): Observable<User> {
-    return this.get(this.url(`${environment.startupEndpoint}/${username}`))
+  findCurrentUser(): Observable<User> {
+    return this.get(this.url(`${environment.startupEndpoint}`))
       .pipe(map(user => {
         const userObj = User.from(user);
         this.setCurrentUser(userObj);
@@ -50,43 +34,12 @@ export class UserService extends HttpService {
       }));
   }
 
-  refreshCurrentUser(withRedirectOnError: boolean = false): Observable<User> {
-    const username = this.selectedUsername;
-    if (username) {
-      return this.findUser(username);
-    }
-    if (withRedirectOnError) {
-      this.router.navigate(['/home']).then();
-    }
-    return EMPTY;
-  }
-
   logout() {
     this.currentUserSubject.next({} as User);
-    this.localStorageService.removeCurrentUser();
-    this.localStorageService.removeSelectedUsername();
-  }
-
-  private initializeFromLocalStorage() {
-    const storedUser = this.localStorageService.getCurrentUser();
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        this.currentUserSubject.next(user);
-      } catch (e) {
-        console.error('Error parsing stored user', e);
-        this.localStorageService.removeCurrentUser(); // Remove invalid data
-      }
-    }
+    this.authService.logout();
   }
 
   private setCurrentUser(user: User) {
-    this.localStorageService.setCurrentUser(JSON.stringify(user));
-    this.setSelectedUsername(user.username);
     this.currentUserSubject.next(user);
-  }
-
-  private setSelectedUsername(username: string) {
-    this.localStorageService.setSelectedUsername(username);
   }
 }

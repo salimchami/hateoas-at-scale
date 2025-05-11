@@ -43,17 +43,6 @@
         <button mat-button (click)="logout()">
           <mat-icon aria-label="Logout">logout</mat-icon>
         </button>
-      } @else {
-        <section>
-          <div class="connection-button-row">
-            <button mat-stroked-button [matMenuTriggerFor]="menu">Connection</button>
-            <mat-menu #menu="matMenu">
-              @for (username of usernames; track username) {
-                <button mat-menu-item (click)="connect(username)">{{ username }}</button>
-              }
-            </mat-menu>
-          </div>
-        </section>
       }
     </mat-toolbar>
     <div class="sidenav-scroll-wrapper">

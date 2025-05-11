@@ -38,7 +38,6 @@ import {LocalStorageService} from '../../shared/local-storage.service';
 })
 export class LayoutComponent implements OnInit {
   isHandset$!: Observable<boolean>;
-  usernames: Array<string> = [];
   currentUser: User | null = null;
   private readonly allRoutes = routes
     .find(r => r.path === '' && r.children)?.children || [];
@@ -54,7 +53,6 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usernames = this.userService.usernames;
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map(result => result.matches),
@@ -69,15 +67,11 @@ export class LayoutComponent implements OnInit {
       }
     });
     if (!this.userService.currentUser) {
-      this.userService.refreshCurrentUser(false).subscribe();
+      this.userService.findCurrentUser()
     } else {
       this.updateVisibleRoutes();
     }
 
-  }
-
-  connect(username: string) {
-    this.userService.findUser(username).subscribe();
   }
 
   hasAccess(route: Route): boolean {

@@ -25,6 +25,7 @@ import {Product} from '../../shared/product';
   styleUrl: './products.component.scss'
 })
 export class ProductsComponent implements OnInit {
+  currentUser: User | null = null;
   products: Products = {list: []} as unknown as Products;
 
   constructor(private readonly userService: UserService,
@@ -33,19 +34,16 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.userService.currentUser) {
-      this.userService.refreshCurrentUser(true).subscribe(user => this.loadProducts(user));
-    } else {
-      this.loadProducts(this.userService.currentUser);
-    }
+    this.userService.currentUser$.subscribe(user => this.currentUser = user);
+    this.loadProducts();
   }
 
   selectProduct(product: Product) {
     this.productsService.selectProduct(product);
   }
 
-  private loadProducts(user: User) {
-    this.productsService.findAll(user._links['products'].href)
+  private loadProducts() {
+    this.productsService.findAll(this.currentUser?._links['products'].href)
       .subscribe(products => this.products = products);
   }
 }

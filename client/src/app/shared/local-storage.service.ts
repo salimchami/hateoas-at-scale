@@ -19,30 +19,6 @@ export class LocalStorageService {
     this.setItem('selectedProductLink', href);
   }
 
-  getCurrentUser(): string | null {
-    return this.getItem<string>('currentUser');
-  }
-
-  removeCurrentUser(): void {
-    this.removeItem('currentUser');
-  }
-
-  setCurrentUser(user: string): void {
-    this.setItem('currentUser', user);
-  }
-
-  setSelectedUsername(username: string): void {
-    this.setItem('selectedUsername', username);
-  }
-
-  getSelectedUsername(): string | null {
-    return this.getItem<string>('selectedUsername');
-  }
-
-  removeSelectedUsername(): void {
-    this.removeItem('selectedUsername');
-  }
-
   addToCart(cartProducts: string) {
     this.setItem('cartProducts', cartProducts);
   }
