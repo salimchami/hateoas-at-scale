@@ -36,7 +36,6 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.userService.currentUser.subscribe(user => {
       this.currentUser = user;
-      debugger;
       if (this.currentUser?.username) {
         this.loadProducts();
       }

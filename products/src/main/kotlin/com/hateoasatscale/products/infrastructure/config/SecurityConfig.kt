@@ -8,11 +8,9 @@ import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy
@@ -23,43 +21,48 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableWebSecurity
 @EnableMethodSecurity
 class SecurityConfig {
-  @Bean
-  protected fun sessionAuthenticationStrategy(): SessionAuthenticationStrategy? {
-    return NullAuthenticatedSessionStrategy()
-  }
+    @Bean
+    fun sessionAuthenticationStrategy(): SessionAuthenticationStrategy? {
+        return NullAuthenticatedSessionStrategy()
+    }
 
-  @Bean
-  @Throws(Exception::class)
-  fun filterChain(http: HttpSecurity,
-                  @Value("\${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") jwkUri: String): SecurityFilterChain {
-    return http.csrf(Customizer.withDefaults())
-      .cors(Customizer.withDefaults())
-      .authorizeHttpRequests { auth: AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry ->
-        auth.anyRequest().authenticated()
-      }
-      .sessionManagement { c ->
-        c.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-      }
-      .oauth2ResourceServer { obj: OAuth2ResourceServerConfigurer<HttpSecurity?> ->
-        obj.jwt { jwtConfigurer ->
-          jwtConfigurer.jwkSetUri(jwkUri)
-          jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())
+    @Bean
+    @Throws(Exception::class)
+    fun filterChain(
+        http: HttpSecurity,
+        @Value("\${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}") jwkUri: String
+    ): SecurityFilterChain {
+        return http
+            .csrf(Customizer.withDefaults())
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests { authz ->
+                authz
+                    .requestMatchers("/actuator/**").permitAll()
+                    .anyRequest().authenticated()
+            }
+            .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .oauth2ResourceServer { oauth2 ->
+                oauth2.jwt { jwtConfigurer ->
+                    jwtConfigurer.jwkSetUri(jwkUri)
+                    jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter())
+                }
+            }
+            .exceptionHandling { exception ->
+                exception.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            }
+            .build()
+    }
+
+    @Bean
+    fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
+        val jwtAuthenticationConverter = JwtAuthenticationConverter()
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter { jwt ->
+            val resourceAccess = jwt.getClaim<Map<String, Any>>("resource_access")
+            val clientAccess = resourceAccess?.get("hateoasatscale") as? Map<*, *>
+            val roles = clientAccess?.get("roles") as? Collection<*>
+            roles?.map { role -> SimpleGrantedAuthority("ROLE_$role") }?.toSet() ?: emptySet()
         }
-      }
-      .exceptionHandling { exception ->
-        exception.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-      }
-      .build()
-  }
+        return jwtAuthenticationConverter
 
-  @Bean
-  fun jwtAuthenticationConverter(): JwtAuthenticationConverter {
-    val converter = JwtGrantedAuthoritiesConverter()
-    converter.setAuthoritiesClaimName("roles")
-    converter.setAuthorityPrefix("ROLE_")
-
-    val jwtConverter = JwtAuthenticationConverter()
-    jwtConverter.setJwtGrantedAuthoritiesConverter(converter)
-    return jwtConverter
-  }
+    }
 }

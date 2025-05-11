@@ -60,11 +60,9 @@ export class LayoutComponent implements OnInit {
       );
     this.userService.currentUser.subscribe(user => {
       if (user?.username) {
-        debugger;
         this.currentUser = user;
         this.updateVisibleRoutes();
       } else {
-        debugger;
         this.userService.findCurrentUser().subscribe();
       }
     });

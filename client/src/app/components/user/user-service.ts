@@ -8,7 +8,7 @@ import {environment} from '../../../environments/environment';
 import {AuthService} from '../../shared/authentication';
 import {Users} from '../users/users';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserService extends HttpService {
   readonly currentUser = new BehaviorSubject<User | null>(null);
 

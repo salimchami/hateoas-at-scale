@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable
 @FeignClient("users-service")
 fun interface UsersFeignClient {
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/api/v1/users/{username}")
     fun findBy(@PathVariable username: String): ProviderUserDto
 }
