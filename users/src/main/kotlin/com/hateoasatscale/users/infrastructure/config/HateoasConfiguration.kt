@@ -11,7 +11,7 @@ class HateoasConfiguration {
     @Bean
     fun forwardedHeaderFilter(): FilterRegistrationBean<ForwardedHeaderFilter?> {
         val bean = FilterRegistrationBean<ForwardedHeaderFilter?>()
-        bean.setFilter(ForwardedHeaderFilter())
+        bean.filter = ForwardedHeaderFilter()
         return bean
     }
 }

@@ -27,6 +27,7 @@ abstract class AbstractTests: InitializingBean {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
     @Autowired
     protected lateinit var restTemplate: TestRestTemplate
 
