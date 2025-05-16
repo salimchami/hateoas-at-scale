@@ -4,7 +4,7 @@
   "price": 158.00,
   "_links": {
     "self": {
-      "href": "{{products-service-url}}/products/orange"
+      "href": "http://localhost/api/v1/products/orange"
     },
     "add-to-cart": {
       "href": "http://172.25.0.10:8000/carts-service/carts/orange"

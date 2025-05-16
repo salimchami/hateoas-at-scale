@@ -8,6 +8,13 @@ spring:
   cloud:
     consul:
       enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://keycloak-mock"
+          jwk-set-uri: "http://keycloak-mock"
+        client-id: hateoasatscale
 
 application:
   network:
