@@ -1,15 +1,15 @@
 {
-  "users": [
+  "list": [
     {
       "username": "ada.lovelace",
       "firstname": "Ada",
       "lastname": "Lovelace",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/ada.lovelace"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "all-users": {
-          "href": "{{users-service-url}}/users/all/ada.lovelace"
+          "href": "http://localhost/api/v1/users/all"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -25,7 +25,7 @@
       "lastname": "Turing",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/alan.turing"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -41,7 +41,7 @@
       "lastname": "Darwin",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/charles.darwin"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -57,7 +57,7 @@
       "lastname": "Spence",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/karen.spence"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -73,7 +73,7 @@
       "lastname": "Curie",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/martin.curie"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -89,7 +89,7 @@
       "lastname": "Stallman",
       "_links": {
         "self": {
-          "href": "{{users-service-url}}/users/richard.stallman"
+          "href": "http://localhost/api/v1/users/user-info"
         },
         "products": {
           "href": "http://172.25.0.10:8000/products-service/products"
@@ -107,7 +107,7 @@
   ],
   "_links": {
     "self": {
-      "href": "{{users-service-url}}/users/all/ada.lovelace"
+      "href": "http://localhost/api/v1/users/all"
     }
   }
 }

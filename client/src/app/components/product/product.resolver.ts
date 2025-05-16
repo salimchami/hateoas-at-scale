@@ -5,7 +5,7 @@ import {ProductService} from './product.service';
 import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
-export class ProductResolver  implements Resolve<Product> {
+export class ProductResolver implements Resolve<Product> {
   constructor(private readonly productService: ProductService) {
   }
 

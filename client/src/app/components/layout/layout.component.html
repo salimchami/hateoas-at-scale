@@ -1,15 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
-    class="sidenav"
-    fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
+    class="sidenav"
+    fixedInViewport
   >
     <mat-toolbar>
       <div class="mat-text-align-center">
-        <a routerLink=""><img ngSrc="/logo.png" alt="home" width="79" height="53"></a>
+        <a routerLink=""><img alt="home" height="53" ngSrc="/logo.png" width="79"></a>
       </div>
     </mat-toolbar>
     <mat-nav-list>
@@ -43,17 +43,6 @@
         <button mat-button (click)="logout()">
           <mat-icon aria-label="Logout">logout</mat-icon>
         </button>
-      } @else {
-        <section>
-          <div class="connection-button-row">
-            <button mat-stroked-button [matMenuTriggerFor]="menu">Connection</button>
-            <mat-menu #menu="matMenu">
-              @for (username of usernames; track username) {
-                <button mat-menu-item (click)="connect(username)">{{ username }}</button>
-              }
-            </mat-menu>
-          </div>
-        </section>
       }
     </mat-toolbar>
     <div class="sidenav-scroll-wrapper">

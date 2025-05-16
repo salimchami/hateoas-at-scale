@@ -1,7 +1,5 @@
 package com.hateoasatscale.users.domain
 
-import com.hateoasatscale.roles.Role
-
 class User(
     private val role: Role,
     val username: String,
@@ -11,9 +9,9 @@ class User(
 ) {
     init {
         this.permissions = when (role) {
-            Role.ADMIN -> Permission.entries
-            Role.CUSTOMER -> listOf<Permission>(Permission.READ_OWN_USER, Permission.READ_CART, Permission.READ_PRODUCTS)
-            Role.ANONYMOUS -> listOf<Permission>()
+            Role.ROLE_ADMIN -> Permission.entries
+            Role.ROLE_CUSTOMER -> listOf<Permission>(Permission.READ_OWN_USER, Permission.READ_CART, Permission.READ_PRODUCTS)
+            Role.ROLE_ANONYMOUS -> listOf<Permission>()
         }
     }
 }
