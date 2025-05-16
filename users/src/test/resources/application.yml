@@ -3,6 +3,8 @@ spring:
     name: users-service
   profiles:
     active: test
+  banner:
+    location: classpath:/banner.txt
   cloud:
     consul:
       enabled: false

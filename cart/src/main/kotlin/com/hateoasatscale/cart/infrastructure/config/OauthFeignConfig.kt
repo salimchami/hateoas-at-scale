@@ -1,13 +1,10 @@
 package com.hateoasatscale.cart.infrastructure.config
 
-import feign.RequestInterceptor
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 
 
-@Configuration
+// @Configuration
 class OauthFeignConfig {
     companion object {
         private const val CLIENT_REGISTRATION_ID = "hateoasatscale"
@@ -24,13 +21,13 @@ class OauthFeignConfig {
         this.clientRegistrationRepository = clientRegistrationRepository
     }
 
-    @Bean
-    fun requestInterceptor(): RequestInterceptor {
-        val clientRegistration = clientRegistrationRepository.findByRegistrationId(CLIENT_REGISTRATION_ID)
-        val clientCredentialsFeignManager = OAuthClientCredentialsFeignManager(authorizedClientManager(), clientRegistration)
-        return RequestInterceptor { requestTemplate ->
-            requestTemplate.header("Authorization", "Bearer " + clientCredentialsFeignManager.getAccessToken())
-        }
-
-    }
+    //@Bean
+    //fun requestInterceptor(): RequestInterceptor {
+    //    val clientRegistration = clientRegistrationRepository.findByRegistrationId(CLIENT_REGISTRATION_ID)
+    //    val clientCredentialsFeignManager = OAuthClientCredentialsFeignManager(authorizedClientManager(), clientRegistration)
+    //    return RequestInterceptor { requestTemplate ->
+    //        requestTemplate.header("Authorization", "Bearer " + clientCredentialsFeignManager.getAccessToken())
+    //    }
+//
+    //}
 }
