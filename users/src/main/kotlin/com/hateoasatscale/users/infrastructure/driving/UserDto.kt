@@ -33,13 +33,13 @@ class UserDto @JsonCreator constructor(
 
     private fun addProductsLink(permissions: List<Permission>) {
         if (permissions.containsAll(listOf(Permission.READ_PRODUCTS))) {
-            add(Link.of("$gatewayUrl/$productsServiceName/$productsEndpoint", "products"))
+            add(Link.of("$gatewayUrl/$productsServiceName$productsEndpoint", "products"))
         }
     }
 
     private fun addCartLink(permissions: List<Permission>) {
         if (permissions.containsAll(listOf(Permission.READ_CART))) {
-            add(Link.of("$gatewayUrl/$cartsServiceName/$cartsEndpoint/$username", "cart"))
+            add(Link.of("$gatewayUrl/$cartsServiceName$cartsEndpoint", "cart"))
         }
     }
 

@@ -42,4 +42,4 @@ application:
       carts:
         name: carts-service
         endpoints:
-          add: carts
+          add: /api/v1/carts

@@ -23,8 +23,8 @@ application:
       products:
         name: products-service
         endpoints:
-          list: products
+          list: /api/v1/products
       carts:
         name: carts-service
         endpoints:
-          list: carts
+          list: /api/v1/carts

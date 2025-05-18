@@ -3,7 +3,7 @@ import {AuthConfig, OAuthModuleConfig} from 'angular-oauth2-oidc';
 const appApiHost = 'http://172.25.0.10:8000';
 const keycloakHost = 'http://localhost:8010';
 const keycloakRealm = 'hateoasatscale';
-const keycloakClientId = 'hateoasatscale';
+const keycloakClientId = 'hateoasatscale-front';
 const keycloakRegistrationUrl = `${keycloakHost}/realms/${keycloakRealm}
 /protocol/openid-connect/registrations?client_id=${keycloakClientId}&scope=openid%20profile
 &response_type=code
@@ -13,7 +13,6 @@ const authConfig: AuthConfig = {
   clientId: keycloakClientId,
   responseType: 'code',
   redirectUri: window.location.origin,
-  silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   scope: 'openid profile email',
   useSilentRefresh: true,
   silentRefreshTimeout: 20000,

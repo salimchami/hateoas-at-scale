@@ -16,3 +16,14 @@ spring:
           jwk-set-uri: "http://keycloak-mock"
         client-id: hateoasatscale
 
+application:
+  network:
+    services:
+      products:
+        name: products-service
+        endpoints:
+          find-product: /api/v1/products
+      users:
+        name: users-service
+        endpoints:
+          user-info: /api/v1/users/user-info

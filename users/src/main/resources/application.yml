@@ -45,4 +45,4 @@ application:
       carts:
         name: carts-service
         endpoints:
-          list: carts
+          list: /api/v1/carts

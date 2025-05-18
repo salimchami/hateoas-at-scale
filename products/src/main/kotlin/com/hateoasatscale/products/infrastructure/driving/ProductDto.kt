@@ -21,11 +21,11 @@ class ProductDto @JsonCreator constructor(
         addAddProductToCartLink()
     }
 
-    private fun addAddProductToCartLink() {
-        add(Link.of("$gatewayUrl/$cartsServiceName/$addProductToCartEndpoint/$name", "add-to-cart"))
-    }
-
     private fun addSelfLink() {
         add(linkTo(methodOn(ProductsResource::class.java).find(name)).withSelfRel())
+    }
+
+    private fun addAddProductToCartLink() {
+        add(Link.of("$gatewayUrl/$cartsServiceName$addProductToCartEndpoint/$name", "add-to-cart"))
     }
 }
