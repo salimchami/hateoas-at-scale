@@ -58,7 +58,7 @@ class SecurityConfig {
         val jwtAuthenticationConverter = JwtAuthenticationConverter()
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter { jwt ->
             val resourceAccess = jwt.getClaim<Map<String, Any>>("resource_access")
-            val clientAccess = resourceAccess?.get("hateoasatscale") as? Map<*, *>
+            val clientAccess = resourceAccess?.get("hateoas-front") as? Map<*, *>
             val roles = clientAccess?.get("roles") as? Collection<*>
             roles?.map { role -> SimpleGrantedAuthority("ROLE_$role") }?.toSet() ?: emptySet()
         }

@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: users-service
@@ -20,7 +21,6 @@ spring:
         jwt:
           issuer-uri: "http://keycloak:8080/realms/hateoasatscale"
           jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
-        client-id: hateoasatscale
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -46,3 +46,9 @@ application:
         name: carts-service
         endpoints:
           list: /api/v1/carts
+logging:
+  level:
+    org:
+      apache:
+        http:
+          wire=DEBUG:
