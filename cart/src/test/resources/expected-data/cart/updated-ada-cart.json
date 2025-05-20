@@ -1,13 +1,13 @@
 {
-  "totalPrice": 402.00,
+  "totalPrice": 406.00,
   "user": {
     "username": "ada.lovelace"
   },
   "products": [
     {
       "name": "apple",
-      "totalPrice": 1.00,
-      "quantity": 1,
+      "totalPrice": 5.00,
+      "quantity": 5,
       "_links": {
         "self": {
           "href": "http://localhost/products-service/products/apple"
@@ -17,20 +17,10 @@
     {
       "name": "pineapple",
       "totalPrice": 401.00,
-      "quantity": 1,
+      "quantity": 2,
       "_links": {
         "self": {
           "href": "http://localhost/products-service/products/pineapple"
-        }
-      }
-    },
-    {
-      "name": "strawberry",
-      "totalPrice": 56.99,
-      "quantity": 1,
-      "_links": {
-        "self": {
-          "href": "http://localhost/products-service/products/strawberry"
         }
       }
     }

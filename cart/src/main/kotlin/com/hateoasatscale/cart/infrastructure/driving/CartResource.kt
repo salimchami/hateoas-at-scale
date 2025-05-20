@@ -1,6 +1,8 @@
 package com.hateoasatscale.cart.infrastructure.driving
 
+import com.hateoasatscale.cart.domain.api.AddToCart
 import com.hateoasatscale.cart.domain.api.FindCart
+import com.hateoasatscale.cart.domain.entities.add.ProductToAdd
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.EntityModel
 import org.springframework.http.ResponseEntity
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/carts")
-class CartResource(@Autowired private val findCart: FindCart) {
+class CartResource(@Autowired private val findCart: FindCart,
+    @Autowired private val addToCart: AddToCart
+) {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
@@ -25,8 +29,9 @@ class CartResource(@Autowired private val findCart: FindCart) {
 
     @PatchMapping
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
-    fun addToCart(@AuthenticationPrincipal principal: Jwt, @RequestBody products: ProductsToUpdateDto): ResponseEntity<ProductsToUpdateDto> {
+    fun addToCart(@AuthenticationPrincipal principal: Jwt, @RequestBody productToAdd: ProductToUpdateDto): ResponseEntity<Unit> {
         val username = principal.claims["preferred_username"] as String
+        addToCart.theProduct(username, ProductToAdd(productToAdd.name, productToAdd.quantity))
         return ResponseEntity.ok().build()
     }
 }

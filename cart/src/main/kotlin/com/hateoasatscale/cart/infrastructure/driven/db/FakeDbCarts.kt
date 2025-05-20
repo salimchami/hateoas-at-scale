@@ -21,4 +21,19 @@ class FakeDbCarts {
             .filter { it.key.username == username }
             .flatMap { it.value }
     }
+
+    fun updateProduct(username: String, productName: String, quantityToAdd: Int) {
+        carts.compute(DbUser(username)) { _, productList ->
+            productList?.map { product -> updateQuantity(product, productName, quantityToAdd) }?.toMutableList()
+                ?: mutableListOf()
+        }
+    }
+
+    private fun updateQuantity(product: DbProduct, productName: String, quantityToAdd: Int): DbProduct {
+        return if (product.name == productName) {
+            product.copy(quantity = product.quantity + quantityToAdd) // Add to the existing quantity
+        } else {
+            product
+        }
+    }
 }

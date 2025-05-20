@@ -33,14 +33,16 @@ class CartResourceTest : AbstractTests() {
     @Test
     @WithJwtMock(UserMock.ADA)
     fun `should update a user cart`() {
-        val productsToUpdate = toRequestedJson("cart", "added-products-to-ada-cart")
-        val expectedCart = toExpectedJson("cart", "updated-ada-cart")
-        http.perform(patch("/api/v1/carts").content(productsToUpdate))
+        val newCartProducts = toRequestedJson("cart", "product-to-add")
+        `when`(productsProvider.findBy(anyString()))
+            .thenReturn(ProductsFixture.apple)
+            .thenReturn(ProductsFixture.apple)
+            .thenReturn(ProductsFixture.pineapple)
+        http.perform(patch("/api/v1/carts").content(newCartProducts))
             .andExpect(status().isOk)
 
         `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
-        `when`(productsProvider.findBy(anyString())).thenReturn(ProductsFixture.apple)
-            .thenReturn(ProductsFixture.pineapple)
+        val expectedCart = toExpectedJson("cart", "updated-ada-cart")
         http.perform(get(CARTS)).andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
 
     }

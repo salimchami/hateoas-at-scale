@@ -12,13 +12,16 @@ class ProductsAdapter(
     private val productsFeignClient: ProductsFeignClient
 ) : ProductsRepository {
     override fun findBy(names: List<String>): List<Product> {
-        val products = names.map { name -> productsFeignClient.findBy(name) }
-        return products.map { product ->
-            val links = HateoasLinkRewriter.rewrite(product.links, "products-service")
-            Product(
-                product.name,
-                product.price,
-                links.map { link -> Link(link.href, link.rel.value()) })
-        }
+        return names.map { name -> this.findBy(name) }
+    }
+
+    override fun findBy(name: String): Product {
+        val product = productsFeignClient.findBy(name)
+        val links = HateoasLinkRewriter.rewrite(product.links, "products-service")
+        return Product(
+            product.name,
+            product.price,
+            links.map { link -> Link(link.href, link.rel.value()) },
+        )
     }
 }

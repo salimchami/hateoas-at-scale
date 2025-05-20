@@ -16,4 +16,8 @@ class CartsAdapter : CartsRepository {
         val dbProducts = db.findBy(username)
         return Cart(username, dbProducts.map { product -> CartProduct(product.name, product.quantity) })
     }
+
+    override fun updateProductQuantity(username: String, productName: String, quantity: Int) {
+        db.updateProduct(username, productName, quantity)
+    }
 }
