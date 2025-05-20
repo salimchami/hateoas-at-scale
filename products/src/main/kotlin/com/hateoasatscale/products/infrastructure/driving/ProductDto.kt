@@ -26,6 +26,6 @@ class ProductDto @JsonCreator constructor(
     }
 
     private fun addAddProductToCartLink() {
-        add(Link.of("$gatewayUrl/$cartsServiceName$addProductToCartEndpoint/$name", "add-to-cart"))
+        add(Link.of("$gatewayUrl/$cartsServiceName$addProductToCartEndpoint", "add-to-cart"))
     }
 }

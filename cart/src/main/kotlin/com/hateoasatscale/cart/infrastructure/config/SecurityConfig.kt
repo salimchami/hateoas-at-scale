@@ -63,6 +63,5 @@ class SecurityConfig {
             roles?.map { role -> SimpleGrantedAuthority("ROLE_$role") }?.toSet() ?: emptySet()
         }
         return jwtAuthenticationConverter
-
     }
 }

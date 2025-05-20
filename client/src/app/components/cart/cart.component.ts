@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data: any) => {
-      this.cart = this.cartService.updateCartFrom(data.cart);
+      this.cart = data.cart;
     });
   }
 

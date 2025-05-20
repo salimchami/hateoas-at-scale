@@ -19,14 +19,6 @@ export class LocalStorageService {
     this.setItem('selectedProductLink', href);
   }
 
-  addToCart(cartProducts: string) {
-    this.setItem('cartProducts', cartProducts);
-  }
-
-  getCartProducts() {
-    return this.getItem<string>('cartProducts');
-  }
-
   private setItem(key: string, value: any): void {
     try {
       const jsonValue = JSON.stringify(value);
@@ -44,9 +36,5 @@ export class LocalStorageService {
       console.error('Error reading from local storage', error);
       return null;
     }
-  }
-
-  private removeItem(key: string): void {
-    localStorage.removeItem(key);
   }
 }

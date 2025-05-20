@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: carts-service
@@ -27,3 +28,8 @@ application:
         name: users-service
         endpoints:
           user-info: /api/v1/users/user-info
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG

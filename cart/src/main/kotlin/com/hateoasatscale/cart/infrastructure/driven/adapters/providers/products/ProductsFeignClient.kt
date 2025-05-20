@@ -4,10 +4,9 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
-// @FeignClient(value = "products-service", configuration = [OauthFeignConfig::class])
 @FeignClient(value = "products-service")
 fun interface ProductsFeignClient {
 
-    @GetMapping("\$application.network.services.products.endpoints.find-product")
+    @GetMapping("/api/v1/products/{name}")
     fun findBy(@PathVariable name: String): ProviderProductDto
 }

@@ -3,6 +3,8 @@ package com.hateoasatscale.cart.infrastructure.driving
 import com.hateoasatscale.cart.domain.api.FindCart
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.hateoas.EntityModel
+import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 class CartResource(@Autowired private val findCart: FindCart) {
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     fun cartInfo(@AuthenticationPrincipal principal: Jwt): EntityModel<CartDto> {
         val username = principal.claims["preferred_username"] as String
         val cart = findCart.by(username)
@@ -20,10 +23,10 @@ class CartResource(@Autowired private val findCart: FindCart) {
         return EntityModel.of(CartDto(cart.totalPrice, user, products))
     }
 
-    @PostMapping
-    @ResponseStatus(code = org.springframework.http.HttpStatus.CREATED)
-    fun addCart(@AuthenticationPrincipal principal: Jwt, @RequestBody products: List<ProductDto>) {
+    @PatchMapping
+    @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
+    fun addToCart(@AuthenticationPrincipal principal: Jwt, @RequestBody products: ProductsToUpdateDto): ResponseEntity<ProductsToUpdateDto> {
         val username = principal.claims["preferred_username"] as String
-
+        return ResponseEntity.ok().build()
     }
 }

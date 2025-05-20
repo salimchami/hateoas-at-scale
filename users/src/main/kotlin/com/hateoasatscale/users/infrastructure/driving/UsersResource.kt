@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -22,6 +23,14 @@ class UsersResource(
     @GetMapping("/user-info")
     fun userInfo(@AuthenticationPrincipal principal: Jwt): ResponseEntity<UserDto> {
         val username = principal.claims["preferred_username"] as String
+        val user = findUser.by(username)
+        val userDto = this.userMapping.domainToDto(user)
+        return ResponseEntity.ok(userDto)
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_FEIGN_CLIENT')")
+    @GetMapping("/user-info/{username}")
+    fun userInfo(@PathVariable("username") username: String): ResponseEntity<UserDto> {
         val user = findUser.by(username)
         val userDto = this.userMapping.domainToDto(user)
         return ResponseEntity.ok(userDto)
