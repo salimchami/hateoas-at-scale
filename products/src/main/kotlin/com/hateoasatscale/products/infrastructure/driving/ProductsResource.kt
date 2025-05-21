@@ -2,7 +2,7 @@ package com.hateoasatscale.products.infrastructure.driving
 
 import com.hateoasatscale.products.domain.FindProduct
 import com.hateoasatscale.products.domain.FindProducts
-import org.springframework.hateoas.EntityModel
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,10 +19,10 @@ class ProductsResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping("/{name}")
-    fun find(@PathVariable name: String): EntityModel<ProductDto> {
+    fun find(@PathVariable name: String): ResponseEntity<ProductDto> {
         val product = findProduct.by(name)
         val cartsStartupLinks = cartsFeignClient.startupLinks()
-        return EntityModel.of(
+        return ResponseEntity.ok(
             ProductDto(
                 cartsStartupLinks,
                 product.name,
@@ -34,10 +34,10 @@ class ProductsResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping()
-    fun findAll(): EntityModel<ProductsDto> {
+    fun findAll(): ResponseEntity<ProductsDto> {
         val products = findProducts.all()
         val cartsStartupLinks = cartsFeignClient.startupLinks()
-        return EntityModel.of(
+        return ResponseEntity.ok(
             ProductsDto(
                 products.map { product ->
                     ProductDto(

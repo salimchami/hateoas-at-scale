@@ -1,8 +1,8 @@
 package com.hateoasatscale.products.infrastructure.driving
 
-import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,8 +14,8 @@ class StartupResource() {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
-    fun startupLinks(): EntityModel<List<Link>> {
-        return EntityModel.of(
+    fun startupLinks(): ResponseEntity<List<Link>> {
+        return ResponseEntity.ok(
             listOf(
                 WebMvcLinkBuilder.linkTo(ProductsResource::class.java.methods.first { it.name == "findAll" })
                     .withRel { "products" },
