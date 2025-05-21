@@ -14,7 +14,6 @@ abstract class AbstractTests {
 
     @Autowired
     protected lateinit var mockMvc: MockMvc
-
     @MockitoBean
     protected lateinit var cartsFeignClient: CartsFeignClient
     @MockitoBean

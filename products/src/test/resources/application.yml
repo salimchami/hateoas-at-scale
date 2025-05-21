@@ -15,12 +15,3 @@ spring:
           issuer-uri: "http://keycloak-mock"
           jwk-set-uri: "http://keycloak-mock"
         client-id: hateoasatscale
-
-application:
-  network:
-    gateway-url: http://172.25.0.10:8000
-    services:
-      carts:
-        name: carts-service
-        endpoints:
-          add: /api/v1/carts

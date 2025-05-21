@@ -19,6 +19,8 @@ class StartupResource() {
             listOf(
                 WebMvcLinkBuilder.linkTo(CartResource::class.java.methods.first { it.name == "myCart" })
                     .withRel { "my-cart" },
+                WebMvcLinkBuilder.linkTo(CartResource::class.java.methods.first { it.name == "addToCart" })
+                    .withRel { "add-product" },
             ),
         )
     }

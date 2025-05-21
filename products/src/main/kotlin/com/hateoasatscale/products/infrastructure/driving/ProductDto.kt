@@ -8,9 +8,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 class ProductDto @JsonCreator constructor(
-    private val gatewayUrl: String,
-    private val cartsServiceName: String,
-    private val addProductToCartEndpoint: String,
+    private val cartsLinks: List<Link>,
     val name: String,
     val reference: String,
     val price: BigDecimal
@@ -18,14 +16,14 @@ class ProductDto @JsonCreator constructor(
 
     init {
         addSelfLink()
-        addAddProductToCartLink()
+        addFirstLinksFromCarts()
     }
 
     private fun addSelfLink() {
         add(linkTo(methodOn(ProductsResource::class.java).find(name)).withSelfRel())
     }
 
-    private fun addAddProductToCartLink() {
-        add(Link.of("$gatewayUrl/$cartsServiceName$addProductToCartEndpoint", "add-to-cart"))
+    private fun addFirstLinksFromCarts() {
+        cartsLinks.forEach { link -> add(link) }
     }
 }

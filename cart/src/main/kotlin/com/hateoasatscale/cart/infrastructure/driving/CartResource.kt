@@ -12,12 +12,12 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/carts")
+@RequestMapping("/api/v1/cart")
 class CartResource(@Autowired private val findCart: FindCart,
     @Autowired private val addToCart: AddToCart
 ) {
 
-    @GetMapping
+    @GetMapping("my-cart")
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     fun myCart(@AuthenticationPrincipal principal: Jwt): EntityModel<CartDto> {
         val username = principal.claims["preferred_username"] as String
@@ -27,7 +27,7 @@ class CartResource(@Autowired private val findCart: FindCart,
         return EntityModel.of(CartDto(cart.totalPrice, user, products))
     }
 
-    @PatchMapping
+    @PatchMapping("add-product")
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     fun addToCart(@AuthenticationPrincipal principal: Jwt, @RequestBody productToAdd: ProductToUpdateDto): ResponseEntity<Unit> {
         val username = principal.claims["preferred_username"] as String
