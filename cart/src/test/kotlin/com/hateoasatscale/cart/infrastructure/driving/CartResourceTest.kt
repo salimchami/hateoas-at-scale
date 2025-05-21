@@ -1,7 +1,8 @@
 package com.hateoasatscale.cart.infrastructure.driving
 
 import com.hateoasatscale.cart.AbstractTests
-import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.CARTS
+import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.ADD_PRODUCT
+import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.MY_CART
 import com.hateoasatscale.cart.UserMock
 import com.hateoasatscale.cart.WithJwtMock
 import com.hateoasatscale.cart.utils.JsonReader.toExpectedJson
@@ -20,13 +21,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class CartResourceTest : AbstractTests() {
 
     @Test
-    @WithJwtMock(UserMock.ADA)
+    @WithJwtMock(UserMock.CHARLES)
     fun `should return cart info with links`() {
         `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
         `when`(productsProvider.findBy(anyString())).thenReturn(ProductsFixture.apple)
             .thenReturn(ProductsFixture.pineapple)
-        val expectedCart = toExpectedJson("cart", "ada-cart")
-        http.perform(get(CARTS))
+        val expectedCart = toExpectedJson("cart", "charles-cart")
+        http.perform(get(MY_CART))
             .andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
     }
 
@@ -38,19 +39,12 @@ class CartResourceTest : AbstractTests() {
             .thenReturn(ProductsFixture.apple)
             .thenReturn(ProductsFixture.apple)
             .thenReturn(ProductsFixture.pineapple)
-        http.perform(patch("/api/v1/carts").content(newCartProducts))
+        http.perform(patch(ADD_PRODUCT).content(newCartProducts))
             .andExpect(status().isOk)
 
         `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
         val expectedCart = toExpectedJson("cart", "updated-ada-cart")
-        http.perform(get(CARTS)).andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
+        http.perform(get(MY_CART)).andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
 
-    }
-
-    @Test
-    @WithJwtMock(UserMock.ADA)
-    fun `should run test`() {
-        http.perform(get("$CARTS/test"))
-            .andExpect(content().string("it works!"))
     }
 }

@@ -31,7 +31,8 @@ abstract class AbstractTests: InitializingBean {
     companion object {
         class Urls {
             companion object {
-                const val CARTS: String = "/api/v1/cart"
+                const val MY_CART: String = "/api/v1/cart/my-cart"
+                const val ADD_PRODUCT: String = "/api/v1/cart/add-product"
             }
         }
     }

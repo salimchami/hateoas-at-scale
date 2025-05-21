@@ -15,6 +15,6 @@ class CartDto @JsonCreator constructor(
     }
 
     private fun addSelfLink() {
-        add(linkTo(CartResource::class.java.methods.first { it.name == "cartInfo" }).withSelfRel())
+        add(linkTo(CartResource::class.java.methods.first { it.name == "myCart" }).withSelfRel())
     }
 }
