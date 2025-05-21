@@ -1,4 +1,4 @@
-package com.hateoasatscale.cart.infrastructure.driving
+package com.hateoasatscale.products.infrastructure.driving
 
 import org.springframework.hateoas.EntityModel
 import org.springframework.hateoas.Link
@@ -17,8 +17,8 @@ class StartupResource() {
     fun startupLinks(): EntityModel<List<Link>> {
         return EntityModel.of(
             listOf(
-                WebMvcLinkBuilder.linkTo(CartResource::class.java.methods.first { it.name == "myCart" })
-                    .withRel { "my-cart" },
+                WebMvcLinkBuilder.linkTo(ProductsResource::class.java.methods.first { it.name == "findAll" })
+                    .withRel { "products" },
             ),
         )
     }
