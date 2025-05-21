@@ -1,10 +1,9 @@
 package com.hateoasatscale.cart.infrastructure.driving
 
 import com.fasterxml.jackson.annotation.JsonCreator
+import java.math.BigDecimal
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
-import java.math.BigDecimal
 
 class CartDto @JsonCreator constructor(
     val totalPrice: BigDecimal,
@@ -16,6 +15,6 @@ class CartDto @JsonCreator constructor(
     }
 
     private fun addSelfLink() {
-        add(linkTo(methodOn(CartResource::class.java).cartInfo(user.username)).withSelfRel())
+        add(linkTo(CartResource::class.java.methods.first { it.name == "myCart" }).withSelfRel())
     }
 }

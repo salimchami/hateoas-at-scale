@@ -5,14 +5,10 @@ import com.hateoasatscale.users.domain.Permission
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 
 class UserDto @JsonCreator constructor(
-    private val gatewayUrl: String,
-    private val productsServiceName: String,
-    private val productsEndpoint: String,
-    private val cartsServiceName: String,
-    private val cartsEndpoint: String,
+    private val productsLinks: List<Link>,
+    private val cartsLinks: List<Link>,
     private val permissions: List<Permission>,
     val username: String,
     val firstname: String,
@@ -20,42 +16,30 @@ class UserDto @JsonCreator constructor(
 ) : RepresentationModel<UserDto>() {
 
     init {
-        addSelfLink(permissions)
-        addAllUsersLink(permissions)
-        addProductsLink(permissions)
-        addCartLink(permissions)
+        addSelfLink()
+        addAllUsersLink()
+        addFirstLinksFromProducts()
+        addFirstLinksFromCarts()
     }
 
-    private fun addAllUsersLink(permissions: List<Permission>) {
+    private fun addFirstLinksFromCarts() {
+        cartsLinks.forEach { link -> add(link) }
+    }
+
+    private fun addFirstLinksFromProducts() {
+        productsLinks.forEach { link -> add(link) }
+    }
+
+    private fun addAllUsersLink() {
         if (permissions.contains(Permission.READ_ALL_USERS)) {
-            add(
-                linkTo(
-                    methodOn(UsersResource::class.java)
-                        .findAll(this.username)
-                ).withRel("all-users")
-            )
+            add(linkTo(UsersResource::class.java.methods.first { it.name == "findAll" }).withRel("all-users"))
         }
     }
 
-    private fun addProductsLink(permissions: List<Permission>) {
-        if (permissions.containsAll(listOf(Permission.READ_PRODUCTS))) {
-            add(Link.of("$gatewayUrl/$productsServiceName/$productsEndpoint", "products"))
-        }
-    }
-
-    private fun addCartLink(permissions: List<Permission>) {
-        if (permissions.containsAll(listOf(Permission.READ_CART))) {
-            add(Link.of("$gatewayUrl/$cartsServiceName/$cartsEndpoint/$username", "cart"))
-        }
-    }
-
-    private fun addSelfLink(permissions: List<Permission>) {
+    private fun addSelfLink() {
         if (permissions.containsAll(listOf(Permission.READ_OWN_USER))) {
             add(
-                linkTo(
-                    methodOn(UsersResource::class.java)
-                        .userInfo(this.username)
-                ).withSelfRel()
+                linkTo(UsersResource::class.java.methods.first { it.name == "userInfo" }).withSelfRel(),
             )
         }
     }

@@ -6,7 +6,13 @@
       "price": 1.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/apple"
+          "href": "http://localhost/api/v1/products/apple"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -16,7 +22,13 @@
       "price": 1.54,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/banana"
+          "href": "http://localhost/api/v1/products/banana"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -26,7 +38,13 @@
       "price": 100.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/kiwi"
+          "href": "http://localhost/api/v1/products/kiwi"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -36,7 +54,13 @@
       "price": 158.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/orange"
+          "href": "http://localhost/api/v1/products/orange"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -46,7 +70,13 @@
       "price": 99.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/pineapple"
+          "href": "http://localhost/api/v1/products/pineapple"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -56,7 +86,13 @@
       "price": 56.99,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/strawberry"
+          "href": "http://localhost/api/v1/products/strawberry"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -66,7 +102,13 @@
       "price": 1000.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/watermelon"
+          "href": "http://localhost/api/v1/products/watermelon"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     },
@@ -76,14 +118,20 @@
       "price": 154.00,
       "_links": {
         "self": {
-          "href": "{{products-service-url}}/products/grapes"
+          "href": "http://localhost/api/v1/products/grapes"
+        },
+        "my-cart": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
+        },
+        "add-product": {
+          "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
     }
   ],
   "_links": {
     "self": {
-      "href": "{{products-service-url}}/products"
+      "href": "http://localhost/api/v1/products"
     }
   }
 }

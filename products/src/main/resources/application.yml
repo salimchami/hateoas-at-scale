@@ -14,6 +14,16 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://keycloak:8080/realms/hateoasatscale"
+          jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
+
+        client-id: hateoasatscale
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 server:
   port: 8080

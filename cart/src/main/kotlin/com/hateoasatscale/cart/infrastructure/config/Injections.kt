@@ -1,5 +1,6 @@
 package com.hateoasatscale.cart.infrastructure.config
 
+import com.hateoasatscale.cart.domain.CartAddition
 import com.hateoasatscale.cart.domain.CartSearch
 import com.hateoasatscale.cart.domain.spi.CartsRepository
 import com.hateoasatscale.cart.domain.spi.ProductsRepository
@@ -16,4 +17,10 @@ class Injections {
         productsRepository: ProductsRepository,
         usersRepository: UsersRepository
     ) = CartSearch(cartsRepository, productsRepository, usersRepository)
+
+    @Bean
+    fun AddToCart(
+        productsRepository: ProductsRepository,
+        cartRepository: CartsRepository
+    ) = CartAddition(productsRepository, cartRepository)
 }

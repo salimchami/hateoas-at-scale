@@ -1,1 +1,44 @@
-<p>users works!</p>
+<div class="users-container">
+  <h1 class="mat-display-1">User List</h1>
+
+  <div *ngIf="users?.list?.length; else noUsers" class="users-content">
+    <!-- Users Table -->
+    <mat-card class="users-card">
+      <mat-card-header>
+        <mat-card-title>List of Users</mat-card-title>
+        <mat-card-subtitle>Total: {{ users.list.length }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <table class="users-table">
+          <thead>
+          <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users.list" class="user-row">
+            <td>{{ user.username }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- No Users Template -->
+  <ng-template #noUsers>
+    <div class="empty-users-container">
+      <mat-card class="no-users-card">
+        <mat-icon class="no-users-icon">person_off</mat-icon>
+        <h2>No Users Found</h2>
+        <p>There are currently no users in the system.</p>
+      </mat-card>
+    </div>
+  </ng-template>
+</div>

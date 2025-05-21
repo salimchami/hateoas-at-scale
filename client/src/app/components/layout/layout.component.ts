@@ -37,15 +37,12 @@ import {LocalStorageService} from '../../shared/local-storage.service';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent implements OnInit {
+  isHandset$!: Observable<boolean>;
+  currentUser: User | null = null;
   private readonly allRoutes = routes
     .find(r => r.path === '' && r.children)?.children || [];
-
   private readonly visibleRoutesSubject = new BehaviorSubject<Route[]>([]);
   visibleRoutes$ = this.visibleRoutesSubject.asObservable();
-
-  isHandset$!: Observable<boolean>;
-  usernames: Array<string> = [];
-  currentUser: User | null = null;
 
   constructor(
     private readonly userService: UserService,
@@ -56,39 +53,23 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usernames = this.userService.usernames;
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map(result => result.matches),
         shareReplay()
       );
-    this.userService.currentUser$.subscribe(user => {
+    this.userService.currentUser.subscribe(user => {
       if (user?.username) {
         this.currentUser = user;
         this.updateVisibleRoutes();
       } else {
-        this.currentUser = null;
+        this.userService.findCurrentUser().subscribe();
       }
     });
-    if (!this.userService.currentUser) {
-      this.userService.refreshCurrentUser(false).subscribe();
-    } else {
-      this.updateVisibleRoutes();
-    }
-
-  }
-
-  connect(username: string) {
-    this.userService.findUser(username).subscribe();
-  }
-
-  private updateVisibleRoutes() {
-    const visibleRoutes = this.allRoutes.filter(route => this.hasAccess(route));
-    this.visibleRoutesSubject.next(visibleRoutes);
   }
 
   hasAccess(route: Route): boolean {
-    const userLinks = this.userService.currentUser?._links;
+    const userLinks = this.currentUser?._links;
     const routeIsHome = route.path === 'home';
     const routeLinkName = route.data?.['linkName'] ?? route.path;
     const userLinksContainsRoute = !!userLinks && Object.keys(userLinks).some(linkKey => linkKey === routeLinkName)
@@ -97,8 +78,12 @@ export class LayoutComponent implements OnInit {
 
   logout() {
     this.userService.logout();
-    this.currentUser = null;
     this.router.navigate(['/home']).then(() => this.updateVisibleRoutes());
     this.localStorageService.clear();
+  }
+
+  private updateVisibleRoutes() {
+    const visibleRoutes = this.allRoutes.filter(route => this.hasAccess(route));
+    this.visibleRoutesSubject.next(visibleRoutes);
   }
 }

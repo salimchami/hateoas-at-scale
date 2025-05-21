@@ -1,13 +1,7 @@
-import {HateoasModel} from '../../shared/hateoas.model';
+import {CartProduct} from './cart-product';
 
 class CartUser {
   constructor(readonly username: string) {
-  }
-}
-
-class CartProduct extends HateoasModel {
-  constructor(readonly name: string, readonly totalPrice: number, readonly quantity: number) {
-    super();
   }
 }
 

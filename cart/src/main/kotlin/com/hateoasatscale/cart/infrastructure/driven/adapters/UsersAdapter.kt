@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class UsersAdapter(private val usersFeignClient: UsersFeignClient) : UsersRepository {
     override fun findBy(username: String): User {
-        val user = usersFeignClient.findBy(username)
+        val user = usersFeignClient.findBy()
         return User(user.username)
     }
 }

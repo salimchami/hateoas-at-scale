@@ -20,4 +20,7 @@ export class ProductService extends HttpService {
     }
     throw new Error('No product selected...');
   }
+
+  addToCart(product: Product, quantity: number) {
+  }
 }

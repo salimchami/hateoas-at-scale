@@ -1,9 +1,25 @@
 name: "HATEOAS at scale"
 
 services:
+  keycloak:
+    container_name: "hateoasatscale-keycloak"
+    image: "quay.io/keycloak/keycloak:latest"
+    restart: "unless-stopped"
+    ports:
+      - "8010:8080"
+    command: ["start-dev", "--import-realm", "--log-level=INFO"]
+    environment:
+      KC_HEALTH_ENABLED: true
+      KC_BOOTSTRAP_ADMIN_USERNAME: "admin"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "admin"
+      KC_FEATURES: token-exchange,admin-fine-grained-authz
+    volumes:
+        - ./keycloak/data:/opt/keycloak/data/import
+    networks:
+      - hateoas-at-scale-nw
 
   kong-gateway:
-    image: kong/kong-gateway:3.10.0.0
+    image: "kong/kong-gateway:3.10.0.0"
     environment:
       KONG_DATABASE: off
       KONG_PROXY_ACCESS_LOG: /dev/stdout
@@ -67,8 +83,13 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-#    deploy:
-#      replicas: 3
+      keycloak:
+        condition: service_started
+    deploy:
+      replicas: 1
+    ports:
+      - "8080:8080"
+      - "4451:4451"
     networks:
       - hateoas-at-scale-nw
 
@@ -80,8 +101,13 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-#    deploy:
-#      replicas: 3
+      keycloak:
+        condition: service_started
+    deploy:
+      replicas: 1
+    ports:
+      - "8081:8080"
+      - "4452:4451"
     networks:
       - hateoas-at-scale-nw
 
@@ -93,8 +119,13 @@ services:
     depends_on:
       consul-service:
         condition: service_healthy
-#    deploy:
-#      replicas: 3
+      keycloak:
+        condition: service_started
+    deploy:
+      replicas: 1
+    ports:
+      - "8082:8080"
+      - "4453:4451"
     networks:
       - hateoas-at-scale-nw
 

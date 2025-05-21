@@ -1,30 +1,48 @@
 package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.AbstractTests
-import com.hateoasatscale.users.utils.JsonReader.strip
+import com.hateoasatscale.users.AbstractTests.Companion.Urls.Companion.ALL_USERS
+import com.hateoasatscale.users.AbstractTests.Companion.Urls.Companion.USER_INFO
+import com.hateoasatscale.users.UserMock
+import com.hateoasatscale.users.WithJwtMock
 import com.hateoasatscale.users.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.web.client.getForEntity
-import org.springframework.http.HttpStatus
+import org.mockito.Mockito.`when`
+import org.springframework.hateoas.Link
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class UserResourceTest : AbstractTests() {
 
     @Test
+    @WithJwtMock(UserMock.ADA)
     fun `should find user info with links from username`() {
-        val expectedUser =
-            toExpectedJson("users/user", "user-ada").replace("{{users-service-url}}", baseUrl)
-        val entity = restTemplate.getForEntity<String>("$baseUrl/users/ada.lovelace")
-        assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedUser)
+        `when`(cartsFeignClient.startupLinks()).thenReturn(
+            listOf(
+                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "my-cart"),
+                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "add-product"),
+            ),
+        )
+        `when`(productsFeignClient.startupLinks()).thenReturn(
+            listOf(
+                Link.of("http://172.25.0.10:8000/products-service/api/v1/products", "products"),
+            ),
+        )
+        val expectedUser = toExpectedJson("users/user", "user-ada")
+        val result = mockMvc.perform(get(USER_INFO))
+            .andExpect(status().isOk)
+            .andReturn()
+        assertThat(result.response.contentAsString).isEqualTo(expectedUser)
     }
 
     @Test
+    @WithJwtMock(UserMock.ADA)
     fun `should find all user`() {
-        val expectedUser =
-            toExpectedJson("users", "all").replace("{{users-service-url}}", baseUrl)
-        val entity = restTemplate.getForEntity<String>("$baseUrl/users/all/ada.lovelace")
-        assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(entity.body?.let { strip(it) }).isEqualTo(expectedUser)
+        val expectedUser = toExpectedJson("users", "all")
+        val result = mockMvc.perform(get(ALL_USERS))
+            .andExpect { status().isOk }
+            .andReturn()
+        assertThat(result.response.contentAsString).isEqualTo(expectedUser)
     }
 }

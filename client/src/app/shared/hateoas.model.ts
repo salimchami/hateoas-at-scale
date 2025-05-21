@@ -1,3 +1,3 @@
 export class HateoasModel {
-    public _links: any;
+  public _links: any;
 }

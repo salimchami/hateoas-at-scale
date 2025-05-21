@@ -1,6 +1,5 @@
 package com.hateoasatscale.users.domain
 
-import com.hateoasatscale.roles.Role
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -23,9 +22,9 @@ class UserTest {
         @JvmStatic
         fun userFromRoleParams(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(Role.ADMIN, Permission.entries),
-                Arguments.of(Role.CUSTOMER, listOf(Permission.READ_OWN_USER, Permission.READ_CART, Permission.READ_PRODUCTS)),
-                Arguments.of(Role.ANONYMOUS, listOf<Permission>()),
+                Arguments.of(Role.ROLE_ADMIN, Permission.entries),
+                Arguments.of(Role.ROLE_CUSTOMER, listOf(Permission.READ_OWN_USER, Permission.READ_CART, Permission.READ_PRODUCTS)),
+                Arguments.of(Role.ROLE_ANONYMOUS, listOf<Permission>()),
             )
         }
     }

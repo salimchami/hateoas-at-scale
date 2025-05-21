@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: users-service
@@ -14,6 +15,14 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "http://keycloak:8080/realms/hateoasatscale"
+          jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 server:
   port: 8080
@@ -25,15 +34,9 @@ management:
   server:
     port: 4451
 
-application:
-  network:
-    gateway-url: http://172.25.0.10:8000
-    services:
-      products:
-        name: products-service
-        endpoints:
-          list: products
-      carts:
-        name: carts-service
-        endpoints:
-          list: carts
+logging:
+  level:
+    org:
+      apache:
+        http:
+          wire=DEBUG:

@@ -40,7 +40,7 @@
     background-color: #102030;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
 }
 
@@ -230,4 +230,13 @@
       min-width: 130px;
     }
   }
+}
+
+.added-to-cart {
+  color: #66ef66;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
