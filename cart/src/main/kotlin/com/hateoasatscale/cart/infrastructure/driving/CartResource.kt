@@ -4,7 +4,6 @@ import com.hateoasatscale.cart.domain.api.AddToCart
 import com.hateoasatscale.cart.domain.api.FindCart
 import com.hateoasatscale.cart.domain.entities.add.ProductToAdd
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.hateoas.EntityModel
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -19,12 +18,12 @@ class CartResource(@Autowired private val findCart: FindCart,
 
     @GetMapping("my-cart")
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
-    fun myCart(@AuthenticationPrincipal principal: Jwt): EntityModel<CartDto> {
+    fun myCart(@AuthenticationPrincipal principal: Jwt): ResponseEntity<CartDto> {
         val username = principal.claims["preferred_username"] as String
         val cart = findCart.by(username)
         val user = UserDto(cart.username)
         val products = cart.products.map { ProductDto(it.name, it.totalPrice, it.quantity, it.links) }
-        return EntityModel.of(CartDto(cart.totalPrice, user, products))
+        return ResponseEntity.ok(CartDto(cart.totalPrice, user, products))
     }
 
     @PatchMapping("add-product")
