@@ -1,32 +1,23 @@
 package com.hateoasatscale.users.infrastructure.driving
 
 import com.hateoasatscale.users.domain.User
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.hateoas.Link
 import org.springframework.stereotype.Component
 
 @Component
-class UserMapping(
-    @Value("\${application.network.gateway-url}") private val gatewayUrl: String,
-    @Value("\${application.network.services.products.name}") private val productsServiceName: String,
-    @Value("\${application.network.services.products.endpoints.list}") private val productsEndpoint: String,
-    @Value("\${application.network.services.carts.name}") private val cartsServiceName: String,
-    @Value("\${application.network.services.carts.endpoints.list}") private val cartsEndpoint: String,
-) {
-    fun domainToDto(user: User): UserDto {
+class UserMapping() {
+    fun domainToDto(user: User, productsLinks: List<Link>, cartsLinks: List<Link>): UserDto {
         return UserDto(
-            gatewayUrl,
-            productsServiceName,
-            productsEndpoint,
-            cartsServiceName,
-            cartsEndpoint,
+            productsLinks,
+            cartsLinks,
             user.permissions,
             user.username,
             user.firstname,
-            user.lastname
+            user.lastname,
         )
     }
 
-    fun domainToDto(users: List<User>): List<UserDto> {
-        return users.map { this.domainToDto(it) }
+    fun domainToInfoDto(users: List<User>): List<UserInfoDto> {
+        return users.map { UserInfoDto(it.username, it.firstname, it.lastname) }
     }
 }

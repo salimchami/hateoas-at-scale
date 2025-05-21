@@ -19,7 +19,7 @@ class CartResource(@Autowired private val findCart: FindCart,
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
-    fun cartInfo(@AuthenticationPrincipal principal: Jwt): EntityModel<CartDto> {
+    fun myCart(@AuthenticationPrincipal principal: Jwt): EntityModel<CartDto> {
         val username = principal.claims["preferred_username"] as String
         val cart = findCart.by(username)
         val user = UserDto(cart.username)

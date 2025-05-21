@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -17,6 +16,8 @@ class UsersResource(
     private val findUser: FindUser,
     private val findUsers: FindUsers,
     private val userMapping: UserMapping,
+    private val productsFeignClient: ProductsFeignClient,
+    private val cartsFeignClient: CartsFeignClient,
 ) {
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
@@ -24,15 +25,9 @@ class UsersResource(
     fun userInfo(@AuthenticationPrincipal principal: Jwt): ResponseEntity<UserDto> {
         val username = principal.claims["preferred_username"] as String
         val user = findUser.by(username)
-        val userDto = this.userMapping.domainToDto(user)
-        return ResponseEntity.ok(userDto)
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_FEIGN_CLIENT')")
-    @GetMapping("/user-info/{username}")
-    fun userInfo(@PathVariable("username") username: String): ResponseEntity<UserDto> {
-        val user = findUser.by(username)
-        val userDto = this.userMapping.domainToDto(user)
+        val productsStartupLinks = productsFeignClient.startupLinks()
+        val cartsStartupLinks = cartsFeignClient.startupLinks()
+        val userDto = this.userMapping.domainToDto(user, productsStartupLinks, cartsStartupLinks)
         return ResponseEntity.ok(userDto)
     }
 
@@ -41,7 +36,7 @@ class UsersResource(
     fun findAll(@AuthenticationPrincipal principal: Jwt): ResponseEntity<UsersDto> {
         val username = principal.claims["preferred_username"] as String
         val users = findUsers.all(username)
-        val usersDto = this.userMapping.domainToDto(users)
+        val usersDto = this.userMapping.domainToInfoDto(users)
         return ResponseEntity.ok(UsersDto(username, usersDto))
     }
 }
