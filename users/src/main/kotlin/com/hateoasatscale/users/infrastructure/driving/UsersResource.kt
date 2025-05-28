@@ -36,12 +36,18 @@ class UsersResource(
             feignClientHeaders + mapOf(
 
                 "X-Forwarded-Prefix" to "/products-service",
-                "X-Forwarded-Host" to "172.25.0.10",
-                "X-Forwarded-Port" to "8000",
+                "X-Forwarded-Host" to "localhost",
+                "X-Forwarded-Port" to "8020",
                 "X-Forwarded-Proto" to "http"
-            ),
+            )
         )
-        val cartsStartupLinks = cartsFeignClient.startupLinks()
+        val cartsStartupLinks = cartsFeignClient.startupLinks(feignClientHeaders + mapOf(
+
+                "X-Forwarded-Prefix" to "/carts-service",
+                "X-Forwarded-Host" to "localhost",
+                "X-Forwarded-Port" to "8020",
+                "X-Forwarded-Proto" to "http"
+            ))
         val userDto = this.userMapping.domainToDto(user, productsStartupLinks, cartsStartupLinks)
         return ResponseEntity.ok(userDto)
     }

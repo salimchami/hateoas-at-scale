@@ -20,8 +20,6 @@ spring:
         jwt:
           issuer-uri: "http://keycloak:8080/realms/hateoasatscale"
           jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
-
-        client-id: hateoasatscale
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
@@ -30,7 +28,15 @@ server:
   error:
     whitelabel:
       enabled: false
-  forward-headers-strategy: framework
+  forward-headers-strategy: FRAMEWORK
+
 management:
   server:
     port: 4452
+
+logging:
+  level:
+    org:
+      apache:
+        http:
+          wire=DEBUG:

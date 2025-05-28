@@ -3,7 +3,6 @@ package com.hateoasatscale.cart.infrastructure.driven.adapters
 import com.hateoasatscale.cart.domain.entities.Product
 import com.hateoasatscale.cart.domain.share.network.Link
 import com.hateoasatscale.cart.domain.spi.ProductsRepository
-import com.hateoasatscale.cart.infrastructure.config.HateoasLinkRewriter
 import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProductsFeignClient
 import org.springframework.stereotype.Component
 
@@ -16,12 +15,19 @@ class ProductsAdapter(
     }
 
     override fun findBy(name: String): Product {
-        val product = productsFeignClient.findBy(name)
-        val links = HateoasLinkRewriter.rewrite(product.links, "products-service")
+        val product = productsFeignClient.findBy(
+            mapOf(
+                "X-Forwarded-Prefix" to "/products-service",
+                "X-Forwarded-Host" to "localhost",
+                "X-Forwarded-Port" to "8020",
+                "X-Forwarded-Proto" to "http",
+            ),
+            name,
+        )
         return Product(
             product.name,
             product.price,
-            links.map { link -> Link(link.href, link.rel.value()) },
+            product.links.map { link -> Link(link.href, link.rel.value()) },
         )
     }
 }

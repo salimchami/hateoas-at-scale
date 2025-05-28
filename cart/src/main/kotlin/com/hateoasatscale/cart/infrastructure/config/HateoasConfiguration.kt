@@ -3,6 +3,7 @@ package com.hateoasatscale.cart.infrastructure.config
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.Ordered
 import org.springframework.web.filter.ForwardedHeaderFilter
 
 
@@ -10,8 +11,9 @@ import org.springframework.web.filter.ForwardedHeaderFilter
 class HateoasConfiguration {
     @Bean
     fun forwardedHeaderFilter(): FilterRegistrationBean<ForwardedHeaderFilter?> {
-        val bean = FilterRegistrationBean<ForwardedHeaderFilter?>()
+        val bean = FilterRegistrationBean(ForwardedHeaderFilter())
         bean.filter = ForwardedHeaderFilter()
+        bean.order = Ordered.HIGHEST_PRECEDENCE
         return bean
     }
 }

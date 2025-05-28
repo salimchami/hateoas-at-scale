@@ -1,6 +1,6 @@
 import {AuthConfig, OAuthModuleConfig} from 'angular-oauth2-oidc';
 
-const appApiHost = 'http://localhost:8020';
+const appApiHost = 'http://172.25.0.10:8020';
 const keycloakHost = 'http://localhost:8010';
 const keycloakRealm = 'hateoasatscale';
 const keycloakClientId = 'hateoas-front';

@@ -9,6 +9,5 @@ import org.springframework.web.bind.annotation.RequestHeader
 fun interface ProductsFeignClient {
 
     @GetMapping("/api/v1/startup")
-    fun startupLinks(@RequestHeader headers: Map<String, String>
-): List<Link>
+    fun startupLinks(@RequestHeader headers: Map<String, String>): List<Link>
 }
