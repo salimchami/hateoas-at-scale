@@ -3,7 +3,7 @@ package com.hateoasatscale.cart.infrastructure.driven.adapters
 import com.hateoasatscale.cart.domain.entities.Product
 import com.hateoasatscale.cart.domain.share.network.Link
 import com.hateoasatscale.cart.domain.spi.ProductsRepository
-import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.HateoasLinkRewriter
+import com.hateoasatscale.cart.infrastructure.config.HateoasLinkRewriter
 import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProductsFeignClient
 import org.springframework.stereotype.Component
 

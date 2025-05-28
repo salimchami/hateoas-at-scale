@@ -29,6 +29,7 @@ server:
   error:
     whitelabel:
       enabled: false
+  forward-headers-strategy: framework
 
 management:
   server:
