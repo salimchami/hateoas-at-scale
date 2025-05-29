@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -24,30 +23,12 @@ class UsersResource(
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping("/user-info")
     fun userInfo(
-        @AuthenticationPrincipal principal: Jwt,
-        @RequestHeader headers: Map<String, String>
+        @AuthenticationPrincipal principal: Jwt
     ): ResponseEntity<UserDto> {
         val username = principal.claims["preferred_username"] as String
         val user = findUser.by(username)
-        val feignClientHeaders = headers.filter {
-            it.key.lowercase() == "authorization" || it.key.lowercase().startsWith("x-forwarded-")|| it.key.lowercase() == "x-service-path"
-        }
-        val productsStartupLinks = productsFeignClient.startupLinks(
-            feignClientHeaders + mapOf(
-
-                "X-Forwarded-Prefix" to "/products-service",
-                "X-Forwarded-Host" to "localhost",
-                "X-Forwarded-Port" to "8020",
-                "X-Forwarded-Proto" to "http"
-            )
-        )
-        val cartsStartupLinks = cartsFeignClient.startupLinks(feignClientHeaders + mapOf(
-
-                "X-Forwarded-Prefix" to "/carts-service",
-                "X-Forwarded-Host" to "localhost",
-                "X-Forwarded-Port" to "8020",
-                "X-Forwarded-Proto" to "http"
-            ))
+        val productsStartupLinks = productsFeignClient.startupLinks()
+        val cartsStartupLinks = cartsFeignClient.startupLinks()
         val userDto = this.userMapping.domainToDto(user, productsStartupLinks, cartsStartupLinks)
         return ResponseEntity.ok(userDto)
     }

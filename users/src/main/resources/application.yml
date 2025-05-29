@@ -1,3 +1,9 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+  forward-headers-strategy: native
 
 spring:
   application:
@@ -15,6 +21,27 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+    loadbalancer:
+      x-forwarded:
+        enabled: true
+    openfeign:
+      client:
+        config:
+          products-service:
+            default-request-headers:
+              X-Forwarded-For: localhost
+              X-Forwarded-Host: localhost
+              X-Forwarded-Prefix: /products-service
+              X-Forwarded-Port: 8020
+              X-Forwarded-Proto: http
+          carts-service:
+            default-request-headers:
+              X-Forwarded-For: localhost
+              X-Forwarded-Host: localhost
+              X-Forwarded-Prefix: /carts-service
+              X-Forwarded-Port: 8020
+              X-Forwarded-Proto: http
+
   security:
     oauth2:
       resourceserver:
@@ -24,14 +51,18 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
-  forward-headers-strategy: FRAMEWORK
-
 management:
+  httpexchanges:
+    recording:
+      enabled: true
+      include: request-headers, response-headers
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: [info,health,metrics,mappings]
   server:
     port: 4451
 

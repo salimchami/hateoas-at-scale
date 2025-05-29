@@ -14,6 +14,7 @@ class HateoasConfiguration {
         val bean = FilterRegistrationBean(ForwardedHeaderFilter())
         bean.filter = ForwardedHeaderFilter()
         bean.order = Ordered.HIGHEST_PRECEDENCE
+        println(bean.filter.filterConfig)
         return bean
     }
 }

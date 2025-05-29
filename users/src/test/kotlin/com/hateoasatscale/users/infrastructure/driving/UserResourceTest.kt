@@ -8,7 +8,6 @@ import com.hateoasatscale.users.WithJwtMock
 import com.hateoasatscale.users.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.`when`
 import org.springframework.hateoas.Link
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -19,13 +18,13 @@ class UserResourceTest : AbstractTests() {
     @Test
     @WithJwtMock(UserMock.ADA)
     fun `should find user info with links from username`() {
-        `when`(cartsFeignClient.startupLinks(any())).thenReturn(
+        `when`(cartsFeignClient.startupLinks()).thenReturn(
             listOf(
                 Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "my-cart"),
                 Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "add-product"),
             ),
         )
-        `when`(productsFeignClient.startupLinks(any())).thenReturn(
+        `when`(productsFeignClient.startupLinks()).thenReturn(
             listOf(
                 Link.of("http://172.25.0.10:8000/products-service/api/v1/products", "products"),
             ),

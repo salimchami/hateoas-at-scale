@@ -42,7 +42,7 @@ export const routes: Routes = [
         component: CartComponent,
         title: 'Cart',
         data: {
-          linkName: 'cart'
+          linkName: 'my-cart'
         },
         resolve: {
           cart: CartResolver

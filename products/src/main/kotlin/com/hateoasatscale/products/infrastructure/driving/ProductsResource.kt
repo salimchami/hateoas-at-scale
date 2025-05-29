@@ -4,7 +4,10 @@ import com.hateoasatscale.products.domain.FindProduct
 import com.hateoasatscale.products.domain.FindProducts
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -16,21 +19,9 @@ class ProductsResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping("/{name}")
-    fun find(@RequestHeader headers: Map<String, String>, @PathVariable name: String): ResponseEntity<ProductDto> {
+    fun find(@PathVariable name: String): ResponseEntity<ProductDto> {
         val product = findProduct.by(name)
-        val feignClientHeaders = headers.filter {
-            it.key.lowercase() == "authorization" || it.key.lowercase()
-                .startsWith("x-forwarded-") || it.key.lowercase() == "x-service-path"
-        }
-        val cartsStartupLinks = cartsFeignClient.startupLinks(
-            feignClientHeaders + mapOf(
-
-                "X-Forwarded-Prefix" to "/carts-service",
-                "X-Forwarded-Host" to "localhost",
-                "X-Forwarded-Port" to "8020",
-                "X-Forwarded-Proto" to "http",
-            ),
-        )
+        val cartsStartupLinks = cartsFeignClient.startupLinks()
         return ResponseEntity.ok(
             ProductDto(
                 cartsStartupLinks,
@@ -43,21 +34,9 @@ class ProductsResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping()
-    fun findAll(@RequestHeader headers: Map<String, String>): ResponseEntity<ProductsDto> {
+    fun findAll(): ResponseEntity<ProductsDto> {
         val products = findProducts.all()
-        val feignClientHeaders = headers.filter {
-            it.key.lowercase() == "authorization" || it.key.lowercase()
-                .startsWith("x-forwarded-") || it.key.lowercase() == "x-service-path"
-        }
-        val cartsStartupLinks = cartsFeignClient.startupLinks(
-            feignClientHeaders + mapOf(
-
-                "X-Forwarded-Prefix" to "/carts-service",
-                "X-Forwarded-Host" to "localhost",
-                "X-Forwarded-Port" to "8020",
-                "X-Forwarded-Proto" to "http",
-            ),
-        )
+        val cartsStartupLinks = cartsFeignClient.startupLinks()
 
         return ResponseEntity.ok(
             ProductsDto(

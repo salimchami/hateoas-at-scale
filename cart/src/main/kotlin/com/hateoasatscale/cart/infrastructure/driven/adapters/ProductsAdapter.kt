@@ -15,15 +15,7 @@ class ProductsAdapter(
     }
 
     override fun findBy(name: String): Product {
-        val product = productsFeignClient.findBy(
-            mapOf(
-                "X-Forwarded-Prefix" to "/products-service",
-                "X-Forwarded-Host" to "localhost",
-                "X-Forwarded-Port" to "8020",
-                "X-Forwarded-Proto" to "http",
-            ),
-            name,
-        )
+        val product = productsFeignClient.findBy(name)
         return Product(
             product.name,
             product.price,

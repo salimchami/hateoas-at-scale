@@ -8,11 +8,12 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.stereotype.Component
 
 @Component
-class ForwardingBearerRequestInterceptor: RequestInterceptor {
+class ForwardingBearerRequestInterceptor : RequestInterceptor {
     override fun apply(restTemplate: RequestTemplate) {
         val auth = SecurityContextHolder.getContext().authentication
         if (auth is JwtAuthenticationToken && !restTemplate.headers().containsKey(AUTHORIZATION)) {
             restTemplate.header(AUTHORIZATION, "Bearer %s".format(auth.token.tokenValue))
         }
+        println(restTemplate.headers())
     }
 }

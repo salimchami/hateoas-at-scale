@@ -1,3 +1,10 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+  forward-headers-strategy: native
+
 spring:
   application:
     name: products-service
@@ -14,6 +21,19 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+    loadbalancer:
+      x-forwarded:
+        enabled: true
+    openfeign:
+      client:
+        config:
+          carts-service:
+            default-request-headers:
+              X-Forwarded-For: localhost
+              X-Forwarded-Host: localhost
+              X-Forwarded-Prefix: /carts-service
+              X-Forwarded-Port: 8020
+              X-Forwarded-Proto: http
   security:
     oauth2:
       resourceserver:
@@ -22,13 +42,6 @@ spring:
           jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
-  forward-headers-strategy: FRAMEWORK
 
 management:
   server:

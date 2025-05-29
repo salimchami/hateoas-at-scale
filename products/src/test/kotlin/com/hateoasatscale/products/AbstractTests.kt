@@ -22,7 +22,7 @@ abstract class AbstractTests {
 
     @BeforeEach
     fun setUp() {
-        `when`(cartsFeignClient.startupLinks(mapOf())).thenReturn(
+        `when`(cartsFeignClient.startupLinks()).thenReturn(
             listOf(
                 Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "my-cart"),
                 Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "add-product"),
