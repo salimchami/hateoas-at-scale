@@ -3,7 +3,7 @@ server:
   error:
     whitelabel:
       enabled: false
-  forward-headers-strategy: native
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -24,23 +24,23 @@ spring:
     loadbalancer:
       x-forwarded:
         enabled: true
-    openfeign:
-      client:
-        config:
-          products-service:
-            default-request-headers:
-              X-Forwarded-For: localhost
-              X-Forwarded-Host: localhost
-              X-Forwarded-Prefix: /products-service
-              X-Forwarded-Port: 8020
-              X-Forwarded-Proto: http
-          users-service:
-            default-request-headers:
-              X-Forwarded-For: localhost
-              X-Forwarded-Host: localhost
-              X-Forwarded-Prefix: /users-service
-              X-Forwarded-Port: 8020
-              X-Forwarded-Proto: http
+#    openfeign:
+#      client:
+#        config:
+#          products-service:
+#            default-request-headers:
+#              X-Forwarded-For: localhost
+#              X-Forwarded-Host: localhost
+#              X-Forwarded-Prefix: /products-service
+#              X-Forwarded-Port: 8020
+#              X-Forwarded-Proto: http
+#          users-service:
+#            default-request-headers:
+#              X-Forwarded-For: localhost
+#              X-Forwarded-Host: localhost
+#              X-Forwarded-Prefix: /users-service
+#              X-Forwarded-Port: 8020
+#              X-Forwarded-Proto: http
   security:
     oauth2:
       resourceserver:
@@ -51,6 +51,10 @@ spring:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
 management:
+  httpexchanges:
+    recording:
+      enabled: true
+      include: request-headers, response-headers
   info:
     env:
       enabled: true

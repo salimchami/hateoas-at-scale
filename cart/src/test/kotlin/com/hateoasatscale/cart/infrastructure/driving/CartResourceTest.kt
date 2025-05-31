@@ -24,8 +24,7 @@ class CartResourceTest : AbstractTests() {
     @WithJwtMock(UserMock.CHARLES)
     fun `should return cart info with links`() {
         `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
-        `when`(productsProvider.findBy(anyString())).thenReturn(ProductsFixture.apple)
-            .thenReturn(ProductsFixture.pineapple)
+        `when`(productsProvider.startup()).thenReturn(ProductsFixture.startup)
         val expectedCart = toExpectedJson("cart", "charles-cart")
         http.perform(get(MY_CART))
             .andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
@@ -35,10 +34,8 @@ class CartResourceTest : AbstractTests() {
     @WithJwtMock(UserMock.ADA)
     fun `should update a user cart`() {
         val newCartProducts = toRequestedJson("cart", "product-to-add")
-        `when`(productsProvider.findBy(anyString()))
-            .thenReturn(ProductsFixture.apple)
-            .thenReturn(ProductsFixture.apple)
-            .thenReturn(ProductsFixture.pineapple)
+        `when`(productsProvider.startup())
+            .thenReturn(ProductsFixture.startup)
         http.perform(patch(ADD_PRODUCT).content(newCartProducts))
             .andExpect(status().isOk)
 
