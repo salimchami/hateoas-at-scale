@@ -3,7 +3,9 @@ server:
   error:
     whitelabel:
       enabled: false
-  forward-headers-strategy: framework
+  forward-headers-strategy: native
+  undertow:
+    preserve-path-on-forward: true
 
 spring:
   application:
@@ -24,23 +26,6 @@ spring:
     loadbalancer:
       x-forwarded:
         enabled: true
-#    openfeign:
-#      client:
-#        config:
-#          products-service:
-#            default-request-headers:
-#              X-Forwarded-For: localhost
-#              X-Forwarded-Host: localhost
-#              X-Forwarded-Prefix: /products-service
-#              X-Forwarded-Port: 8020
-#              X-Forwarded-Proto: http
-#          carts-service:
-#            default-request-headers:
-#              X-Forwarded-For: localhost
-#              X-Forwarded-Host: localhost
-#              X-Forwarded-Prefix: /carts-service
-#              X-Forwarded-Port: 8020
-#              X-Forwarded-Proto: http
 
   security:
     oauth2:

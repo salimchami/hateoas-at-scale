@@ -3,7 +3,7 @@ server:
   error:
     whitelabel:
       enabled: false
-  forward-headers-strategy: framework
+  forward-headers-strategy: native
 
 spring:
   application:
@@ -24,16 +24,7 @@ spring:
     loadbalancer:
       x-forwarded:
         enabled: true
-#    openfeign:
-#      client:
-#        config:
-#          carts-service:
-#            default-request-headers:
-#              X-Forwarded-For: localhost
-#              X-Forwarded-Host: localhost
-#              X-Forwarded-Prefix: /carts-service
-#              X-Forwarded-Port: 8020
-#              X-Forwarded-Proto: http
+
   security:
     oauth2:
       resourceserver:
@@ -54,7 +45,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: [info,health,metrics,mappings]
+        include: [ info,health,metrics,mappings ]
   server:
     port: 4452
 

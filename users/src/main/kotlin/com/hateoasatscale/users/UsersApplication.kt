@@ -1,7 +1,8 @@
 package com.hateoasatscale.users
 
-import WebConfiguration
-import com.hateoasatscale.users.infrastructure.config.FeignClientConfiguration
+import com.hateoasatscale.users.infrastructure.config.FeignConfiguration
+import com.hateoasatscale.users.infrastructure.config.ForwardedHeadersRequestInterceptor
+import com.hateoasatscale.users.infrastructure.config.HateoasConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.runApplication
@@ -10,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
-@Import(FeignClientConfiguration::class, WebConfiguration::class)
+@Import(ForwardedHeadersRequestInterceptor::class, HateoasConfiguration::class, FeignConfiguration::class)
 @EnableDiscoveryClient
 @EnableFeignClients
 class UsersApplication

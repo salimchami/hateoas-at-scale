@@ -114,12 +114,6 @@ services:
     depends_on:
       nginx-gateway:
         condition: service_started
-      users-service:
-        condition: service_started
-      carts-service:
-        condition: service_started
-      products-service:
-        condition: service_started
       keycloak:
         condition: service_started
     ports:

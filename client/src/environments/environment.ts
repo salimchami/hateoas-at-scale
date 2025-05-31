@@ -1,6 +1,5 @@
 import {AuthConfig, OAuthModuleConfig} from 'angular-oauth2-oidc';
 
-const appApiHost = 'http://localhost:8020';
 const keycloakHost = 'http://localhost:8010';
 const keycloakRealm = 'hateoasatscale';
 const keycloakClientId = 'hateoas-front';
@@ -26,13 +25,12 @@ const authConfig: AuthConfig = {
 
 const authOAuthModuleConfig: OAuthModuleConfig = {
   resourceServer: {
-    allowedUrls: [`${appApiHost}/v1/api`],
+    allowedUrls: [`/v1/api`],
     sendAccessToken: true
   }
 }
 export const environment: any = {
   production: true,
-  appApiHost,
   startupEndpoint: '/users-service/api/v1/users/user-info',
   keycloakRegistrationUrl,
   authConfig,
