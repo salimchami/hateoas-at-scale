@@ -4,8 +4,6 @@ server:
     whitelabel:
       enabled: false
   forward-headers-strategy: framework
-  #undertow:
-  #  preserve-path-on-forward: true
 
 spring:
   application:

@@ -21,9 +21,6 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
-    loadbalancer:
-      x-forwarded:
-        enabled: true
 
   security:
     oauth2:
@@ -45,7 +42,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: [ info,health,metrics,mappings ]
+        include: [info,health,metrics,mappings]
   server:
     port: 4452
 

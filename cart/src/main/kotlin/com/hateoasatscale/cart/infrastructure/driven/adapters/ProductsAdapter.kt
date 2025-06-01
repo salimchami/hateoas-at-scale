@@ -18,9 +18,9 @@ class ProductsAdapter(
     }
 
     override fun findBy(name: String): Product {
-        val startup = productsFeignClient.startup()
+        val startupLinks = productsFeignClient.startup()
         // TODO: add HateoasLinks enum everywhere
-        val productLink = startup.links.find { link -> link.rel.value() == "product" }
+        val productLink = startupLinks.find { link -> link.rel.value() == "product" }
             ?: throw IllegalStateException("Product link not found in startup response")
 
         val productResponse = restTemplate.getForObject(productLink.href, ProviderProductDto::class.java)

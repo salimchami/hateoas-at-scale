@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.FilterType
 
 @SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
-@EnableDiscoveryClient
 @ComponentScan(
     basePackages = ["com.hateoasatscale.users"],
     excludeFilters = [
@@ -19,6 +18,7 @@ import org.springframework.context.annotation.FilterType
         ),
     ],
 )
+@EnableDiscoveryClient
 @EnableFeignClients
 class UsersApplication
 
