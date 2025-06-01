@@ -3,9 +3,9 @@ server:
   error:
     whitelabel:
       enabled: false
-  forward-headers-strategy: native
-  undertow:
-    preserve-path-on-forward: true
+  forward-headers-strategy: framework
+  #undertow:
+  #  preserve-path-on-forward: true
 
 spring:
   application:
