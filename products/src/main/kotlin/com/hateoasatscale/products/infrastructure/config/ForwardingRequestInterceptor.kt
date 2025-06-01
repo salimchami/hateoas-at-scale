@@ -5,8 +5,9 @@ import feign.RequestTemplate
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
+import org.springframework.stereotype.Component
 
-// @Component
+@Component
 class ForwardingRequestInterceptor : RequestInterceptor {
     override fun apply(requestTemplate: RequestTemplate) {
         val auth = SecurityContextHolder.getContext().authentication

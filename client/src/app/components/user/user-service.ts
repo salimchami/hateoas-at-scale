@@ -24,7 +24,7 @@ export class UserService extends HttpService {
   }
 
   findCurrentUser(): Observable<User> {
-    return this.get(`${environment.startupEndpoint}`)
+    return this.get(this.url(`${environment.startupEndpoint}`))
       .pipe(map(user => {
         const userObj = User.from(user);
         this.currentUser.next(userObj);

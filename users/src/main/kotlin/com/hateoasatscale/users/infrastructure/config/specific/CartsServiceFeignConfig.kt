@@ -17,7 +17,7 @@ class CartsServiceFeignConfig {
             it.header("X-Forwarded-For", "localhost")
             it.header("X-Forwarded-Host", "localhost")
             it.header("X-Forwarded-Prefix", "/carts-service")
-            it.header("X-Forwarded-Port", "4200")
+            it.header("X-Forwarded-Port", "8020")
             it.header("X-Forwarded-Proto", "http")
         }
         return interceptor

@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 class HttpParam {
   constructor(
@@ -43,6 +44,10 @@ export class HttpService {
   ): Observable<any> {
     headers?.append('Content-Type', 'application/json');
     return this.http.put(endpoint, payload ?? null, {headers});
+  }
+
+  protected url(endpoint: string): string {
+    return `${environment.appApiHost}${endpoint}`;
   }
 
   private fillParams(endpoint: string, requestParams: HttpParam[] = []) {
