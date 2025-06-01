@@ -8,11 +8,6 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 class StartupDto @JsonCreator constructor() : RepresentationModel<StartupDto>() {
     init {
         addProductsLink()
-        addProductLink()
-    }
-
-    private fun addProductLink() {
-        add(linkTo(ProductsResource::class.java.methods.first { it.name == "find" }).withRel("product"))
     }
 
     private fun addProductsLink() {

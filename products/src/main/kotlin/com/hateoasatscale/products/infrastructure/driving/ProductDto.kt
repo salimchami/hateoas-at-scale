@@ -16,14 +16,14 @@ class ProductDto @JsonCreator constructor(
 
     init {
         addSelfLink()
-        addFirstLinksFromCarts()
+        addStartupLinksFromCarts()
     }
 
     private fun addSelfLink() {
         add(linkTo(methodOn(ProductsResource::class.java).find(name)).withSelfRel())
     }
 
-    private fun addFirstLinksFromCarts() {
+    private fun addStartupLinksFromCarts() {
         cartsLinks.forEach { link -> add(link) }
     }
 }

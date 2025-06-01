@@ -5,4 +5,9 @@ class ProductsSearch(private val productsRepository: ProductsRepository) : FindP
     override fun all(): List<Product> {
         return productsRepository.findAll()
     }
+
+    @Throws(ProductNotFound::class)
+    override fun some(names: List<String>): List<Product> {
+        return productsRepository.findAllByNames(names)
+    }
 }

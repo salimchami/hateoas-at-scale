@@ -27,4 +27,17 @@ class ProductsResourceTest : AbstractTests() {
         val products = mockMvc.perform(get(ALL_PRODUCTS)).andReturn().response.contentAsString
         assertThat(products).isEqualTo(expectedProduct)
     }
+
+    @Test
+    @WithJwtMock(UserMock.RICHARD)
+    fun `should return products list by names`() {
+        val expectedProduct = toExpectedJson("products/list", "products-list-by-names")
+        val products = mockMvc.perform(
+            get(ALL_PRODUCTS)
+                .param("name", "apple")
+                .param("name", "pineapple"),
+        )
+            .andReturn().response.contentAsString
+        assertThat(products).isEqualTo(expectedProduct)
+    }
 }
