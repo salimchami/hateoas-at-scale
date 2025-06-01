@@ -5,6 +5,7 @@ import com.hateoasatscale.users.AbstractTests.Companion.Urls.Companion.ALL_USERS
 import com.hateoasatscale.users.AbstractTests.Companion.Urls.Companion.USER_INFO
 import com.hateoasatscale.users.UserMock
 import com.hateoasatscale.users.WithJwtMock
+import com.hateoasatscale.users.infrastructure.hateoas.WorkflowLinks
 import com.hateoasatscale.users.utils.JsonReader.toExpectedJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -20,13 +21,16 @@ class UserResourceTest : AbstractTests() {
     fun `should find user info with links from username`() {
         `when`(cartsFeignClient.startupLinks()).thenReturn(
             listOf(
-                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "my-cart"),
-                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "add-product"),
+                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", WorkflowLinks.MY_CART),
+                Link.of(
+                    "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product",
+                    WorkflowLinks.ADD_PRODUCT_TO_CART,
+                ),
             ),
         )
         `when`(productsFeignClient.startupLinks()).thenReturn(
             listOf(
-                Link.of("http://172.25.0.10:8000/products-service/api/v1/products", "products"),
+                Link.of("http://172.25.0.10:8000/products-service/api/v1/products", WorkflowLinks.ALL_PRODUCTS),
             ),
         )
         val expectedUser = toExpectedJson("users/user", "user-ada")

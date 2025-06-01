@@ -35,6 +35,7 @@ abstract class AbstractTests {
             companion object {
                 const val PRODUCT_ORANGE = "/api/v1/products/orange"
                 const val ALL_PRODUCTS = "/api/v1/products"
+                const val SOME_PRODUCTS = "/api/v1/products/some"
             }
         }
     }
