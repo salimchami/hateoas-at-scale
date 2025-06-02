@@ -1,3 +1,9 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -15,6 +21,7 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+
   security:
     oauth2:
       resourceserver:
@@ -24,13 +31,18 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
-
 management:
+  httpexchanges:
+    recording:
+      enabled: true
+      include: request-headers, response-headers
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: [info,health,metrics,mappings]
   server:
     port: 4451
 

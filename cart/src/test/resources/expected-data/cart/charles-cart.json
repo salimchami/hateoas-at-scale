@@ -1,7 +1,7 @@
 {
   "totalPrice": 202.50,
   "user": {
-    "username": "ada.lovelace"
+    "username": "charles.darwin"
   },
   "products": [
     {
@@ -10,7 +10,7 @@
       "quantity": 2,
       "_links": {
         "self": {
-          "href": "http://localhost/products-service/products/apple"
+          "href": "http://localhost:8080/products/apple"
         }
       }
     },
@@ -20,7 +20,7 @@
       "quantity": 1,
       "_links": {
         "self": {
-          "href": "http://localhost/products-service/products/pineapple"
+          "href": "http://localhost:8080/products/pineapple"
         }
       }
     }

@@ -3,25 +3,45 @@ package com.hateoasatscale.cart.infrastructure.driven.adapters
 import com.hateoasatscale.cart.domain.entities.Product
 import com.hateoasatscale.cart.domain.share.network.Link
 import com.hateoasatscale.cart.domain.spi.ProductsRepository
-import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.HateoasLinkRewriter
 import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProductsFeignClient
+import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProvidersProductDto
 import org.springframework.stereotype.Component
+import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 
 @Component
 class ProductsAdapter(
-    private val productsFeignClient: ProductsFeignClient
+    private val productsFeignClient: ProductsFeignClient,
+    private val restTemplate: RestTemplate
 ) : ProductsRepository {
     override fun findBy(names: List<String>): List<Product> {
-        return names.map { name -> this.findBy(name) }
+        val startupLinks = productsFeignClient.startup()
+        val productsLink = startupLinks.find { link -> link.rel.value() == "someProducts" }
+            ?: throw IllegalStateException("Products link not found in products-service startup response")
+        val queryParams = mapOf("name" to names.joinToString(","))
+        val baseUrl = productsLink.href.replace("?name={name}", "")
+        val uriBuilder = UriComponentsBuilder.fromUriString(baseUrl)
+
+        // Add each name as a separate query parameter
+        names.forEach { name ->
+            uriBuilder.queryParam("name", name)
+        }
+
+        val finalUrl = uriBuilder.toUriString()
+
+        val productsResponse =
+            restTemplate.getForObject(finalUrl, ProvidersProductDto::class.java, queryParams)
+                ?: throw IllegalStateException("Products not found for names: $names")
+        return productsResponse.list.map {
+            Product(
+                it.name,
+                it.price,
+                it.links.map { link -> Link(link.href, link.rel.value()) },
+            )
+        }
     }
 
     override fun findBy(name: String): Product {
-        val product = productsFeignClient.findBy(name)
-        val links = HateoasLinkRewriter.rewrite(product.links, "products-service")
-        return Product(
-            product.name,
-            product.price,
-            links.map { link -> Link(link.href, link.rel.value()) },
-        )
+        return this.findBy(listOf(name))[0]
     }
 }

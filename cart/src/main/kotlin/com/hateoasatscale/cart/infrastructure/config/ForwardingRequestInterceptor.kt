@@ -5,14 +5,13 @@ import feign.RequestTemplate
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
-import org.springframework.stereotype.Component
 
-@Component
-class ForwardingBearerRequestInterceptor: RequestInterceptor {
-    override fun apply(restTemplate: RequestTemplate) {
+//@Component
+class ForwardingRequestInterceptor : RequestInterceptor {
+    override fun apply(requestTemplate: RequestTemplate) {
         val auth = SecurityContextHolder.getContext().authentication
-        if (auth is JwtAuthenticationToken && !restTemplate.headers().containsKey(AUTHORIZATION)) {
-            restTemplate.header(AUTHORIZATION, "Bearer %s".format(auth.token.tokenValue))
+        if (auth is JwtAuthenticationToken && !requestTemplate.headers().containsKey(AUTHORIZATION)) {
+            requestTemplate.header(AUTHORIZATION, "Bearer %s".format(auth.token.tokenValue))
         }
     }
 }

@@ -22,7 +22,9 @@ class UsersResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping("/user-info")
-    fun userInfo(@AuthenticationPrincipal principal: Jwt): ResponseEntity<UserDto> {
+    fun userInfo(
+        @AuthenticationPrincipal principal: Jwt
+    ): ResponseEntity<UserDto> {
         val username = principal.claims["preferred_username"] as String
         val user = findUser.by(username)
         val productsStartupLinks = productsFeignClient.startupLinks()

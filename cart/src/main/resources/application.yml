@@ -1,3 +1,10 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+  forward-headers-strategy: framework
+
 spring:
   application:
     name: carts-service
@@ -14,23 +21,21 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: "http://keycloak:8080/realms/hateoasatscale"
           jwk-set-uri: "http://keycloak:8080/realms/hateoasatscale/protocol/openid-connect/certs"
-        client-id: hateoasatscale
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
-
 management:
+  httpexchanges:
+    recording:
+      enabled: true
+      include: request-headers, response-headers
   info:
     env:
       enabled: true
@@ -38,8 +43,12 @@ management:
     web:
       exposure:
         include: [info,health,metrics,mappings]
-
-    env:
-      enabled: true
   server:
     port: 4450
+
+logging:
+  level:
+    org:
+      apache:
+        http:
+          wire=DEBUG:

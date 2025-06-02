@@ -2,6 +2,7 @@ package com.hateoasatscale.users.infrastructure.driving
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.hateoasatscale.users.domain.Permission
+import com.hateoasatscale.users.infrastructure.hateoas.WorkflowLinks
 import org.springframework.hateoas.Link
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
@@ -32,7 +33,8 @@ class UserDto @JsonCreator constructor(
 
     private fun addAllUsersLink() {
         if (permissions.contains(Permission.READ_ALL_USERS)) {
-            add(linkTo(UsersResource::class.java.methods.first { it.name == "findAll" }).withRel("all-users"))
+            add(linkTo(UsersResource::class.java.methods.first { it.name == "findAll" })
+                .withRel(WorkflowLinks.ALL_USERS))
         }
     }
 

@@ -15,6 +15,12 @@ java {
     }
 }
 
+buildscript {
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+    }
+}
+
 tasks.getByName<Jar>("jar") {
     enabled = false
 }

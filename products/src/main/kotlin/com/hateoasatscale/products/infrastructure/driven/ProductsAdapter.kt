@@ -17,4 +17,8 @@ class ProductsAdapter : ProductsRepository {
     override fun findAll(): List<Product> {
         return FakeDbProducts.products.map { Product(it.id, it.name, it.reference, it.price) }
     }
+
+    override fun findAllByNames(names: List<String>): List<Product> {
+        return FakeDbProducts.products.filter { names.contains(it.name) }.map { Product(it.id, it.name, it.reference, it.price) }
+    }
 }
