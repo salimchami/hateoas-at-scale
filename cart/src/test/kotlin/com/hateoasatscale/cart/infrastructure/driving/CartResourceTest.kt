@@ -11,7 +11,6 @@ import com.hateoasatscale.cart.utils.JsonReader.toRequestedJson
 import com.hateoasatscale.cart.utils.ProductsFixture
 import com.hateoasatscale.cart.utils.UsersFixture
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyMap
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.`when`
@@ -29,7 +28,6 @@ class CartResourceTest : AbstractTests() {
         `when`(restTemplate.getForObject(
             anyString(),
             eq(ProvidersProductDto::class.java),
-            anyMap<String, String>(),
         ))
             .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
 
@@ -45,7 +43,6 @@ class CartResourceTest : AbstractTests() {
         `when`(restTemplate.getForObject(
             anyString(),
             eq(ProvidersProductDto::class.java),
-            anyMap<String, String>(),
         ))
             .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
 

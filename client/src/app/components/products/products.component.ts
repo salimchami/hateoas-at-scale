@@ -47,7 +47,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private loadProducts() {
-    this.productsService.findAll(this.currentUser?._links['products'].href)
+    this.productsService.findAll(this.currentUser?._links['allProducts'].href)
       .subscribe(products => this.products = products);
   }
 }
