@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.web.client.RestTemplate
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc(addFilters = false)
@@ -23,6 +24,10 @@ abstract class AbstractTests : InitializingBean {
 
     @MockitoBean
     protected lateinit var productsProvider: ProductsFeignClient
+
+     @MockitoBean
+    protected lateinit var restTemplate: RestTemplate
+
 
     @Autowired
     private lateinit var mockMvc: MockMvc

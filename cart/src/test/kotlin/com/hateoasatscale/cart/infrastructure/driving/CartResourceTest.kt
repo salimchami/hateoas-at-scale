@@ -5,11 +5,15 @@ import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.ADD_PRODUC
 import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.MY_CART
 import com.hateoasatscale.cart.UserMock
 import com.hateoasatscale.cart.WithJwtMock
+import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProvidersProductDto
 import com.hateoasatscale.cart.utils.JsonReader.toExpectedJson
 import com.hateoasatscale.cart.utils.JsonReader.toRequestedJson
 import com.hateoasatscale.cart.utils.ProductsFixture
 import com.hateoasatscale.cart.utils.UsersFixture
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.anyMap
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mockito.`when`
 import org.springframework.test.json.JsonCompareMode
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -21,7 +25,14 @@ class CartResourceTest : AbstractTests() {
 
     @Test
     @WithJwtMock(UserMock.CHARLES)
-    fun `should return cart info with links`() {
+    fun `should return cart info`() {
+        `when`(restTemplate.getForObject(
+            anyString(),
+            eq(ProvidersProductDto::class.java),
+            anyMap<String, String>(),
+        ))
+            .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
+
         `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.carlesDarwin)
         val expectedCart = toExpectedJson("cart", "charles-cart")
         http.perform(get(MY_CART))
@@ -31,9 +42,17 @@ class CartResourceTest : AbstractTests() {
     @Test
     @WithJwtMock(UserMock.ADA)
     fun `should update a user cart`() {
+        `when`(restTemplate.getForObject(
+            anyString(),
+            eq(ProvidersProductDto::class.java),
+            anyMap<String, String>(),
+        ))
+            .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
+
+        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.carlesDarwin)
+
+
         val newCartProducts = toRequestedJson("cart", "product-to-add")
-        `when`(productsProvider.startup())
-            .thenReturn(ProductsFixture.startupLinks)
         http.perform(patch(ADD_PRODUCT).content(newCartProducts))
             .andExpect(status().isOk)
 

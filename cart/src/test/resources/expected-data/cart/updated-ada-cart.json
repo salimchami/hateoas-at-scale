@@ -10,7 +10,7 @@
       "quantity": 5,
       "_links": {
         "self": {
-          "href": "http://localhost/products-service/products/apple"
+          "href": "http://localhost:8080/products/apple"
         }
       }
     },
@@ -20,7 +20,7 @@
       "quantity": 2,
       "_links": {
         "self": {
-          "href": "http://localhost/products-service/products/pineapple"
+          "href": "http://localhost:8080/products/pineapple"
         }
       }
     }

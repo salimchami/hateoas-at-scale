@@ -7,6 +7,7 @@ import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products
 import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProvidersProductDto
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 
 @Component
 class ProductsAdapter(
@@ -18,8 +19,19 @@ class ProductsAdapter(
         val productsLink = startupLinks.find { link -> link.rel.value() == "someProducts" }
             ?: throw IllegalStateException("Products link not found in products-service startup response")
         val queryParams = mapOf("name" to names.joinToString(","))
-        val productsResponse = restTemplate.getForObject(productsLink.href, ProvidersProductDto::class.java, queryParams)
-            ?: throw IllegalStateException("Products not found for names: $names")
+        val baseUrl = productsLink.href.replace("?name={name}", "")
+        val uriBuilder = UriComponentsBuilder.fromUriString(baseUrl)
+
+        // Add each name as a separate query parameter
+        names.forEach { name ->
+            uriBuilder.queryParam("name", name)
+        }
+
+        val finalUrl = uriBuilder.toUriString()
+
+        val productsResponse =
+            restTemplate.getForObject(finalUrl, ProvidersProductDto::class.java, queryParams)
+                ?: throw IllegalStateException("Products not found for names: $names")
         return productsResponse.list.map {
             Product(
                 it.name,
