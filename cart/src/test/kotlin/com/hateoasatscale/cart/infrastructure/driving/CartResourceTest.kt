@@ -10,7 +10,6 @@ import com.hateoasatscale.cart.utils.JsonReader.toRequestedJson
 import com.hateoasatscale.cart.utils.ProductsFixture
 import com.hateoasatscale.cart.utils.UsersFixture
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.anyString
 import org.mockito.Mockito.`when`
 import org.springframework.test.json.JsonCompareMode
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -23,8 +22,7 @@ class CartResourceTest : AbstractTests() {
     @Test
     @WithJwtMock(UserMock.CHARLES)
     fun `should return cart info with links`() {
-        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
-        `when`(productsProvider.startup()).thenReturn(ProductsFixture.startup)
+        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.carlesDarwin)
         val expectedCart = toExpectedJson("cart", "charles-cart")
         http.perform(get(MY_CART))
             .andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
@@ -35,7 +33,7 @@ class CartResourceTest : AbstractTests() {
     fun `should update a user cart`() {
         val newCartProducts = toRequestedJson("cart", "product-to-add")
         `when`(productsProvider.startup())
-            .thenReturn(ProductsFixture.startup)
+            .thenReturn(ProductsFixture.startupLinks)
         http.perform(patch(ADD_PRODUCT).content(newCartProducts))
             .andExpect(status().isOk)
 

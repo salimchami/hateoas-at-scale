@@ -24,8 +24,8 @@ abstract class AbstractTests {
     fun setUp() {
         `when`(cartsFeignClient.startupLinks()).thenReturn(
             listOf(
-                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "my-cart"),
-                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "add-product"),
+                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart", "myCart"),
+                Link.of("http://172.25.0.10:8000/carts-service/api/v1/cart/add-product", "addProductToCart"),
             ),
         )
     }
@@ -36,6 +36,7 @@ abstract class AbstractTests {
                 const val PRODUCT_ORANGE = "/api/v1/products/orange"
                 const val ALL_PRODUCTS = "/api/v1/products"
                 const val SOME_PRODUCTS = "/api/v1/products/some"
+                const val STARTUP = "/api/v1/startup"
             }
         }
     }

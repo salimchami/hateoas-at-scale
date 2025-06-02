@@ -6,9 +6,6 @@
     "self": {
       "href": "http://localhost/api/v1/products/orange"
     },
-    "allProducts": {
-      "href": "http://172.25.0.10:8000/products-service/api/v1/products"
-    },
     "myCart": {
       "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
     },

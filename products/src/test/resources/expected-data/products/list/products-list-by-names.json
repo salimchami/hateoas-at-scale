@@ -8,10 +8,10 @@
         "self": {
           "href": "http://localhost/api/v1/products/apple"
         },
-        "my-cart": {
+        "myCart": {
           "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
         },
-        "add-product": {
+        "addProductToCart": {
           "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
@@ -24,10 +24,10 @@
         "self": {
           "href": "http://localhost/api/v1/products/pineapple"
         },
-        "my-cart": {
+        "myCart": {
           "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/my-cart"
         },
-        "add-product": {
+        "addProductToCart": {
           "href": "http://172.25.0.10:8000/carts-service/api/v1/cart/add-product"
         }
       }
@@ -35,7 +35,7 @@
   ],
   "_links": {
     "self": {
-      "href": "http://localhost/api/v1/products?name={name}",
+      "href": "http://localhost/api/v1/products/some?name={name}",
       "templated": true
     }
   }

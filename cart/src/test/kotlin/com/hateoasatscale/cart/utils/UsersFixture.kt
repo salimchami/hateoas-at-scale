@@ -7,5 +7,7 @@ class UsersFixture {
     companion object {
         val adaLovelace = ProviderUserDto("ada.lovelace")
             .add(Link.of("http://users.localhost:8080/users/ada.lovelace").withSelfRel())
+        val carlesDarwin = ProviderUserDto("charles.darwin")
+            .add(Link.of("http://users.localhost:8080/users/charles.darwin").withSelfRel())
     }
 }

@@ -9,6 +9,11 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 class StartupDto @JsonCreator constructor() : RepresentationModel<StartupDto>() {
     init {
         addProductsLink()
+        addSomeProductsLink()
+    }
+
+    private fun addSomeProductsLink() {
+        add(linkTo(ProductsResource::class.java.methods.first { it.name == "findSome" }).withRel(WorkflowLinks.SOME_PRODUCTS))
     }
 
     private fun addProductsLink() {

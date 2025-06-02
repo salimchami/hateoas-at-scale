@@ -3,6 +3,7 @@ package com.hateoasatscale.products.infrastructure.driving
 import com.hateoasatscale.products.AbstractTests
 import com.hateoasatscale.products.AbstractTests.Companion.Urls.Companion.ALL_PRODUCTS
 import com.hateoasatscale.products.AbstractTests.Companion.Urls.Companion.PRODUCT_ORANGE
+import com.hateoasatscale.products.AbstractTests.Companion.Urls.Companion.SOME_PRODUCTS
 import com.hateoasatscale.products.UserMock
 import com.hateoasatscale.products.WithJwtMock
 import com.hateoasatscale.products.utils.JsonReader.toExpectedJson
@@ -14,7 +15,7 @@ class ProductsResourceTest : AbstractTests() {
 
     @Test
     @WithJwtMock(UserMock.MARTIN)
-    fun `should return product info with links`() {
+    fun `should return product info`() {
         val expectedProduct = toExpectedJson("products/product", "product-orange")
         val product = mockMvc.perform(get(PRODUCT_ORANGE)).andReturn().response.contentAsString
         assertThat(product).isEqualTo(expectedProduct)
@@ -33,7 +34,7 @@ class ProductsResourceTest : AbstractTests() {
     fun `should return products list by names`() {
         val expectedProduct = toExpectedJson("products/list", "products-list-by-names")
         val products = mockMvc.perform(
-            get(ALL_PRODUCTS)
+            get(SOME_PRODUCTS)
                 .param("name", "apple")
                 .param("name", "pineapple"),
         )

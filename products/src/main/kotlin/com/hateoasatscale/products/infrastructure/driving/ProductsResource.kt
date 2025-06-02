@@ -55,12 +55,12 @@ class ProductsResource(
 
     @PreAuthorize("hasAnyRole('ROLE_CUSTOMER', 'ROLE_ADMIN')")
     @GetMapping("/some")
-    fun findSome(@RequestParam("name") names: List<String>): ResponseEntity<ProductsDto> {
+    fun findSome(@RequestParam("name") names: List<String>): ResponseEntity<SomeProductsDto> {
         val products = findProducts.some(names)
         val cartsStartupLinks = cartsFeignClient.startupLinks()
 
         return ResponseEntity.ok(
-            ProductsDto(
+            SomeProductsDto(
                 products.map { product ->
                     ProductDto(
                         cartsStartupLinks,

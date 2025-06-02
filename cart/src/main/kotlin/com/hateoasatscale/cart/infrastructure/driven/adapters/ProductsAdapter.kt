@@ -15,7 +15,7 @@ class ProductsAdapter(
 ) : ProductsRepository {
     override fun findBy(names: List<String>): List<Product> {
         val startupLinks = productsFeignClient.startup()
-        val productsLink = startupLinks.find { link -> link.rel.value() == "products" }
+        val productsLink = startupLinks.find { link -> link.rel.value() == "someProducts" }
             ?: throw IllegalStateException("Products link not found in products-service startup response")
         val queryParams = mapOf("name" to names.joinToString(","))
         val productsResponse = restTemplate.getForObject(productsLink.href, ProvidersProductDto::class.java, queryParams)
