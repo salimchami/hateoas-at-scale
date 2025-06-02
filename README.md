@@ -8,7 +8,7 @@
 [![main-build](https://github.com/salimchami/hateoas-at-scale/actions/workflows/build.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/build.yml)
 [![PR-build](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml/badge.svg)](https://github.com/salimchami/hateoas-at-scale/actions/workflows/pull-request.yml)
 
-**A demonstration of HATEOAS implementation at scale with [Spring Boot](https://spring.io/projects/spring-boot), [Consul](https://developer.hashicorp.com/consul) and [Kong API Gateway](https://konghq.com).**
+**A demonstration of HATEOAS implementation at scale with [Spring Boot](https://spring.io/projects/spring-boot), [Consul](https://developer.hashicorp.com/consul) and [Nginx](https://nginx.org/).**
 
 This project aims to showcase an approach to implement HATEOAS (Hypermedia as the Engine of Application State) in RESTful applications designed for scalability. It provides a concrete example of an architecture and techniques for managing hypermedia links efficiently in distributed systems.
 
@@ -35,9 +35,20 @@ This project aims to showcase an approach to implement HATEOAS (Hypermedia as th
 * **Consul:** Acts as a service discovery and configuration solution. It allows the system to locate other services
   dynamically in a distributed architecture, handle load balancing, and store service configuration centrally. This
   ensures that the components of the system can communicate efficiently and scale seamlessly.
-* **Kong API Gateway:** Provides a scalable API management solution with capabilities like routing, load-balancing,
-authentication, and monitoring of API traffic. It's used in this project to manage and expose the services in a unified
+* **Nginx Reverse Proxy:** Acts as a reverse proxy server that handles load balancing, SSL termination, caching,
+  authentication, and monitoring of API traffic. It's used in this project to manage and expose the services in a unified
 way, ensuring secure and efficient communication between clients and microservices.
+
+## Workflows
+
+### Functional workflow
+
+![Functional workflow](doc/functional-workflow.png "Functional workflow")
+
+
+### Hateoas workflow
+
+![Hateoas workflow](doc/hateoas-links.png "Hateoas workflow")
 
 ## Quick Start
 
@@ -71,27 +82,15 @@ Make sure you have the following installed:
 2. Consul service should be available at [localhost:8500](http://localhost:8500)
 On the Consul web page, you can find services urls
 
-3. Kong API Gateway should be available at [localhost:8002](http://localhost:8002)
+3. Nginx should be available at [localhost:8020](http://localhost:8020)
 
 ## Usage
 
-### API Endpoints
-
-List of the main API endpoints available:
-
-* `GET /users/1`: Retrieves a user from the `users` service. (see `com.hateoasatscale.users.infrastructure.driven.FakeDbUsers`)
-* `GET /products/1`: Retrieves a product from the `products` service. (see `com.hateoasatscale.products.infrastructure.driven.FakeDbProducts`)
-* `GET /cart/1`: Retrieves the user 1 cart from the `cart` service. (see `com.hateoasatscale.cart.infrastructure.driven.db.FakeDbCarts`)
-
 ### Request and Response Examples
 
-Here's an example of the cart 1 response 
+Here's an example of the Ada Lovelace cart response 
 
-**Example Request (GET <kong-ui-url>/carts-service/carts/1):**
-
-```bash
-curl http://localhost:8000/carts-service/carts/1
-```
+**Example Request (GET <nginx-ui-url>/carts-service/api/v1/carts/my-cart):**
 
 ``` json
 {

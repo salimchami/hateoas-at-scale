@@ -11,6 +11,8 @@ class LbConfiguration {
     @LoadBalanced
     @Bean
     fun loadBalancedRestTemplate(): RestTemplate {
-        return RestTemplate()
+        val restTemplate = RestTemplate()
+        restTemplate.interceptors.add(HeaderForwardingInterceptor())
+        return restTemplate
     }
 }

@@ -14,7 +14,7 @@ export class CartService extends HttpService {
   currentUser: User | null = null;
 
   find(currentUser: User): Observable<Cart> {
-    return this.get(currentUser._links['my-cart'].href).pipe(
+    return this.get(currentUser._links['myCart'].href).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
           return of({products: [], totalPrice: 0, user: currentUser} as Cart);

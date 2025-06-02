@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit {
   }
 
   private loadUsers() {
-    this.userService.findAll(this.currentUser?._links['all-users'].href)
+    this.userService.findAll(this.currentUser?._links['allUsers'].href)
       .subscribe(users => {
         this.users = users;
       });

@@ -25,7 +25,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         component: ProductsComponent,
         title: 'Products',
-        data: {linkName: 'products'}
+        data: {linkName: 'allProducts'}
       },
       {
         path: 'products/:name',
@@ -42,7 +42,7 @@ export const routes: Routes = [
         component: CartComponent,
         title: 'Cart',
         data: {
-          linkName: 'my-cart'
+          linkName: 'myCart'
         },
         resolve: {
           cart: CartResolver
@@ -53,7 +53,7 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         component: UsersComponent,
         title: 'Users',
-        data: {linkName: 'all-users'}
+        data: {linkName: 'allUsers'}
       },
       {
         path: '**',

@@ -15,23 +15,7 @@ class ProductsAdapter(
     private val restTemplate: RestTemplate
 ) : ProductsRepository {
     override fun findBy(names: List<String>): List<Product> {
-        val startupLinks = productsFeignClient.startup()
-        val productsLink = startupLinks.find { link -> link.rel.value() == "someProducts" }
-            ?: throw IllegalStateException("Products link not found in products-service startup response")
-        val queryParams = mapOf("name" to names.joinToString(","))
-        val baseUrl = productsLink.href.replace("?name={name}", "")
-        val uriBuilder = UriComponentsBuilder.fromUriString(baseUrl)
-
-        // Add each name as a separate query parameter
-        names.forEach { name ->
-            uriBuilder.queryParam("name", name)
-        }
-
-        val finalUrl = uriBuilder.toUriString()
-
-        val productsResponse =
-            restTemplate.getForObject(finalUrl, ProvidersProductDto::class.java, queryParams)
-                ?: throw IllegalStateException("Products not found for names: $names")
+        val productsResponse = findProductsByName(names)
         return productsResponse.list.map {
             Product(
                 it.name,
@@ -41,7 +25,43 @@ class ProductsAdapter(
         }
     }
 
+    private fun findProductsByName(
+        names: List<String>
+    ): ProvidersProductDto {
+        val startupLinks = productsFeignClient.startup()
+        val productsLink = startupLinks.find { link -> link.rel.value() == "someProducts" }
+            ?: throw IllegalStateException("Products link not found in products-service startup response")
+        val baseUrl = productsLink.href.replace("?name={name}", "")
+        val nameParams = names.joinToString("&") { "name=$it" }
+        val finalUrl = "$baseUrl?$nameParams"
+        return restTemplate.getForObject(transformToServiceUrl(finalUrl), ProvidersProductDto::class.java)
+            ?: throw IllegalStateException("Products not found for names: $names")
+    }
+
     override fun findBy(name: String): Product {
         return this.findBy(listOf(name))[0]
+    }
+
+    fun transformToServiceUrl(url: String): String {
+        val original = UriComponentsBuilder.fromUriString(url).build()
+        val pathSegments = original.pathSegments
+
+        val serviceName = pathSegments.firstOrNull { it.endsWith("-service") }
+
+        return if (serviceName != null) {
+            val serviceIndex = pathSegments.indexOf(serviceName)
+            val remainingSegments = pathSegments.drop(serviceIndex + 1)
+
+            UriComponentsBuilder.newInstance()
+                .scheme(original.scheme)
+                .host(serviceName)
+                .pathSegment(*remainingSegments.toTypedArray())
+                .query(original.query)
+                .fragment(original.fragment)
+                .build()
+                .toUriString()
+        } else {
+            url
+        }
     }
 }
