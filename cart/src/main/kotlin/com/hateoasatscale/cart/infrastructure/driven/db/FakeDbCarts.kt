@@ -12,10 +12,6 @@ class FakeDbCarts {
         ),
     )
 
-    fun createOrUpdate(user: DbUser, products: List<DbProduct>) {
-        carts[user] = products.toMutableList()
-    }
-
     fun findBy(username: String): List<DbProduct> {
         return carts.entries
             .filter { it.key.username == username }
@@ -23,17 +19,15 @@ class FakeDbCarts {
     }
 
     fun updateProduct(username: String, productName: String, quantityToAdd: Int) {
-        carts.compute(DbUser(username)) { _, productList ->
-            productList?.map { product -> updateQuantity(product, productName, quantityToAdd) }?.toMutableList()
-                ?: mutableListOf()
-        }
+        carts.getOrPut(DbUser(username)) { mutableListOf() }
+            .updateOrAddProduct(productName, quantityToAdd)
     }
 
-    private fun updateQuantity(product: DbProduct, productName: String, quantityToAdd: Int): DbProduct {
-        return if (product.name == productName) {
-            product.copy(quantity = product.quantity + quantityToAdd) // Add to the existing quantity
+    private fun MutableList<DbProduct>.updateOrAddProduct(productName: String, quantityToAdd: Int) {
+        val existingIndex = indexOfFirst { it.name == productName }
+        if (existingIndex >= 0) {
+            this[existingIndex] = this[existingIndex].copy(quantity = this[existingIndex].quantity + quantityToAdd)
         } else {
-            product
+            add(DbProduct(productName, quantityToAdd))
         }
-    }
-}
+    }}

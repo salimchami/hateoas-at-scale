@@ -11,7 +11,6 @@ export function httpInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   const router = inject(Router);
   const token = authService.getAccessToken();
   const authReq = req.withCredentials ? req.clone({headers: req.headers.set('Authorization', `Bearer ${token}`)}) : req;
-
   return next(authReq).pipe(
     tap(event => {
       if (event.type === HttpEventType.Sent) {

@@ -5,7 +5,8 @@ import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.ADD_PRODUC
 import com.hateoasatscale.cart.AbstractTests.Companion.Urls.Companion.MY_CART
 import com.hateoasatscale.cart.UserMock
 import com.hateoasatscale.cart.WithJwtMock
-import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProvidersProductDto
+import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProviderProductDto
+import com.hateoasatscale.cart.infrastructure.driven.adapters.providers.products.ProviderProductsDto
 import com.hateoasatscale.cart.utils.JsonReader.toExpectedJson
 import com.hateoasatscale.cart.utils.JsonReader.toRequestedJson
 import com.hateoasatscale.cart.utils.ProductsFixture
@@ -25,13 +26,15 @@ class CartResourceTest : AbstractTests() {
     @Test
     @WithJwtMock(UserMock.CHARLES)
     fun `should return cart info`() {
-        `when`(restTemplate.getForObject(
-            anyString(),
-            eq(ProvidersProductDto::class.java),
-        ))
-            .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
+        `when`(
+            restTemplate.getForObject(
+                anyString(),
+                eq(ProviderProductsDto::class.java),
+            ),
+        )
+            .thenReturn(ProviderProductsDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
 
-        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.carlesDarwin)
+        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.charlesDarwin)
         val expectedCart = toExpectedJson("cart", "charles-cart")
         http.perform(get(MY_CART))
             .andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
@@ -39,21 +42,29 @@ class CartResourceTest : AbstractTests() {
 
     @Test
     @WithJwtMock(UserMock.ADA)
-    fun `should update a user cart`() {
-        `when`(restTemplate.getForObject(
-            anyString(),
-            eq(ProvidersProductDto::class.java),
-        ))
-            .thenReturn(ProvidersProductDto(listOf(ProductsFixture.apple, ProductsFixture.pineapple)))
+    fun `should add a product to cart`() {
+        `when`(
+            restTemplate.getForObject(anyString(), eq(ProviderProductDto::class.java)),
+        ).thenReturn(ProductsFixture.watermelon)
+        `when`(
+            restTemplate.getForObject(anyString(), eq(ProviderProductsDto::class.java)),
+        ).thenReturn(
+            ProviderProductsDto(
+                listOf(
+                    ProductsFixture.apple,
+                    ProductsFixture.pineapple,
+                    ProductsFixture.watermelon,
+                ),
+            ),
+        )
 
-        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.carlesDarwin)
+        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
 
 
         val newCartProducts = toRequestedJson("cart", "product-to-add")
         http.perform(patch(ADD_PRODUCT).content(newCartProducts))
             .andExpect(status().isOk)
 
-        `when`(usersFeignClient.findBy()).thenReturn(UsersFixture.adaLovelace)
         val expectedCart = toExpectedJson("cart", "updated-ada-cart")
         http.perform(get(MY_CART)).andExpect(content().json(expectedCart, JsonCompareMode.STRICT))
 

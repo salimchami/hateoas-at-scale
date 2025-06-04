@@ -10,6 +10,7 @@ class FakeDbCartsTest {
     private val adalovelace = "ada.lovelace"
     private val strawberry: String = "strawberry"
     private val apple = "apple"
+    private val pineapple = "pineapple"
 
     @BeforeEach
     fun setUp() {
@@ -17,12 +18,13 @@ class FakeDbCartsTest {
     }
 
     @Test
-    fun `should add products for a user`() {
-        sut.createOrUpdate(DbUser(adalovelace), listOf(DbProduct(apple, 15), DbProduct(strawberry)))
+    fun `should add a product for a user`() {
+        sut.updateProduct(adalovelace, strawberry, 2)
         assertThat(sut.findBy(adalovelace)).isEqualTo(
             listOf(
-                DbProduct(apple, 15),
-                DbProduct(strawberry)
+                DbProduct(apple),
+                DbProduct(pineapple, 2),
+                DbProduct(strawberry, 2)
             )
         )
     }
@@ -30,8 +32,7 @@ class FakeDbCartsTest {
     @Test
     fun `should find cart for a user`() {
         val user = DbUser(adalovelace)
-        val adaProducts = listOf(DbProduct(apple))
-        sut.createOrUpdate(user, adaProducts)
+        val adaProducts = listOf(DbProduct(apple), DbProduct(pineapple, 2))
         val products: List<DbProduct> = sut.findBy(user.username)
         assertThat(products).isEqualTo(adaProducts)
     }

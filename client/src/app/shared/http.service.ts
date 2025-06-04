@@ -31,19 +31,11 @@ export class HttpService {
     return this.http.get<any>(endpoint, {headers: headers, withCredentials});
   }
 
-  protected post(endpoint: string,
-                 payload: any
-  ): Observable<any> {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(endpoint, payload, {headers});
-  }
-
-  protected put(endpoint: string, headers?: HttpHeaders,
-                payload?: any
+  protected patch(endpoint: string,
+                 payload: any, headers?: HttpHeaders, withCredentials: boolean = true
   ): Observable<any> {
     headers?.append('Content-Type', 'application/json');
-    return this.http.put(endpoint, payload ?? null, {headers});
+    return this.http.patch(endpoint, payload, {headers, withCredentials});
   }
 
   protected url(endpoint: string): string {

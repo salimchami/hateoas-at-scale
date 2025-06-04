@@ -22,5 +22,12 @@ export class ProductService extends HttpService {
   }
 
   addToCart(product: Product, quantity: number) {
+    this.patch(product._links.addProductToCart.href, {name: product.name, quantity}).subscribe(
+      () => {
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }

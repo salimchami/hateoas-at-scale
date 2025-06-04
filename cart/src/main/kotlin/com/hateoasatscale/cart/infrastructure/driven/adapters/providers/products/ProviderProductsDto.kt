@@ -2,6 +2,6 @@ package com.hateoasatscale.cart.infrastructure.driven.adapters.providers.product
 
 import org.springframework.hateoas.RepresentationModel
 
-data class ProvidersProductDto(
+data class ProviderProductsDto(
     val list: List<ProviderProductDto>,
-) : RepresentationModel<ProvidersProductDto>()
+) : RepresentationModel<ProviderProductsDto>()

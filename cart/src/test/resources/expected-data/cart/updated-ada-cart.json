@@ -1,13 +1,13 @@
 {
-  "totalPrice": 406.00,
+  "totalPrice": 2199.00,
   "user": {
     "username": "ada.lovelace"
   },
   "products": [
     {
       "name": "apple",
-      "totalPrice": 5.00,
-      "quantity": 5,
+      "totalPrice": 1.00,
+      "quantity": 1,
       "_links": {
         "self": {
           "href": "http://localhost:8080/products/apple"
@@ -16,11 +16,21 @@
     },
     {
       "name": "pineapple",
-      "totalPrice": 401.00,
+      "totalPrice": 198.00,
       "quantity": 2,
       "_links": {
         "self": {
           "href": "http://localhost:8080/products/pineapple"
+        }
+      }
+    },
+    {
+      "name": "watermelon",
+      "totalPrice": 2000.00,
+      "quantity": 2,
+      "_links": {
+        "self": {
+          "href": "http://localhost:8080/products/watermelon"
         }
       }
     }
