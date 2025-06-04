@@ -12,9 +12,9 @@ class ProductsFixture {
         )
         val apple: ProviderProductDto = ProviderProductDto("apple", "1.00".toBigDecimal())
             .add(Link.of("http://localhost:8080/products/apple").withSelfRel())
-        val pineapple: ProviderProductDto = ProviderProductDto("pineapple", "200.50".toBigDecimal())
+        val pineapple: ProviderProductDto = ProviderProductDto("pineapple", "99.00".toBigDecimal())
             .add(Link.of("http://localhost:8080/products/pineapple").withSelfRel())
-        val watermelon: ProviderProductDto = ProviderProductDto("watermelon", "400.50".toBigDecimal())
+        val watermelon: ProviderProductDto = ProviderProductDto("watermelon", "1000.00".toBigDecimal())
             .add(Link.of("http://localhost:8080/products/watermelon").withSelfRel())
     }
 }

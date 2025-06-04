@@ -1,5 +1,5 @@
 {
-  "totalPrice": 202.50,
+  "totalPrice": 101.00,
   "user": {
     "username": "charles.darwin"
   },
@@ -16,7 +16,7 @@
     },
     {
       "name": "pineapple",
-      "totalPrice": 200.50,
+      "totalPrice": 99.00,
       "quantity": 1,
       "_links": {
         "self": {

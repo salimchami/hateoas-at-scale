@@ -1,5 +1,9 @@
 [
   {
+    "rel": "product",
+    "href": "http://localhost/api/v1/products/{name}"
+  },
+  {
     "rel": "allProducts",
     "href": "http://localhost/api/v1/products"
   },

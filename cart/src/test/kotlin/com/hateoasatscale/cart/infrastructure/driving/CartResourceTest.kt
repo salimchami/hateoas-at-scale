@@ -51,8 +51,8 @@ class CartResourceTest : AbstractTests() {
         ).thenReturn(
             ProviderProductsDto(
                 listOf(
-                    ProductsFixture.watermelon,
-                    ProductsFixture.watermelon,
+                    ProductsFixture.apple,
+                    ProductsFixture.pineapple,
                     ProductsFixture.watermelon,
                 ),
             ),
