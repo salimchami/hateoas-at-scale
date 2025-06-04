@@ -7,7 +7,7 @@
     {
       "name": "apple",
       "totalPrice": 5.00,
-      "quantity": 5,
+      "quantity": 1,
       "_links": {
         "self": {
           "href": "http://localhost:8080/products/apple"
@@ -21,6 +21,16 @@
       "_links": {
         "self": {
           "href": "http://localhost:8080/products/pineapple"
+        }
+      }
+    },
+    {
+      "name": "watermelon",
+      "totalPrice": 801.00,
+      "quantity": 2,
+      "_links": {
+        "self": {
+          "href": "http://localhost:8080/products/watermelon"
         }
       }
     }

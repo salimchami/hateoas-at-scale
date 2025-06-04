@@ -15,13 +15,15 @@ This project aims to showcase an approach to implement HATEOAS (Hypermedia as th
 ## Table of Contents
 
 * [Key Features](#key-features)
+* [Workflows](#workflows)
+  * [Functional workflow](#functional-workflow) 
+  * [Hateoas Workflow](#hateoas-workflow) 
 * [Quick Start](#quick-start)
-    * [Prerequisites](#prerequisites)
-    * [Installation](#installation)
-    * [Execution](#execution)
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+  * [Execution](#execution)
 * [Usage](#usage)
-    * [API Endpoints](#api-endpoints)
-    * [Request and Response Examples](#request-and-response-examples)
+  * [Request and response examples](#request-and-response-examples)
 * [Contributions](#contributions)
 * [License](#license)
 * [Contact](#contact)
@@ -61,7 +63,7 @@ Make sure you have the following installed:
 * **Java Development Kit (JDK):** Version 21 recommended.
 * **Gradle:** Version 8.10 or higher.
 * **Your preferred IDE:** IntelliJ IDEA, Eclipse, etc. (optional).
-* **An HTTP client:** Postman, Insomnia, curl, etc. to interact with the API.
+* **An HTTP client:** Postman, curl, etc. to interact with the API.
 
 ### Installation
 
@@ -94,41 +96,63 @@ Here's an example of the Ada Lovelace cart response
 
 ``` json
 {
-    "totalPrice": 159.00,
+    "totalPrice": 1199.00,
     "user": {
-        "firstname": "Ada",
-        "lastname": "Lovelace",
-        "_links": {
-            "self": {
-                "href": "http://localhost:8000/users-service/users/1"
-            }
-        }
+        "username": "ada.lovelace"
     },
     "products": [
         {
             "name": "apple",
-            "reference": "RRDGHGT554346",
-            "price": 1.00,
+            "totalPrice": 1.00,
+            "quantity": 1,
             "_links": {
                 "self": {
-                    "href": "http://localhost:8000/products-service/products/1"
+                    "href": "http://172.25.0.6:8080/api/v1/products/apple"
+                },
+                "addProductToCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/add-product"
+                },
+                "myCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/my-cart"
                 }
             }
         },
         {
-            "name": "orange",
-            "reference": "DFHDHYUJJBN887644",
-            "price": 158.00,
+            "name": "pineapple",
+            "totalPrice": 198.00,
+            "quantity": 2,
             "_links": {
                 "self": {
-                    "href": "http://localhost:8000/products-service/products/4"
+                    "href": "http://172.25.0.6:8080/api/v1/products/pineapple"
+                },
+                "addProductToCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/add-product"
+                },
+                "myCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/my-cart"
+                }
+            }
+        },
+        {
+            "name": "watermelon",
+            "totalPrice": 1000.00,
+            "quantity": 1,
+            "_links": {
+                "self": {
+                    "href": "http://172.25.0.6:8080/api/v1/products/watermelon"
+                },
+                "addProductToCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/add-product"
+                },
+                "myCart": {
+                    "href": "http://localhost:8020/carts-service/api/v1/cart/my-cart"
                 }
             }
         }
     ],
     "_links": {
         "self": {
-            "href": "http://localhost:8000/carts-service/carts/1"
+            "href": "http://localhost:8020/carts-service/api/v1/cart/my-cart"
         }
     }
 }
