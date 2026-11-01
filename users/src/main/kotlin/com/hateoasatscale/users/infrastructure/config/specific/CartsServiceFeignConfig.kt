@@ -12,13 +12,14 @@ class CartsServiceFeignConfig {
     @Bean
     fun requestInterceptor(): RequestInterceptor {
         val interceptor = RequestInterceptor {
+            val currentHeaders = it.headers()
             it.header("Authorization", generateToken())
-            it.header("Host", "localhost")
-            it.header("X-Forwarded-For", "localhost")
-            it.header("X-Forwarded-Host", "localhost")
-            it.header("X-Forwarded-Prefix", "/carts-service")
-            it.header("X-Forwarded-Port", "8020")
-            it.header("X-Forwarded-Proto", "http")
+            it.header("Host", currentHeaders["Host"])
+            it.header("X-Forwarded-For", currentHeaders["X-Forwarded-For"])
+            it.header("X-Forwarded-Host", currentHeaders["X-Forwarded-Host"])
+            it.header("X-Forwarded-Prefix", currentHeaders["X-Forwarded-Prefix"])
+            it.header("X-Forwarded-Port", currentHeaders["X-Forwarded-Port"])
+            it.header("X-Forwarded-Proto", currentHeaders["X-Forwarded-Proto"])
         }
         return interceptor
     }

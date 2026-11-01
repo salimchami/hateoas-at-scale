@@ -21,6 +21,13 @@ spring:
         instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
         service-name: ${spring.application.name}
       enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0 # Activer l'échantillonnage à 100% (facultatif, valeur par défaut est 0.1)
+    enabled: true
+    zipkin:
+      base-url: http://zipkin:9411 # L'URL de Zipkin dans le réseau Docker
+      enabled: true
 
   security:
     oauth2:

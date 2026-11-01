@@ -47,6 +47,9 @@ services:
     volumes:
       - "./users/build/libs/users-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
+    environment:
+      - SPRING_ZIPKIN_BASE_URL=http://localhost:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       consul-service:
         condition: service_healthy
@@ -65,6 +68,9 @@ services:
     volumes:
       - "./products/build/libs/products-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
+    environment:
+      - SPRING_ZIPKIN_BASE_URL=http://localhost:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       consul-service:
         condition: service_healthy
@@ -83,6 +89,9 @@ services:
     volumes:
       - "./cart/build/libs/cart-0.0.1-SNAPSHOT.jar:/app/app.jar"
     command: "java -jar /app/app.jar"
+    environment:
+      - SPRING_ZIPKIN_BASE_URL=http://localhost:9411
+      - SPRING_SLEUTH_SAMPLER_PROBABILITY=1.0
     depends_on:
       consul-service:
         condition: service_healthy
@@ -121,6 +130,13 @@ services:
     networks:
       hateoas-at-scale-nw:
         ipv4_address: 172.25.0.9
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - hateoas-at-scale-nw
 
 networks:
   hateoas-at-scale-nw:
