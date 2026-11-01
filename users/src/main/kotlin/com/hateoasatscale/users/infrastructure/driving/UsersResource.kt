@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -25,6 +27,9 @@ class UsersResource(
     fun userInfo(
         @AuthenticationPrincipal principal: Jwt
     ): ResponseEntity<UserDto> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val request = requestAttributes.request
+        request.headerNames.toList().forEach { key -> println("$key: ${request.getHeader(key)}") }
         val username = principal.claims["preferred_username"] as String
         val user = findUser.by(username)
         val productsStartupLinks = productsFeignClient.startupLinks()

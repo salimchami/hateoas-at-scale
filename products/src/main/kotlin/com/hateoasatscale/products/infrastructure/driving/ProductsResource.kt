@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/api/v2/products")
 class ProductsResource(
     private val findProduct: FindProduct,
     private val findProducts: FindProducts,
